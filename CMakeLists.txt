@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.1.3 FATAL_ERROR)
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 	set(CMAKE_BUILD_TYPE Release CACHE STRING
 		"Choose the type of build." FORCE)
-
 	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
@@ -13,8 +12,7 @@ endif()
 # set base language
 set(PROJECT_LANGUAGES C)
 
-# enable c++ if build type is debug or relwithdebinfo
-# required for used test framework
+# enable c++ if build type is debug or relwithdebinfo, for test framework
 if(CMAKE_BUILD_TYPE STREQUAL "Debug"
 		OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
 	set(CXX_REQUIRED ON)
