@@ -9,12 +9,16 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+# disable building tests if not specified
+if(NOT DEFINED BUILD_TESTING)
+	set(BUILD_TESTING OFF CACHE BOOL "Build tests?")
+endif()
+
 # set base language
 set(PROJECT_LANGUAGES C)
 
-# enable c++ if build type is debug or relwithdebinfo, for test framework
-if(CMAKE_BUILD_TYPE STREQUAL "Debug"
-		OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+# enable c++ if building tests
+if(BUILD_TESTING)
 	set(CXX_REQUIRED ON)
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
 else()
@@ -47,7 +51,6 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 		-Wformat=2
 		-Wnull-dereference
 		-Winit-self
-		-Wimplicit-int
 		-Wmain
 		-Wmissing-include-dirs
 		-Wshift-overflow=2
@@ -121,3 +124,9 @@ include_directories(include)
 
 # add src directory
 add_subdirectory(src)
+
+# add test directory
+if(BUILD_TESTING)
+	enable_testing()
+	add_subdirectory(test)
+endif()
