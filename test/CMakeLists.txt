@@ -1,5 +1,5 @@
 # some warnings trigger on the catch framework, so disable them
-# other warnings not disabled to test code is also checked
+# other warnings not disabled, test code is also checked
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	add_compile_options(-Wno-exit-time-destructors)
 elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
