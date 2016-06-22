@@ -11,7 +11,7 @@ endif()
 
 # disable building tests if not specified
 if(NOT DEFINED BUILD_TESTING)
-	set(BUILD_TESTING OFF CACHE BOOL "Build tests?")
+	set(BUILD_TESTING OFF CACHE BOOL "Build tests.")
 endif()
 
 # set base language
