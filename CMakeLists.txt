@@ -46,6 +46,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	add_compile_options(-Werror -Weverything
 		-Wno-switch-enum
+		-Wno-covered-switch-default
 		-Wno-padded
 		-Wno-disabled-macro-expansion)
 elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
