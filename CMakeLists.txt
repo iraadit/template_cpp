@@ -44,7 +44,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set warning flags for clang and gcc
 # gcc source https://gcc.gnu.org/onlinedocs/gcc-6.1.0/gcc/Warning-Options.html
 if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
-	add_compile_options(-Werror -Weverything -Wno-switch-enum)
+	add_compile_options(-Werror -Weverything
+		-Wno-switch-enum
+		-Wno-padded)
 elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	add_compile_options(-Werror -Wpedantic -Wall -Wextra
 		-Wdouble-promotion
