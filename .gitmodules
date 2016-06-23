@@ -1,3 +1,9 @@
 [submodule "test/catch"]
 	path = test/catch
 	url = https://git.mel.vin/mirror/catch.git
+[submodule "ci/docker"]
+	path = ci/docker
+	url = https://git.mel.vin/ci_utils/docker.git
+[submodule "ci/style"]
+	path = ci/style
+	url = https://git.mel.vin/ci_utils/style.git

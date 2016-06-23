@@ -1,0 +1,57 @@
+image: git.mel.vin:5005/templates/c:ci
+
+before_script:
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+
+stages:
+  - analyse
+  - build
+  - test
+
+analyse:
+  stage: analyse
+  script:
+    - ./ci/style/line_limit.sh -l 80 -t 8
+      -e '^(.*/\.git/.*)|(\./test/catch/.*)$' .
+    - cppcheck --enable=all --std=c11 --std=c++11 --std=posix --error-exitcode=1
+      -I include -i test/catch src test
+    - mkdir build_scanbuild
+    - cd build_scanbuild
+    - scan-build -v --status-bugs
+      cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_TESTING:BOOL=ON ..
+    - scan-build -v --status-bugs make
+
+build:clang:
+  stage: build
+  script:
+    - mkdir build
+    - cd build
+    - CC=clang cmake ..
+    - make
+
+build:gcc:
+  stage: build
+  script:
+    - mkdir build
+    - cd build
+    - CC=gcc cmake ..
+    - make
+
+test:clang:
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - CC=clang CXX=clang++ cmake -DBUILD_TESTING:BOOL=ON ..
+    - make
+    - make test
+
+test:gcc:
+  stage: test
+  script:
+    - mkdir build
+    - cd build
+    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON ..
+    - make
+    - make test
