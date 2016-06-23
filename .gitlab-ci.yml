@@ -51,7 +51,7 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang CCX=clang++ cmake -DBUILD_TESTING:BOOL=ON ..
+    - CC=clang CXX=clang++ cmake -DBUILD_TESTING:BOOL=ON ..
     - make
     - make test
 
@@ -60,6 +60,6 @@ test:gcc:
   script:
     - mkdir build
     - cd build
-    - CC=gcc CCX=g++ cmake -DBUILD_TESTING:BOOL=ON ..
+    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON ..
     - make
     - make test
