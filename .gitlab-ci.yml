@@ -9,23 +9,15 @@ stages:
   - build
   - test
 
-analyse:line_limit:
+analyse:
   stage: analyse
   script:
     - ./ci/style/line_limit.sh -l 80 -t 8
       -e '^(.*/\.git/.*)|(\./test/catch/.*)$' .
-
-analyse:cppcheck:
-  stage: analyse
-  script:
     - cppcheck --enable=all --std=c11 --std=c++11 --std=posix --error-exitcode=1
       -I include -i test/catch src test
-
-analyse:scan_build:
-  stage: analyse
-  script:
-    - mkdir build
-    - cd build
+    - mkdir build_scanbuild
+    - cd build_scanbuild
     - scan-build -v --status-bugs
       cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_TESTING:BOOL=ON ..
     - scan-build -v --status-bugs make
