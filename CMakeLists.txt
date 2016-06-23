@@ -48,7 +48,8 @@ if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
 		-Wno-switch-enum
 		-Wno-covered-switch-default
 		-Wno-padded
-		-Wno-disabled-macro-expansion)
+		-Wno-disabled-macro-expansion
+		-Wno-missing-noreturn)
 elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	add_compile_options(-Werror -Wpedantic -Wall -Wextra
 		-Wdouble-promotion
