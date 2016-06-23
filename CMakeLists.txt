@@ -89,8 +89,7 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
 	# set c specific flags manually
 	set(C_FLAGS_EXTRA
-		"-Wtraditional-conversion \
-		-Wbad-function-cast \
+		"-Wbad-function-cast \
 		-Wjump-misses-init \
 		-Wstrict-prototypes \
 		-Wold-style-definition \
