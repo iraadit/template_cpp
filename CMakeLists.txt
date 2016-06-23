@@ -49,18 +49,15 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	add_compile_options(-Werror -Wpedantic -Wall -Wextra
 		-Wdouble-promotion
 		-Wformat=2
-		-Wnull-dereference
 		-Winit-self
 		-Wmain
 		-Wmissing-include-dirs
-		-Wshift-overflow=2
 		-Wswitch-default
 		-Wswitch-enum
 		-Wuninitialized
 		-Wstrict-aliasing
 		-Wsuggest-final-types
 		-Wsuggest-final-methods
-		-Wduplicated-cond
 		-Wtrampolines
 		-Wfloat-equal
 		-Wundef
@@ -81,8 +78,15 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 		-Winline
 		-Winvalid-pch
 		-Wlong-long
-		-Wstack-protector
-		-Whsa)
+		-Wstack-protector)
+
+	# some flags only supported by GCC >= 6
+	if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "6.0.0")
+		add_compile_options(-Wnull-dereference
+			-Wshift-overflow=2
+			-Wduplicated-cond
+			-Whsa)
+	endif()
 
 	# set c specific flags manually
 	set(C_FLAGS_EXTRA
