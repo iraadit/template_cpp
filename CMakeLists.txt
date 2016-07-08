@@ -86,7 +86,7 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 		-Wstack-protector)
 
 	# some flags only supported by GCC >= 6
-	if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS "6.0.0")
+	if(NOT CMAKE_C_COMPILER_VERSION VERSION_LESS "6.0.0")
 		add_compile_options(-Wnull-dereference
 			-Wshift-overflow=2
 			-Wduplicated-cond
