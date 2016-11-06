@@ -12,8 +12,7 @@ stages:
 analyse:
   stage: analyse
   script:
-    - ./ci/style/line_limit.sh -l 80 -t 8
-      -e '^(.*/\.git/.*)|(\./test/catch/.*)$' .
+    - ./ci/style/line_limit.sh -l 80 -t 8 .
     - cppcheck --enable=all --std=c11 --std=c++11 --std=posix --error-exitcode=1
       -I include -i test/catch src test
     - mkdir build_scanbuild

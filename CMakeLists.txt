@@ -33,8 +33,8 @@ if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
 	message(FATAL_ERROR "c and c++ compillers differ")
 endif()
 
-# set standards to c11 and c++14, disable extensions
-set(CMAKE_C_STANDARD 11)
+# set standards to c99 and c++14, disable extensions
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
@@ -43,7 +43,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # set warning flags for clang and gcc
 # gcc source https://gcc.gnu.org/onlinedocs/gcc-6.1.0/gcc/Warning-Options.html
-if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+	message(STATUS "compiler warning flags not enabled for release")
+elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
 	add_compile_options(-Werror -Weverything
 		-Wno-switch-enum
 		-Wno-covered-switch-default
