@@ -60,7 +60,6 @@ elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 		-Winit-self
 		-Wmain
 		-Wmissing-include-dirs
-		-Wswitch-default
 		-Wuninitialized
 		-Wstrict-aliasing
 		-Wsuggest-final-types
