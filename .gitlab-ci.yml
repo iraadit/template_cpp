@@ -1,15 +1,5 @@
 image: git.mel.vin:5005/templates/c:ci
 
-# some issue with https validation on submodules?
-# https://gitlab.com/gitlab-org/gitlab-runner/issues/2659
-# https://gitlab.com/gitlab-org/gitlab-runner/issues/2703
-variables:
-  GIT_SSL_NO_VERIFY: "1"
-
-before_script:
-  - git submodule sync --recursive
-  - git submodule update --init --recursive
-
 stages:
   - analyse
   - build
