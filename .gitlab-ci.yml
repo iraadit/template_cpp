@@ -1,13 +1,12 @@
 image: git.mel.vin:5005/templates/c:ci
 
-before_script:
-  - git submodule sync --recursive
-  - git submodule update --init --recursive
-
 stages:
   - analyse
   - build
   - test
+
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
 
 analyse:
   stage: analyse
