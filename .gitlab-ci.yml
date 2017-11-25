@@ -11,21 +11,21 @@ variables:
 analyse:
   stage: analyse
   script:
-    - ./ci/style/line_limit.sh -l 80 -t 8 .
-    - cppcheck --enable=all --std=c11 --std=c++11 --std=posix --error-exitcode=1
-      -I include -i test/catch src test
-    - mkdir build_scanbuild
-    - cd build_scanbuild
-    - scan-build -v --status-bugs
-      cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DBUILD_TESTING:BOOL=ON ..
-    - scan-build -v --status-bugs make
+    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
+    - cd ..
+    - clang-tidy-6.0 -p=build -warnings-as-errors='*' src/*.c
+    - cppcheck -q --enable=all --project=build/compile_commands.json
+      --error-exitcode=1 --suppressions-list=.cppcheck-suppress
 
 build:clang:
   stage: build
   script:
     - mkdir build
     - cd build
-    - CC=clang cmake ..
+    - CC=clang-6.0 cmake ..
     - make
 
 build:gcc:
@@ -41,7 +41,7 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang CXX=clang++ cmake -DBUILD_TESTING:BOOL=ON ..
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DBUILD_TESTING:BOOL=ON ..
     - make
     - make test
 

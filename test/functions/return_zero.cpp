@@ -1,5 +1,5 @@
+#include "c_template/functions.h"
 #include <catch.hpp>
-#include <c_template/functions.h>
 
 SCENARIO("return zero", "[functions]")
 {

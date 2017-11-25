@@ -1,4 +1,4 @@
-#include <c_template/functions.h>
+#include "c_template/functions.h"
 
 uint8_t return_zero(void)
 {
