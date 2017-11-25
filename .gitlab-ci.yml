@@ -16,7 +16,7 @@ analyse:
     - cd build
     - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
     - cd ..
-    - sh -c 'clang-tidy-6.0 -p=build -warnings-as-errors=\* src/**/*.c'
+    - bash -c "clang-tidy-6.0 -p=build -warnings-as-errors='*' src/**/*.c"
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
 
