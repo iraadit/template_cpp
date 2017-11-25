@@ -44,7 +44,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # set warning flags
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(STATUS "compiler warning flags not enabled for release")
-elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR CMAKE_C_COMPILER_ID STREQUAL "GNU")
+elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR
+		CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	add_compile_options(-Wall -Wextra -Wconversion)
 else()
 	message(WARNING "warning flags not supported for current compiler")
@@ -54,7 +55,7 @@ endif()
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # add include directory
-include_directories(include)
+include_directories(BEFORE include)
 
 # add src directory
 add_subdirectory(src)

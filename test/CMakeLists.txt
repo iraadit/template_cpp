@@ -1,5 +1,5 @@
 # include catch framework
-include_directories(catch/include)
+include_directories(BEFORE catch/include)
 
 # compile main as object library for usage in tests
 add_library(test_main OBJECT
