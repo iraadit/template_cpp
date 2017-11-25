@@ -1,4 +1,4 @@
-image: git.mel.vin:5005/templates/c:ci
+image: git.mel.vin:5005/template/c:ci
 
 stages:
   - analyse

@@ -3,7 +3,7 @@
 	url = ../../mirror/catch.git
 [submodule "ci/docker"]
 	path = ci/docker
-	url = ../../ci_utils/docker.git
+	url = ../../cicd/docker.git
 [submodule "ci/style"]
 	path = ci/style
-	url = ../../ci_utils/style.git
+	url = ../../cicd/style.git
