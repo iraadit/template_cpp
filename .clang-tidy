@@ -1,6 +1,6 @@
-Checks: '*,-google-readability-namespace-comments,-llvm-namespace-comment'
+Checks: '*,-llvm-header-guard,-google-readability-namespace-comments,-llvm-namespace-comment'
 WarningsAsErrors: ''
-HeaderFilterRegex: ''
+HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: false
 FormatStyle: file
 CheckOptions:
