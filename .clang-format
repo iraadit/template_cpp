@@ -7,8 +7,9 @@ AlignOperands: false
 AlignTrailingComments: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortFunctionsOnASingleLine: None
+BreakBeforeBinaryOperators: All
 BreakBeforeBraces: Custom
-BreakBeforeTernaryOperators: false
+BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BraceWrapping:
   AfterClass: true
