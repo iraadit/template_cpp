@@ -1,6 +1,7 @@
 # build code as object library for easier linking to tests
 add_library(c_template OBJECT
-	functions.c)
+	functions.c
+	functions_two.c)
 
 # add main executable
 add_executable(main

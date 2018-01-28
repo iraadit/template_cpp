@@ -66,8 +66,6 @@
 find_program(GCOV_PATH gcov )
 find_program(LCOV_PATH  NAMES lcov lcov.bat lcov.exe lcov.perl)
 find_program(GENHTML_PATH NAMES genhtml genhtml.perl genhtml.bat )
-find_program(GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/scripts/test)
-find_program(SIMPLE_PYTHON_EXECUTABLE python )
 
 if(NOT GCOV_PATH)
 	message(FATAL_ERROR "gcov not found! Aborting...")
@@ -144,7 +142,7 @@ add_custom_target(coverage_clear
 # Setup target
 add_custom_target(coverage_report
 	# Create baselines to make sure untouched files show up in the report
-	COMMAND ${LCOV_PATH} -c -i -d . -o coverage_report.base
+	COMMAND ${LCOV_PATH} -c -i -d ${CMAKE_SOURCE_DIR} -o coverage_report.base
 	# Capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} --directory . --capture 
 	--output-file coverage_report.info

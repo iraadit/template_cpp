@@ -1,0 +1,18 @@
+#pragma once
+
+#include <stdint.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/// \brief Subtract 2 numbers from another
+/// 
+/// \param a The left hand number to subtract.
+/// \param b The right hand number to subtract.
+/// \return The result of subtracting b from a.
+int subtract(uint8_t a, uint8_t b);
+
+#ifdef __cplusplus
+}
+#endif
