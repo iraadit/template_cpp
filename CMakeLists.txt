@@ -1,6 +1,6 @@
 # 3.8.2 required for CMAKE_CXX_STANDARD 17
 cmake_minimum_required(VERSION 3.8.2 FATAL_ERROR)
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # set build type to release if none is specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -55,11 +55,18 @@ endif()
 # create compilation database
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Set coverage compiler flags
+if (COVERAGE)
+  include(CodeCoverage)
+endif()
+
 # add include directory
 include_directories(BEFORE include)
 
 # add src directory
 add_subdirectory(src)
+
+# add coverage if coverage flag is set.
 
 # add test directory
 if(BUILD_TESTING)
@@ -67,5 +74,4 @@ if(BUILD_TESTING)
 	add_subdirectory(test)
 endif()
 
-# load instrumentation.
-include(Instrumentation)
+message(STATUS "${CMAKE_CURRENT_BINARY_DIR}")
