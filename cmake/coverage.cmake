@@ -1,4 +1,4 @@
-# check prereqs
+# find coverage tools
 find_program(GCOV_PATH gcov)
 if(NOT GCOV_PATH)
 	message(FATAL_ERROR "Could not find gcov.")
@@ -37,7 +37,7 @@ add_custom_target(coverage_report
 	COMMAND ${LCOV_PATH} -q -c -i -d 
 		. -o coverage_report.base
 
-		# capturing lcov counters and generating report
+	# capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} -q --directory . --capture 
 		--output-file coverage_report.info
 
