@@ -23,5 +23,7 @@ int main(int argc, char **argv)
 	}
 
 	/* use external function to return */
-	return return_zero();
+	printf("3 + 2 = %u\n", add(3, 2));
+
+	return 0;
 }

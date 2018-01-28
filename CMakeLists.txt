@@ -1,5 +1,6 @@
 # 3.8.2 required for CMAKE_CXX_STANDARD 17
 cmake_minimum_required(VERSION 3.8.2 FATAL_ERROR)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # set build type to release if none is specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -30,7 +31,7 @@ project(c_template VERSION 1.1.0 LANGUAGES ${PROJECT_LANGUAGES})
 
 # abort if compilers differ
 if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
-	message(FATAL_ERROR "c and c++ compillers differ")
+	message(FATAL_ERROR "c and c++ compilers differ")
 endif()
 
 # set standards to c11 and c++17
@@ -65,3 +66,6 @@ if(BUILD_TESTING)
 	enable_testing()
 	add_subdirectory(test)
 endif()
+
+# load instrumentation.
+include(Instrumentation)

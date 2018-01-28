@@ -1,6 +1,6 @@
 # add test executable
 add_executable(test_functions
-	return_zero.cpp
+	add.cpp
 	$<TARGET_OBJECTS:test_main>
 	$<TARGET_OBJECTS:c_template>)
 
