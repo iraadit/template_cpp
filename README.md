@@ -30,6 +30,8 @@ Released into the public domain so you don't have to bother with crediting this.
 
 * [Catch2](https://github.com/catchorg/Catch2)
   * easy-to-use header-only unit testing framework
+* [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
+  * generate coverage reports
 
 ## CI CD
 

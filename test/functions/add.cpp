@@ -13,11 +13,11 @@ SCENARIO("add two numbers", "[functions]")
 
 		REQUIRE(b == 5);
 
-		WHEN("they are added together" ) {
+		WHEN("they are added together") {
 			uint16_t added = add(a, b);
 			
-			THEN("The sum is both numbers added together." ) {
-				REQUIRE(added == (a + b) );
+			THEN("The sum is both numbers added together.") {
+				REQUIRE(added == (a + b));
 			}
 		}
 	}
