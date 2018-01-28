@@ -67,9 +67,18 @@ find_program(GCOV_PATH gcov )
 find_program(LCOV_PATH  NAMES lcov lcov.bat lcov.exe lcov.perl)
 find_program(GENHTML_PATH NAMES genhtml genhtml.perl genhtml.bat )
 
+# Check for necessary utilities
 if(NOT GCOV_PATH)
 	message(FATAL_ERROR "gcov not found! Aborting...")
 endif() # NOT GCOV_PATH
+
+if(NOT LCOV_PATH)
+	message(FATAL_ERROR "lcov not found! Aborting...")
+endif() # NOT LCOV_PATH
+
+if(NOT GENHTML_PATH)
+	message(FATAL_ERROR "genhtml not found! Aborting...")
+endif() # NOT GENHTML_PATH
 
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
 	if("${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS 3)
@@ -123,15 +132,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILER_FLAGS}")
 message(STATUS 
 	"Appending code coverage compiler flags: ${COVERAGE_COMPILER_FLAGS}")
 
-# defines target to create coverage.
-if(NOT LCOV_PATH)
-	message(FATAL_ERROR "lcov not found! Aborting...")
-endif() # NOT LCOV_PATH
-
-if(NOT GENHTML_PATH)
-	message(FATAL_ERROR "genhtml not found! Aborting...")
-endif() # NOT GENHTML_PATH
-
 # Reset coverage
 add_custom_target(coverage_clear
 	# Cleanup lcov
@@ -142,7 +142,7 @@ add_custom_target(coverage_clear
 # Setup target
 add_custom_target(coverage_report
 	# Create baselines to make sure untouched files show up in the report
-	COMMAND ${LCOV_PATH} -c -i -d ${CMAKE_SOURCE_DIR} -o coverage_report.base
+	COMMAND ${LCOV_PATH} -c -i -d "\"${CMAKE_SOURCE_DIR}\"" -o coverage_report.base
 	# Capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} --directory . --capture 
 	--output-file coverage_report.info
@@ -157,7 +157,7 @@ add_custom_target(coverage_report
 		-e coverage_report.total "\"${CMAKE_SOURCE_DIR}/*\""
 		--output-file coverage_report.info.cleaned
 	COMMAND ${GENHTML_PATH} 
-		-o coverage_report ${PROJECT_BINARY_DIR}/coverage_report.info.cleaned
+		-o coverage_report "\"${PROJECT_BINARY_DIR}/coverage_report.info.cleaned\""
 	COMMAND ${CMAKE_COMMAND} -E remove coverage_report.base
 		coverage_report.info coverage_report.all coverage_report.total
 		${PROJECT_BINARY_DIR}/coverage_report.info.cleaned
