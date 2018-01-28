@@ -142,7 +142,8 @@ add_custom_target(coverage_clear
 # Setup target
 add_custom_target(coverage_report
 	# Create baselines to make sure untouched files show up in the report
-	COMMAND ${LCOV_PATH} -q -c -i -d "\"${CMAKE_SOURCE_DIR}\"" -o coverage_report.base
+	COMMAND ${LCOV_PATH} -q -c -i -d 
+		"\"${CMAKE_SOURCE_DIR}\"" -o coverage_report.base
 	# Capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} -q --directory . --capture 
 	--output-file coverage_report.info
