@@ -14,47 +14,15 @@ if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "genhtml not available...")
 endif()
 
-set(COVERAGE_COMPILER_FLAGS "--coverage"
-	CACHE INTERNAL "")
-
-set(CMAKE_CXX_FLAGS_COVERAGE
-	${COVERAGE_COMPILER_FLAGS}
-	CACHE STRING "C++ compiler flags for coverage."
-	FORCE )
-set(CMAKE_C_FLAGS_COVERAGE
-	${COVERAGE_COMPILER_FLAGS}
-	CACHE STRING "C compiler flags for coverage."
-	FORCE )
-set(CMAKE_EXE_LINKER_FLAGS_COVERAGE
-	""
-	CACHE STRING "Exe linker flags for coverage."
-	FORCE )
-set(CMAKE_SHARED_LINKER_FLAGS_COVERAGE
-	""
-	CACHE STRING 
-		"Shared linker flags for coverage."
-	FORCE )
-mark_as_advanced(
-	CMAKE_CXX_FLAGS_COVERAGE
-	CMAKE_C_FLAGS_COVERAGE
-	CMAKE_EXE_LINKER_FLAGS_COVERAGE
-	CMAKE_SHARED_LINKER_FLAGS_COVERAGE )
-
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(FATAL_ERROR 
-		"Code coverage results is only valid with debug builds.")
+		"Code coverage is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
-if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-	link_libraries(gcov)
-else()
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-endif()
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COVERAGE_COMPILER_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILER_FLAGS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 message(STATUS 
-	"Appending code coverage compiler flags: ${COVERAGE_COMPILER_FLAGS}")
+	"Appending code coverage compiler flags: --coverage")
 
 # Reset coverage
 add_custom_target(coverage_clear

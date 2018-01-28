@@ -13,14 +13,14 @@ endif()
 # options
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(WERROR "Make all warnings into errors." OFF)
+option(COVERAGE 
+	"Instrument code with coverage flags. CMAKE_BUILD_TYPE=DEBUG is required."
+	OFF)
 
 # disable building tests if not specified
 if(NOT DEFINED BUILD_TESTING)
 	set(BUILD_TESTING OFF CACHE BOOL "Build tests.")
 endif()
-
-# options
-option(COVERAGE "Instrument code with coverage flags. Debug is required." OFF)
 
 # set base language
 set(PROJECT_LANGUAGES C)
