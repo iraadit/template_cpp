@@ -16,7 +16,7 @@ if(NOT DEFINED BUILD_TESTING)
 endif()
 
 # options
-option(COVERAGE "Instrument code with coverage flags. A debug build is required." OFF)
+option(COVERAGE "Instrument code with coverage flags. Debug is required." OFF)
 
 
 # set base language
@@ -61,7 +61,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # add coverage instrumentation.
 if (COVERAGE)
-  include(CodeCoverage)
+	include(CodeCoverage)
 endif()
 
 # add include directory
