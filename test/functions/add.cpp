@@ -1,13 +1,13 @@
 #include "c_template/functions.h"
 #include <catch.hpp>
 
-SCENARIO("Add two numbers", "[functions]")
+SCENARIO("add two numbers", "[functions]")
 {
-	GIVEN("Two numbers are added.")
+	GIVEN("two numbers are added.")
 	{
 		int r = add(2, 3);
 
-		THEN("Their sum is returned.")
+		THEN("their sum is returned")
 		{
 			REQUIRE(r == 5);
 		}
