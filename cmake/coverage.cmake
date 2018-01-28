@@ -25,7 +25,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	endif()
 else()
 	message(FATAL_ERROR 
-		"Only GCC or Clang are supported when building with coverage.")
+		"Code coverage not supported for current compiler.")
 endif()
 
 find_program(LCOV_PATH lcov)
@@ -56,7 +56,6 @@ add_custom_target(coverage_clear
 
 # setup target
 add_custom_target(coverage_report
-
 	# create baselines to make sure untouched files show up in the report
 	COMMAND ${LCOV_PATH} -q -c -i 
 		--gcov-tool "\"${GCOV_PATH}\""
@@ -89,7 +88,7 @@ add_custom_target(coverage_report
 
 	WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 	DEPENDS ${Coverage_DEPENDENCIES}
-	COMMENT "Handling coverages files and building html report."
+	COMMENT "Generating html report from coverage data."
 )
 
 # show info where to find the report
