@@ -14,11 +14,13 @@ if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "Could not find genhtml.")
 endif()
 
+# coverage is not valid when it is not a debug build
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(FATAL_ERROR 
 		"Code coverage is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
+# add necessary compile flags
 set(CMAKE_EXE_LINKER_FLAGS "--coverage" CACHE INTERNAL "" FORCE)
 add_compile_options(--coverage)
 
@@ -37,7 +39,7 @@ add_custom_target(coverage_report
 
 		# capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} -q --directory . --capture 
-	--output-file coverage_report.info
+		--output-file coverage_report.info
 
 	# add baseline counters
 	COMMAND ${LCOV_PATH} -q 
@@ -48,6 +50,8 @@ add_custom_target(coverage_report
 	COMMAND ${LCOV_PATH} -q
 		-e coverage_report.total "\"${CMAKE_SOURCE_DIR}/*\""
 		--output-file coverage_report.info.cleaned
+
+	# generate html report and remove intermediate reports.
 	COMMAND ${GENHTML_PATH} 
 		-o coverage_report coverage_report.info.cleaned
 	COMMAND ${CMAKE_COMMAND} -E remove coverage_report.base
