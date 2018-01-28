@@ -1,6 +1,6 @@
 # find clang-tidy
 find_program(CLANG_TIDY_PATH
-	clang-tidy
+	NAMES clang-tidy clang-tidy-6.0 clang-tidy-5.0
 	DOC "Path to clang-tidy."
 )
 
