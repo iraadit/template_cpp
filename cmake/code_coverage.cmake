@@ -14,7 +14,7 @@ if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "genhtml not available...")
 endif()
 
-set(COVERAGE_COMPILER_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage"
+set(COVERAGE_COMPILER_FLAGS "--coverage"
 	CACHE INTERNAL "")
 
 set(CMAKE_CXX_FLAGS_COVERAGE
