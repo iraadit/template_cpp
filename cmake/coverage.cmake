@@ -13,7 +13,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
 	# wrap llvm-cov to have behaviour like gcov.
 	file(WRITE "${GCOV_PATH}" 
-		"#!/bin/bash\nexec ${LLVM_COV_PATH} gcov \"$@\"")
+		"#!/bin/bash\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
 	execute_process(COMMAND chmod +x ${GCOV_PATH})
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	find_program(GCOV_PATH gcov)
