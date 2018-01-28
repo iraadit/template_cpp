@@ -20,7 +20,8 @@ BraceWrapping:
   AfterObjCDeclaration: true
   AfterStruct: true
   AfterUnion: true
-  AfterExternBlock: false
+# requires clang-format >= 6
+#  AfterExternBlock: false
   BeforeCatch: false
   BeforeElse: false
   IndentBraces: false

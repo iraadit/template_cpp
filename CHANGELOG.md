@@ -2,6 +2,16 @@
 
 Reverse chronologically sorted, i.e. newest on top.
 
+View the commit history for minor fixes and improvements, only important changes
+are listed below.
+
+## 1.2.0 / unreleased
+
+* support stable clang-format which is currently 5
+* add CLANG\_TIDY flag that will check on make
+* add WERROR flag that will turn warnings into errors
+* disable modernize-deprecated-headers which is buggy with extern C blocks
+
 ## 1.1.0 / 2017-11-27
 
 Donald Knuth
