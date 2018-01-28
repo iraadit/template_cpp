@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <c_template/functions.h>
+#include <c_template/functions_two.h>
 
 int main(int argc, char **argv)
 {
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	}
 
 	/* use external function to return */
-	printf("3 + 2 = %u\n", add(3, 2));
+	printf("3 - 2 = %i\n", subtract(3, 2));
 
 	return 0;
 }
