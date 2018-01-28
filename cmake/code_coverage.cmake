@@ -14,15 +14,6 @@ if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "genhtml not available...")
 endif()
 
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
-	if("${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS 3)
-		message(FATAL_ERROR "Clang 3.0.0 < is required...")
-	endif()
-elseif(NOT "${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" 
-	AND NOT "${CMAKE_C_COMPILER_ID}" MATCHES "GNU")
-	message(FATAL_ERROR "Compiler is not GNU." )
-endif()
-
 set(COVERAGE_COMPILER_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage"
 	CACHE INTERNAL "")
 
