@@ -1,19 +1,22 @@
-# find coverage tools, gcov is for GCC and llvm-cov for clang.
-# llvm-cov has to wrapped with the gcov option.
+# find coverage tools, gcov is for GCC and llvm-cov for clang
+# llvm-cov has to wrapped with the gcov option
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	find_program(LLVM_COV_PATH
 		NAMES llvm-cov llvm-cov-6.0 llvm-cov-5.0
 		DOC "Path to llvm-cov"
 	)
+
 	if(NOT LLVM_COV_PATH)
 		message(FATAL_ERROR "Could not find llvm-cov.")
 	endif()
 
 	set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
 
-	# wrap llvm-cov to have behaviour like gcov.
+	# wrap llvm-cov to have behaviour like gcov
+
 	file(WRITE "${GCOV_PATH}" 
-		"#!/bin/bash\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
+		"#!/bin/sh\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
+
 	execute_process(COMMAND chmod +x ${GCOV_PATH})
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	find_program(GCOV_PATH gcov)
