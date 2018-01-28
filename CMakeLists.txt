@@ -14,7 +14,7 @@ endif()
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(WERROR "Make all warnings into errors." OFF)
 option(COVERAGE 
-	"Instrument code with coverage flags. CMAKE_BUILD_TYPE=DEBUG is required."
+	"Instrument code with coverage flags."
 	OFF)
 
 # disable building tests if not specified
@@ -65,13 +65,13 @@ endif()
 # create compilation database
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# add coverage instrumentation.
+# add include directory
+include_directories(BEFORE include)
+
+# add coverage instrumentation
 if (COVERAGE)
 	include(code_coverage)
 endif()
-
-# add include directory
-include_directories(BEFORE include)
 
 # clang-tidy
 if(CLANG_TIDY)
