@@ -13,6 +13,7 @@ endif()
 # options
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(WERROR "Make all warnings into errors." OFF)
+option(COVERAGE "Instrument code with coverage flags." OFF)
 
 # disable building tests if not specified
 if(NOT DEFINED BUILD_TESTING)
@@ -35,7 +36,7 @@ project(c_template VERSION 1.1.0 LANGUAGES ${PROJECT_LANGUAGES})
 
 # abort if compilers differ
 if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
-	message(FATAL_ERROR "c and c++ compillers differ")
+	message(FATAL_ERROR "c and c++ compilers differ")
 endif()
 
 # set standards to c11 and c++17
@@ -64,6 +65,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # add include directory
 include_directories(BEFORE include)
+
+# add coverage instrumentation
+if(COVERAGE)
+	include(coverage)
+endif()
 
 # clang-tidy
 if(CLANG_TIDY)

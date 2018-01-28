@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <c_template/functions.h>
+#include <c_template/subtract.h>
 
 int main(int argc, char **argv)
 {
@@ -23,5 +23,7 @@ int main(int argc, char **argv)
 	}
 
 	/* use external function to return */
-	return return_zero();
+	printf("3 - 2 = %i\n", subtract(3, 2));
+
+	return 0;
 }
