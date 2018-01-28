@@ -1,4 +1,4 @@
-Checks: '*,-google-readability-namespace-comments,-llvm-header-guard,-llvm-namespace-comment,-modernize-deprecated-headers'
+Checks: '*,-google-readability-namespace-comments,-hicpp-deprecated-headers,-llvm-header-guard,-llvm-namespace-comment,-modernize-deprecated-headers'
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: false
