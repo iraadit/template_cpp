@@ -18,7 +18,6 @@ endif()
 # options
 option(COVERAGE "Instrument code with coverage flags. Debug is required." OFF)
 
-
 # set base language
 set(PROJECT_LANGUAGES C)
 
@@ -61,7 +60,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # add coverage instrumentation.
 if (COVERAGE)
-	include(CodeCoverage)
+	include(code_coverage)
 endif()
 
 # add include directory
@@ -75,5 +74,3 @@ if(BUILD_TESTING)
 	enable_testing()
 	add_subdirectory(test)
 endif()
-
-message(STATUS "${CMAKE_CURRENT_BINARY_DIR}")

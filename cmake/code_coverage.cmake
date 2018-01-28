@@ -1,20 +1,18 @@
 # Check prereqs
-find_program(GCOV_PATH gcov )
-find_program(LCOV_PATH  NAMES lcov lcov.bat lcov.exe lcov.perl)
-find_program(GENHTML_PATH NAMES genhtml genhtml.perl genhtml.bat )
-
-# Check for necessary utilities
+find_program(GCOV_PATH gcov)
 if(NOT GCOV_PATH)
 	message(FATAL_ERROR "gcov not available...")
-endif() # NOT GCOV_PATH
+endif()
 
+find_program(LCOV_PATH lcov)
 if(NOT LCOV_PATH)
 	message(FATAL_ERROR "lcov not available...")
-endif() # NOT LCOV_PATH
+endif()
 
+find_program(GENHTML_PATH genhtml)
 if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "genhtml not available...")
-endif() # NOT GENHTML_PATH
+endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
 	if("${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS 3)
@@ -54,7 +52,7 @@ mark_as_advanced(
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(FATAL_ERROR 
 		"Code coverage results is only valid with debug builds.")
-endif() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
+endif()
 
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	link_libraries(gcov)
