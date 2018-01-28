@@ -1,7 +1,26 @@
-# find coverage tools
-find_program(GCOV_PATH gcov)
-if(NOT GCOV_PATH)
-	message(FATAL_ERROR "Could not find gcov.")
+# find coverage tools, gcov is for GCC and llvm-cov for clang.
+# llvm-cov has to wrapped with the gcov option.
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	find_program(LLVM_COV_PATH
+		NAMES llvm-cov llvm-cov-6.0 llvm-cov-5.0
+		DOC "Path to llvm-cov"
+	)
+	if(NOT LLVM_COV_PATH)
+		message(FATAL_ERROR "Could not find llvm-cov.")
+	endif()
+
+	set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
+
+	# wrap llvm-cov to have behaviour like gcov.
+	file(WRITE "${GCOV_PATH}" 
+		"#!/bin/bash\nexec ${LLVM_COV_PATH} gcov \"$@\"")
+	execute_process(COMMAND chmod +x ${GCOV_PATH})
+	
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	find_program(GCOV_PATH gcov)
+	if(NOT GCOV_PATH)
+		message(FATAL_ERROR "Could not find gcov.")
+	endif()
 endif()
 
 find_program(LCOV_PATH lcov)
@@ -34,20 +53,25 @@ add_custom_target(coverage_clear
 add_custom_target(coverage_report
 
 	# create baselines to make sure untouched files show up in the report
-	COMMAND ${LCOV_PATH} -q -c -i -d 
-		. -o coverage_report.base
+	COMMAND ${LCOV_PATH} -q -c -i 
+		--gcov-tool "\"${GCOV_PATH}\""
+		-d . -o coverage_report.base
 
 	# capturing lcov counters and generating report
-	COMMAND ${LCOV_PATH} -q --directory . --capture 
+	COMMAND ${LCOV_PATH} -q 
+		--gcov-tool "\"${GCOV_PATH}\""
+		--directory . --capture 
 		--output-file coverage_report.info
 
 	# add baseline counters
 	COMMAND ${LCOV_PATH} -q 
+		--gcov-tool "\"${GCOV_PATH}\""
 		-a coverage_report.base -a coverage_report.info
 		--output-file coverage_report.total
 
 	# exclude everything but the project sources
 	COMMAND ${LCOV_PATH} -q
+		--gcov-tool "\"${GCOV_PATH}\""
 		-e coverage_report.total "\"${CMAKE_SOURCE_DIR}/*\""
 		--output-file coverage_report.info.cleaned
 
