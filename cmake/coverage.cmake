@@ -21,6 +21,9 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	if(NOT GCOV_PATH)
 		message(FATAL_ERROR "Could not find gcov.")
 	endif()
+else()
+	message(FATAL_ERROR 
+		"Only GCC or Clang are supported when building with coverage.")
 endif()
 
 find_program(LCOV_PATH lcov)
