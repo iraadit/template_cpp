@@ -11,6 +11,7 @@ apt-get install -y \
 	clang-6.0 \
 	clang-tidy-6.0 \
 	clang-format-6.0 \
-	cppcheck
+	cppcheck \
+	lcov
 
 rm -rf /var/lib/apt/lists/*
