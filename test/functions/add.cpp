@@ -5,7 +5,7 @@ SCENARIO("Add 2 numbers", "[functions]")
 {
 	GIVEN("Returns two numbers added together")
 	{
-		uint8_t r = add(2, 3);
+		int r = add(2, 3);
 
 		THEN("2 + 3 = 5")
 		{

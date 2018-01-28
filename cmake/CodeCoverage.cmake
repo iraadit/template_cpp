@@ -41,6 +41,9 @@
 # 2017-06-02, Lars Bilke
 # - Merged with modified version from github.com/ufz/ogs
 #
+# 2017-01-28, Rowan Goemans
+# - Removed the need to setup targets. Just enable coverage then run your targets the way you like and then create a report.
+#
 #
 # USAGE:
 #
@@ -49,21 +52,13 @@
 # 2. Add the following line to your CMakeLists.txt:
 #      include(CodeCoverage)
 #
-# 3. Append necessary compiler flags:
-#      APPEND_COVERAGE_COMPILER_FLAGS()
-#
-# 4. If you need to exclude additional directories from the report, specify them
-#    using the COVERAGE_EXCLUDES variable before calling SETUP_TARGET_FOR_COVERAGE.
-#    Example:
-#      set(COVERAGE_EXCLUDES 'dir1/*' 'dir2/*')
-#
-# 5. Use the functions described below to create a custom make target which
-#    runs your test executable and produces a code coverage report.
-#
-# 6. Build a Debug build:
+# 3. Build a Debug build, run it and create a report:
 #      cmake -DCMAKE_BUILD_TYPE=Debug ..
-#      make
-#      make my_coverage_target
+#      [Compile and run the targets you want to generated coverage data for,]
+#      make coverage_report
+#
+# 4. Clear out coverage data to allow a clean slate if you want to check a specific target.
+#      make coverage_clear
 #
 
 include(CMakeParseArguments)
@@ -139,6 +134,7 @@ endif() # NOT GENHTML_PATH
 add_custom_target(coverage_clear
   # Cleanup lcov
   COMMAND ${LCOV_PATH} --directory . --zerocounters
+  COMMENT "Resetting code coverage counters to zero."
 )
 
 # Setup target
@@ -159,11 +155,11 @@ add_custom_target(coverage_report
     -e coverage_report.total "\"${CMAKE_SOURCE_DIR}/*\""
     --output-file coverage_report.info.cleaned
   COMMAND ${GENHTML_PATH} -o coverage_report ${PROJECT_BINARY_DIR}/coverage_report.info.cleaned
-  #COMMAND ${CMAKE_COMMAND} -E remove coverage_report.base coverage_report.info coverage_report.all coverage_report.total ${PROJECT_BINARY_DIR}/coverage_report.info.cleaned
+  COMMAND ${CMAKE_COMMAND} -E remove coverage_report.base coverage_report.info coverage_report.all coverage_report.total ${PROJECT_BINARY_DIR}/coverage_report.info.cleaned
 
   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
   DEPENDS ${Coverage_DEPENDENCIES}
-  COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
+  COMMENT "Processing code coverage counters and generating report."
 )
 
 # Show info where to find the report

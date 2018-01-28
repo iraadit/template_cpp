@@ -15,6 +15,10 @@ if(NOT DEFINED BUILD_TESTING)
 	set(BUILD_TESTING OFF CACHE BOOL "Build tests.")
 endif()
 
+# options
+option(COVERAGE "Instrument code with coverage flags. A debug build is required." OFF)
+
+
 # set base language
 set(PROJECT_LANGUAGES C)
 
@@ -55,7 +59,7 @@ endif()
 # create compilation database
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set coverage compiler flags
+# add coverage instrumentation.
 if (COVERAGE)
   include(CodeCoverage)
 endif()
@@ -65,8 +69,6 @@ include_directories(BEFORE include)
 
 # add src directory
 add_subdirectory(src)
-
-# add coverage if coverage flag is set.
 
 # add test directory
 if(BUILD_TESTING)
