@@ -13,9 +13,7 @@ endif()
 # options
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(WERROR "Make all warnings into errors." OFF)
-option(COVERAGE 
-	"Instrument code with coverage flags."
-	OFF)
+option(COVERAGE "Instrument code with coverage flags." OFF)
 
 # disable building tests if not specified
 if(NOT DEFINED BUILD_TESTING)
@@ -69,8 +67,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(BEFORE include)
 
 # add coverage instrumentation
-if (COVERAGE)
-	include(code_coverage)
+if(COVERAGE)
+	include(coverage)
 endif()
 
 # clang-tidy

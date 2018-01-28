@@ -1,17 +1,17 @@
 # check prereqs
 find_program(GCOV_PATH gcov)
 if(NOT GCOV_PATH)
-	message(FATAL_ERROR "gcov not available...")
+	message(FATAL_ERROR "Could not find gcov.")
 endif()
 
 find_program(LCOV_PATH lcov)
 if(NOT LCOV_PATH)
-	message(FATAL_ERROR "lcov not available...")
+	message(FATAL_ERROR "Could not find lcov.")
 endif()
 
 find_program(GENHTML_PATH genhtml)
 if(NOT GENHTML_PATH)
-	message(FATAL_ERROR "genhtml not available...")
+	message(FATAL_ERROR "Could not find genhtml.")
 endif()
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -30,10 +30,12 @@ add_custom_target(coverage_clear
 
 # setup target
 add_custom_target(coverage_report
+
 	# create baselines to make sure untouched files show up in the report
 	COMMAND ${LCOV_PATH} -q -c -i -d 
 		. -o coverage_report.base
-	# capturing lcov counters and generating report
+
+		# capturing lcov counters and generating report
 	COMMAND ${LCOV_PATH} -q --directory . --capture 
 	--output-file coverage_report.info
 

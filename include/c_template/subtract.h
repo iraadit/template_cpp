@@ -11,7 +11,7 @@ extern "C" {
 /// \param a The left hand number to subtract.
 /// \param b The right hand number to subtract.
 /// \return The result of subtracting b from a.
-int subtract(uint8_t a, uint8_t b);
+int16_t subtract(uint8_t a, uint8_t b);
 
 #ifdef __cplusplus
 }

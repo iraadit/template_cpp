@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <c_template/functions_two.h>
+#include <c_template/subtract.h>
 
 int main(int argc, char **argv)
 {

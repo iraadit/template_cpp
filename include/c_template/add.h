@@ -11,7 +11,7 @@ extern "C" {
 /// \param a The left hand number to add.
 /// \param b The right hand number to add.
 /// \return The result of adding a to b.
-int add(uint8_t a, uint8_t b);
+uint16_t add(uint8_t a, uint8_t b);
 
 #ifdef __cplusplus
 }
