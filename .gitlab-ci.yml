@@ -8,18 +8,29 @@ stages:
 variables:
   GIT_SUBMODULE_STRATEGY: normal
 
-analyse:
+clang_tidy:
   stage: analyse
   script:
-    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
     - mkdir build
     - cd build
     - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON
       -DWERROR:BOOL=ON -DBUILD_TESTING:BOOL=ON ..
     - make -j $(nproc)
+
+cppcheck:
+  stage: analyse
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
     - cd ..
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
+
+line_limit:
+  stage: analyse
+  script:
+    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
 
 build:clang:
   stage: build
