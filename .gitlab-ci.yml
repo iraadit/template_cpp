@@ -14,9 +14,10 @@ analyse:
     - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON
+      -DWERROR:BOOL=ON -DBUILD_TESTING:BOOL=ON ..
+    - make
     - cd ..
-    - clang-tidy-6.0 -p=build -warnings-as-errors='*' src/*.c
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
 
