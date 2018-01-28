@@ -17,7 +17,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	file(WRITE "${GCOV_PATH}" 
 		"#!/bin/sh\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
 
-	execute_process(COMMAND chmod +x ${GCOV_PATH})
+	execute_process(COMMAND chmod +x "${GCOV_PATH}")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	find_program(GCOV_PATH gcov)
 	if(NOT GCOV_PATH)
@@ -48,10 +48,10 @@ endif()
 set(CMAKE_EXE_LINKER_FLAGS "--coverage" CACHE INTERNAL "" FORCE)
 add_compile_options(--coverage)
 
-# clear coverage
+# Resets coverage counters.
 add_custom_target(coverage_clear
 	COMMAND ${LCOV_PATH} --directory . --zerocounters
-	COMMENT "Clearing coverage."
+	COMMENT "Resetting coverage counters."
 )
 
 # setup target
