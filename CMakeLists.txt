@@ -10,6 +10,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+# options
+option(CLANG_TIDY "Check code with clang-tidy." OFF)
+option(WERROR "Make all warnings into errors." OFF)
+
 # disable building tests if not specified
 if(NOT DEFINED BUILD_TESTING)
 	set(BUILD_TESTING OFF CACHE BOOL "Build tests.")
@@ -51,6 +55,9 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR
 		CMAKE_C_COMPILER_ID STREQUAL "GNU")
 	add_compile_options(-Wall -Wextra -Wconversion)
+	if(WERROR)
+		add_compile_options(-Werror)
+	endif()
 else()
 	message(WARNING "warning flags not supported for current compiler")
 endif()
@@ -65,6 +72,11 @@ endif()
 
 # add include directory
 include_directories(BEFORE include)
+
+# clang-tidy
+if(CLANG_TIDY)
+	include(clang_tidy)
+endif()
 
 # add src directory
 add_subdirectory(src)

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /// \brief Add 2 numbers together
 /// 
