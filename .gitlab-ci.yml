@@ -37,7 +37,7 @@ doxygen:
   script:
     - mkdir build
     - cd build
-    - cmake -DDOC=doxygen ..
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen ..
     - make doc
 
 build:clang:
@@ -67,6 +67,7 @@ test:clang:
 
 test:gcc:
   stage: test
+  coverage: '/^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$/'
   script:
     - mkdir build
     - cd build
@@ -75,11 +76,33 @@ test:gcc:
     - make -j $(nproc)
     - make test
     - make coverage_report
+  artifacts:
+    paths:
+      - build/coverage_report
 
 html:
   stage: doc
+  dependencies: []
   script:
     - mkdir build
     - cd build
-    - cmake -DDOC=html ../
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=html ..
     - make doc
+  artifacts:
+    paths:
+      - build/doc/html
+
+pages:
+  stage: deploy
+  dependencies:
+    - test:gcc
+    - html
+# TODO enable before mering
+#  only:
+#    - master
+  script:
+    - mv build/doc/html public
+    - mv build/coverage_report public/coverage
+  artifacts:
+    paths:
+      - public
