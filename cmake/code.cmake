@@ -41,5 +41,6 @@ add_subdirectory(src)
 # add test directory
 if(${TEST})
 	enable_testing()
+	include(catch)
 	add_subdirectory(test)
 endif()

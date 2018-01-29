@@ -14,8 +14,8 @@ clang_tidy:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON
-      -DWERROR:BOOL=ON -DTEST:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON -DTEST:BOOL=ON
+      -DWERROR:BOOL=ON ..
     - make -j $(nproc)
 
 cppcheck:
@@ -24,7 +24,7 @@ cppcheck:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
+    - cmake ..
     - cd ..
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
@@ -50,19 +50,17 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON
-      -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
-    - make coverage_report
 
 test:gcc:
   stage: test
   script:
     - mkdir build
     - cd build
-    - CC=gcc CXX=g++ cmake -DTEST:BOOL=ON
-      -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
+    - CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON
+      -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
     - make coverage_report

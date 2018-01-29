@@ -1,5 +1,5 @@
-#include "c_template/add.h"
-#include <catch.hpp>
+#include <c_template/add.h>
+#include <catch/catch.hpp>
 
 SCENARIO("add two numbers", "[add]")
 {
