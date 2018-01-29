@@ -48,6 +48,7 @@ if(${CODE})
 	include(code)
 elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${TEST} OR ${WERROR})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
+endif()
 
 # doc
 if(NOT DOC STREQUAL "OFF")
