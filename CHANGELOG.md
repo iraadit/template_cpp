@@ -7,6 +7,8 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* building code is optional so there is no hard dependency on a compiler
+* do not prevent mixing C and C++ compilers
 * supply the regex for gitlab CI coverage in documentation
 * remove ci/style/line\_limit.sh in favour of clang-format
 * added support for coverage by using gcov, lcov and llvm-cov
