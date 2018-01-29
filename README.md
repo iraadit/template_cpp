@@ -30,8 +30,12 @@ Released into the public domain so you don't have to bother with crediting this.
 
 * [Catch2](https://github.com/catchorg/Catch2)
   * easy-to-use header-only unit testing framework
+* [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html)
+  * instrument code for coverage, with freedom
+* [llvm-cov](https://llvm.org/docs/CommandGuide/llvm-cov.html)
+  * like gcov, but with less enforced freedom
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
-  * generate beautiful coverage html reports
+  * generate beautiful html-based coverage reports
 
 ## CI CD
 
