@@ -12,8 +12,7 @@ SCENARIO("Polymorphic classes", "[inheritance]")
 		REQUIRE(der);
 
 		WHEN("derived class is cast to base.") {
-			auto base =
-				std::dynamic_pointer_cast<::base>(der);
+			auto base = std::dynamic_pointer_cast<::base>(der);
 
 			THEN("the abstract base can be used.") {
 				REQUIRE(base);
