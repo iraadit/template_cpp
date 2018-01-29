@@ -1,24 +1,24 @@
-PROJECT_NAME            =   "@PROJECT_NAME@"
-PROJECT_NUMBER          =   @PROJECT_VERSION@
-STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
-INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
-                            "@CMAKE_SOURCE_DIR@/include"
+CLASS_DIAGRAMS          =   NO
+EXTRACT_ALL             =   NO
+EXTRACT_LOCAL_CLASSES   =   YES
+EXTRACT_PACKAGE         =   YES
+EXTRACT_PRIVATE         =   YES
+EXTRACT_STATIC          =   YES
 FILE_PATTERNS           =   *.hpp \
                             *.h \
                             *.dox
 GENERATE_HTML           =   @DOXY_BUILD_HTML@
-GENERATE_XML            =   @DOXY_BUILD_XML@
 GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
-RECURSIVE               =   YES
-CLASS_DIAGRAMS          =   NO
+GENERATE_XML            =   @DOXY_BUILD_XML@
+HAVE_DOT                =   NO
 HIDE_UNDOC_RELATIONS    =   NO
-EXTRACT_ALL             =   NO
-EXTRACT_PRIVATE         =   YES
-EXTRACT_STATIC          =   YES
-EXTRACT_PACKAGE         =   YES
-EXTRACT_LOCAL_CLASSES   =   YES
+INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
+                            "@CMAKE_SOURCE_DIR@/include"
+OUTPUT_DIRECTORY        =   "@DOXYDIR@"
+PROJECT_NAME            =   "@PROJECT_NAME@"
+PROJECT_NUMBER          =   @PROJECT_VERSION@
+RECURSIVE               =   YES
+STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
+WARN_AS_ERROR           =   @DOXY_WARN_AS_ERR@
 WARN_IF_UNDOCUMENTED    =   YES
 WARN_NO_PARAMDOC        =   YES
-
-# only warn as error when html is build
-WARN_AS_ERROR           =   @DOXY_BUILD_HTML_ONLY@

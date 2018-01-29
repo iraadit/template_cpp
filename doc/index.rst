@@ -1,3 +1,6 @@
+Home
+====
+
 .. toctree::
    :maxdepth: 2
    :caption: Table of Contents
@@ -5,8 +8,5 @@
    :glob:
 
    api/index.rst
-
-Home
-====
 
 This is sphinx documentation with Doxygen integration.

@@ -31,6 +31,15 @@ cppcheck:
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
 
+doxygen:
+  stage: analyse
+  allow_failure: true
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DDOC=doxygen ..
+    - make doc
+
 build:clang:
   stage: build
   script:
