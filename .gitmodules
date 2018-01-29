@@ -4,6 +4,3 @@
 [submodule "ci/docker"]
 	path = ci/docker
 	url = ../../cicd/docker.git
-[submodule "ci/style"]
-	path = ci/style
-	url = ../../cicd/style.git

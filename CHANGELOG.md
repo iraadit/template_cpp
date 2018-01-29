@@ -7,8 +7,9 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* remove ci/style/line\_limit.sh in favour of clang-format
+* added support for coverage by using gcov, lcov and llvm-cov
 * jobs in the analyse stage will warn instead of failing the build
-* added support for coverage by using gcov, lcov and llvm-cov.
 * support stable clang-format which is currently 5
 * add CLANG\_TIDY flag that will check on make
 * add WERROR flag that will turn warnings into errors
