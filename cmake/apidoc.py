@@ -11,7 +11,7 @@ http://www.sat.qc.ca/
 :copyright: Originally by Sphinx Team, C++ modifications by Tatsuyuki Ishi
 :license: BSD, see LICENSE for details.
 
-Modified by Rowan Goemans to allow add parameters to the documentation.
+Modified by Rowan Goemans to add more breathe parameters to the documentation.
 And generate a index.rst with a toctree
 """
 from __future__ import print_function

@@ -5,8 +5,8 @@ set(DOXYDIR ${CMAKE_BINARY_DIR}/doxygen)
 set(DOXYFILE ${DOXYDIR}/Doxyfile)
 set(DOXY_TARGET_NAME "_xml_doxygen")
 
-set(DOXY_BUILD_HTML	"YES")
-set(DOXY_BUILD_XML	"YES")
+set(DOXY_BUILD_HTML "YES")
+set(DOXY_BUILD_XML "YES")
 set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
 
@@ -15,8 +15,8 @@ set(DOXY_WARN_AS_ERR "NO")
 # coverage.
 if(DOC MATCHES "doxygen")
 	set(DOXY_TARGET_NAME "doc")
-	set(DOXY_BUILD_HTML	"YES")
-	set(DOXY_BUILD_XML	"NO")
+	set(DOXY_BUILD_HTML "YES")
+	set(DOXY_BUILD_XML "NO")
 	set(DOXY_BUILD_LATEX "NO")
 	set(DOXY_WARN_AS_ERR "YES")
 endif()
@@ -42,10 +42,10 @@ if(NOT DOC MATCHES "doxygen")
 	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
 
-	set(doc_dir ${CMAKE_BINARY_DIR}/tmp)
+	set(DOC_TMP_DIR ${CMAKE_BINARY_DIR}/tmp)
 
-	file(WRITE ${CMAKE_BINARY_DIR}/copy_doc.cmake
-		"file( COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${doc_dir})")
+	file(WRITE ${DOC_TMP_DIR}/copy_doc.cmake
+		"file( COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${DOC_TMP_DIR})")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
@@ -54,16 +54,15 @@ if(NOT DOC MATCHES "doxygen")
 	)
 
 	add_custom_target(_copy_doc
-		COMMAND ${CMAKE_COMMAND} -P "${CMAKE_BINARY_DIR}/copy_doc.cmake"
+		COMMAND ${CMAKE_COMMAND} -P "${DOC_TMP_DIR}/copy_doc.cmake"
 		DEPENDS ${DOXY_TARGET_NAME}
 		COMMENT "Copying doc to build for postprocessing."
 	)
 
 	add_custom_target(_postprocess_doc
 		COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/cmake/apidoc.py"
-		-f -i -g group
-		-g struct,union,namespace,file,interface,class
-		-o "${doc_dir}/doc/api"
+		-f -i -g group,struct,union,namespace,file,interface,class
+		-o "${DOC_TMP_DIR}/doc/api"
 		"${DOXYDIR}/xml"
 		DEPENDS _copy_doc
 		COMMENT "Generating rst from doxygen xml."
@@ -71,7 +70,7 @@ if(NOT DOC MATCHES "doxygen")
 
 	add_custom_target(doc
 		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
-		"${doc_dir}/doc" "${CMAKE_BINARY_DIR}/doc"
+		"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
 		-c "${CMAKE_BINARY_DIR}/doc"
 		DEPENDS _postprocess_doc
 		COMMENT "Generating sphinx ${DOC} documentation."
