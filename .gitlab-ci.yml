@@ -64,6 +64,7 @@ test:clang:
     - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
+    - make coverage_report
 
 test:gcc:
   stage: test
