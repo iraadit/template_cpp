@@ -1,3 +1,6 @@
+# add subdirectories
+add_subdirectory(inheritance)
+
 # build code as object library for easier linking to tests
 add_library(c_template OBJECT
 	add.c

@@ -10,7 +10,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-# documentation flag.
+# documentation flag
 if (NOT DOC)
 	set(DOC OFF CACHE STRING
 		"The documentationtation target to build" FORCE)
@@ -38,7 +38,10 @@ else()
 endif()
 
 # declare project
-project(c_template VERSION 1.1.0 LANGUAGES ${PROJECT_LANGUAGES})
+project("C/C++ Template" VERSION 1.1.0 LANGUAGES ${PROJECT_LANGUAGES})
+set(PROJECT_AUTHOR "Melvin Vermeeren")
+set(PROJECT_MAIL "mail@mel.vin")
+set(PROJECT_COPYRIGHT "2018, Melvin Vermeeren")
 
 # abort if compilers differ
 if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))

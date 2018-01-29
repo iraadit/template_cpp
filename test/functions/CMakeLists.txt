@@ -5,4 +5,4 @@ add_executable(test_functions
 	$<TARGET_OBJECTS:c_template>)
 
 # add executable to test list
-add_test(functions test_functions)
+add_test(inheritance test_functions)
