@@ -72,7 +72,7 @@ test:gcc:
     - make test
     - make coverage_report
 
-sphinx:html:
+html:
   stage: doc
   script:
     - mkdir build
