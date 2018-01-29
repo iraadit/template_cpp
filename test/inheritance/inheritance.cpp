@@ -1,6 +1,6 @@
 #include "c_template/base.hpp"
 #include "c_template/inheritance/derived.hpp"
-#include <catch.hpp>
+#include <catch/catch.hpp>
 
 #include <memory>
 
