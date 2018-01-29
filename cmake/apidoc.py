@@ -91,17 +91,21 @@ TYPEDICT = {
 	}
 }
 
+def q_print(txt, args):
+	if args.quiet == False:
+		print(txt)
+
 
 def write_file(name, text, args):
 	"""Write the output file for module/package <name>."""
 	fname = os.path.join(args.destdir, '%s.%s' % (name, args.suffix))
 	if args.dryrun:
-		print('Would create file %s.' % fname)
+		q_print('Would create file %s.' % fname, args)
 		return
 	if not args.force and os.path.isfile(fname):
-		print('File %s already exists, skipping.' % fname)
+		q_print('File %s already exists, skipping.' % fname, args)
 	else:
-		print('Creating file %s.' % fname)
+		q_print('Creating file %s.' % fname, args)
 		if not os.path.exists(os.path.dirname(fname)):
 			try:
 				os.makedirs(os.path.dirname(fname))
@@ -112,7 +116,7 @@ def write_file(name, text, args):
 			with open(fname, 'r') as target:
 				orig = target.read()
 				if orig == text:
-					print('File %s up to date, skipping.' % fname)
+					q_print('File %s up to date, skipping.' % fname, args)
 					return
 		except FileNotFoundError:
 			# Don't mind if it isn't there
@@ -218,6 +222,8 @@ def main():
 		dest='force', help='Overwrite existing files')
 	parser.add_argument('-i', '--index', action='store_true',
 		dest='index', help='Generate index.rst for easy inclusion')
+	parser.add_argument('-q', '--quiet', action='store_true',
+		dest='quiet', help='no output except for warnings and errors')
 	parser.add_argument('-n', '--dry-run', action='store_true',
 		dest='dryrun', help='Run the script without creating files')
 	parser.add_argument('-T', '--no-toc', action='store_true',
