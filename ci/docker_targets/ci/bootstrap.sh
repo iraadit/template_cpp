@@ -12,6 +12,11 @@ apt-get install -y \
 	cppcheck \
 	gcc \
 	g++ \
-	lcov
+	lcov \
+	graphviz \
+	python-sphinx \
+	doxygen
+
+pip install breathe
 
 rm -rf /var/lib/apt/lists/*
