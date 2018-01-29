@@ -7,6 +7,7 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* remove the catch submodule as it is a regular system dependency
 * building code is optional so there is no hard dependency on a compiler
 * do not prevent mixing C and C++ compilers
 * supply the regex for gitlab CI coverage in documentation
