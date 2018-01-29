@@ -32,6 +32,13 @@ if(${DOC} STREQUAL "doxygen")
 		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
 		COMMENT "Generating API documentation with DoxyGen"
 	)
+
+	# show info where to find the report
+	add_custom_command(TARGET doc POST_BUILD
+		COMMAND ;
+		COMMENT "Doxygen HTML documentation is available \
+at ${DOXYDIR}/html/index.html")
+
 else()
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
@@ -58,7 +65,7 @@ else()
 
 		# convert doxygen xml to rst files
 		COMMAND ${PYTHON_EXECUTABLE}
-			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i
+			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i -q
 			-g group,struct,union,namespace,file,interface,class
 			-o "${DOC_TMP_DIR}/doc/api"
 			"${DOXYDIR}/xml"
@@ -66,7 +73,14 @@ else()
 		# build sphinx documentation
 		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
 			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
-			-c "${CMAKE_BINARY_DIR}/doc"
+			-c "${CMAKE_BINARY_DIR}/doc" -q
 		COMMENT "Generating sphinx ${DOC} documentation."
 	)
+
+	if(NOT ${DOC} STREQUAL "help")
+		add_custom_command(TARGET doc POST_BUILD
+			COMMAND ;
+			COMMENT "Sphinx ${DOC} documentation is available \
+at ${CMAKE_BINARY_DIR}/doc/html/index.html")
+			endif()
 endif()

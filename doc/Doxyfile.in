@@ -17,6 +17,7 @@ INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
 OUTPUT_DIRECTORY        =   "@DOXYDIR@"
 PROJECT_NAME            =   "@PROJECT_NAME@"
 PROJECT_NUMBER          =   @PROJECT_VERSION@
+QUIET                   =   YES
 RECURSIVE               =   YES
 STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
 WARN_AS_ERROR           =   @DOXY_WARN_AS_ERR@
