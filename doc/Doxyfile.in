@@ -6,9 +6,9 @@ INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
 FILE_PATTERNS           =   *.hpp \
                             *.h \
                             *.dox
-GENERATE_XML            =   YES
-GENERATE_LATEX          =   NO
-GENERATE_HTML           =   YES
+GENERATE_HTML           =   @DOXY_BUILD_HTML@
+GENERATE_XML            =   @DOXY_BUILD_XML@
+GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
 RECURSIVE               =   YES
 CLASS_DIAGRAMS          =   NO
 HIDE_UNDOC_RELATIONS    =   NO
@@ -19,4 +19,6 @@ EXTRACT_PACKAGE         =   YES
 EXTRACT_LOCAL_CLASSES   =   YES
 WARN_IF_UNDOCUMENTED    =   YES
 WARN_NO_PARAMDOC        =   YES
-WARN_AS_ERROR           =   YES
+
+# only warn as error when html is build
+WARN_AS_ERROR           =   @DOXY_BUILD_HTML_ONLY@

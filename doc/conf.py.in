@@ -34,7 +34,7 @@ sys.path.append("@PY_BREATHE@")
 extensions = ['sphinx.ext.todo', 'breathe']
 
 # breathe configuration
-breathe_projects = {"@CMAKE_PROJECT_NAME@": "@doxydir@/xml" }
+breathe_projects = {"@CMAKE_PROJECT_NAME@": "@DOXYDIR@/xml" }
 breathe_default_project = "@CMAKE_PROJECT_NAME@"
 
 # Add any paths that contain templates here, relative to this directory.

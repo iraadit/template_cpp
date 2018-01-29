@@ -13,7 +13,7 @@ endif()
 # documentation flag
 if (NOT DOC)
 	set(DOC OFF CACHE STRING
-		"The documentation type to generate. \"help\" for types. FORCE)
+		"The documentation type to generate. \"help\" for types." FORCE)
 endif()
 
 # options
