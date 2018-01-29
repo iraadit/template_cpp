@@ -53,7 +53,7 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DBUILD_TESTING:BOOL=ON 
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DBUILD_TESTING:BOOL=ON
       -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
     - make -j $(nproc)
     - make test
@@ -64,7 +64,7 @@ test:gcc:
   script:
     - mkdir build
     - cd build
-    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON 
+    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON
       -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
     - make -j $(nproc)
     - make test
