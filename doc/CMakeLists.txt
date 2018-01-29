@@ -3,17 +3,16 @@ find_package(Doxygen REQUIRED)
 
 set(DOXYDIR ${CMAKE_BINARY_DIR}/doxygen)
 set(DOXYFILE ${DOXYDIR}/Doxyfile)
-set(DOXY_TARGET_NAME "_xml_doxygen")
-
+# due to a bug in doxygen HTML has to be enabled for xml to work
 set(DOXY_BUILD_HTML "YES")
 set(DOXY_BUILD_XML "YES")
 set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
 
-# if doxygen is speficied only doxygen html output is generated.
-# This also enables warning as erros to verify complete doxygen
+# if doxygen is specified only doxygen html output is generated.
+# This also enables warning as errors to verify complete doxygen
 # coverage.
-if(DOC MATCHES "doxygen")
+if(${DOC} STREQUAL "doxygen")
 	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
@@ -21,22 +20,19 @@ if(DOC MATCHES "doxygen")
 	set(DOXY_WARN_AS_ERR "YES")
 endif()
 
-
 configure_file(
 	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
 	"${DOXYFILE}"
 	@ONLY
 )
 
-add_custom_target(
-	${DOXY_TARGET_NAME}
-	COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
-	WORKING_DIRECTORY ${DOXYDIR}
-	COMMENT "Generating API documentation with DoxyGen"
-)
-
-
-if(NOT DOC MATCHES "doxygen")
+if(${DOC} STREQUAL "doxygen")
+	add_custom_target(
+		doc
+		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
+		COMMENT "Generating API documentation with DoxyGen"
+	)
+else()
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
 	find_python_module(sphinx REQUIRED)
@@ -53,37 +49,24 @@ if(NOT DOC MATCHES "doxygen")
 		@ONLY
 	)
 
-	add_custom_target(_copy_doc
-		COMMAND ${CMAKE_COMMAND} -P "${DOC_TMP_DIR}/copy_doc.cmake"
-		DEPENDS ${DOXY_TARGET_NAME}
-		COMMENT "Copying doc to build for postprocessing."
-	)
-
-	add_custom_target(_postprocess_doc
-		COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/cmake/apidoc.py"
-		-f -i -g group,struct,union,namespace,file,interface,class
-		-o "${DOC_TMP_DIR}/doc/api"
-		"${DOXYDIR}/xml"
-		DEPENDS _copy_doc
-		COMMENT "Generating rst from doxygen xml."
-	)
-
 	add_custom_target(doc
+		# generate doxygen xml
+		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
+
+		# copy src doc to tmp director
+		COMMAND ${CMAKE_COMMAND} -P "${DOC_TMP_DIR}/copy_doc.cmake"
+
+		# convert doxygen xml to rst files
+		COMMAND ${PYTHON_EXECUTABLE}
+			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i
+			-g group,struct,union,namespace,file,interface,class
+			-o "${DOC_TMP_DIR}/doc/api"
+			"${DOXYDIR}/xml"
+
+		# build sphinx documentation
 		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
-		"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
-		-c "${CMAKE_BINARY_DIR}/doc"
-		DEPENDS _postprocess_doc
+			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
+			-c "${CMAKE_BINARY_DIR}/doc"
 		COMMENT "Generating sphinx ${DOC} documentation."
 	)
-
-	unset(doc_dir)
-
 endif()
-
-unset(DOXYDIR)
-unset(DOXYFILE)
-unset(DOXY_TARGET_NAME)
-unset(DOXY_BUILD_HTML)
-unset(DOXY_BUILD_XML)
-unset(DOXY_BUILD_LATEX)
-unset(DOXY_WARN_AS_ERR)

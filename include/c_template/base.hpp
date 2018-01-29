@@ -18,7 +18,7 @@ public:
 
 	/**
 	 * \brief Default copy constructor.
-	 * \param b cool
+	 * \param b
 	 */
 	base(const base& b) = default;
 
