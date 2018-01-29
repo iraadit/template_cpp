@@ -14,7 +14,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
 	# wrap llvm-cov to have behaviour like gcov
 
-	file(WRITE "${GCOV_PATH}" 
+	file(WRITE "${GCOV_PATH}"
 		"#!/bin/sh\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
 
 	execute_process(COMMAND chmod +x "${GCOV_PATH}")
@@ -24,7 +24,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 		message(FATAL_ERROR "Could not find gcov.")
 	endif()
 else()
-	message(FATAL_ERROR 
+	message(FATAL_ERROR
 		"Code coverage not supported for current compiler.")
 endif()
 
@@ -40,7 +40,7 @@ endif()
 
 # coverage is not valid when it is not a debug build
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-	message(FATAL_ERROR 
+	message(FATAL_ERROR
 		"Code coverage is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
@@ -51,24 +51,23 @@ add_compile_options(--coverage)
 # Resets coverage counters.
 add_custom_target(coverage_clear
 	COMMAND ${LCOV_PATH} --directory . --zerocounters
-	COMMENT "Resetting coverage counters."
-)
+	COMMENT "Resetting coverage counters.")
 
 # setup target
 add_custom_target(coverage_report
 	# create baselines to make sure untouched files show up in the report
-	COMMAND ${LCOV_PATH} -q -c -i 
+	COMMAND ${LCOV_PATH} -q -c -i
 		--gcov-tool "\"${GCOV_PATH}\""
 		-d . -o coverage_report.base
 
 	# capturing lcov counters and generating report
-	COMMAND ${LCOV_PATH} -q 
+	COMMAND ${LCOV_PATH} -q
 		--gcov-tool "\"${GCOV_PATH}\""
-		--directory . --capture 
+		--directory . --capture
 		--output-file coverage_report.info
 
 	# add baseline counters
-	COMMAND ${LCOV_PATH} -q 
+	COMMAND ${LCOV_PATH} -q
 		--gcov-tool "\"${GCOV_PATH}\""
 		-a coverage_report.base -a coverage_report.info
 		--output-file coverage_report.total
@@ -80,7 +79,7 @@ add_custom_target(coverage_report
 		--output-file coverage_report.info.cleaned
 
 	# generate html report and remove intermediate reports.
-	COMMAND ${GENHTML_PATH} 
+	COMMAND ${GENHTML_PATH}
 		-o coverage_report coverage_report.info.cleaned
 	COMMAND ${CMAKE_COMMAND} -E remove coverage_report.base
 		coverage_report.info coverage_report.all coverage_report.total
@@ -88,11 +87,9 @@ add_custom_target(coverage_report
 
 	WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 	DEPENDS ${Coverage_DEPENDENCIES}
-	COMMENT "Generating html report from coverage data."
-)
+	COMMENT "Generating html report from coverage data.")
 
 # show info where to find the report
 add_custom_command(TARGET coverage_report POST_BUILD
 	COMMAND ;
-	COMMENT "Report is available at ./coverage_report/index.html."
-)
+	COMMENT "Report is available at ./coverage_report/index.html.")
