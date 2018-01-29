@@ -76,9 +76,9 @@ test:gcc:
     - make -j $(nproc)
     - make test
     - make coverage_report
-    artifacts:
-      paths:
-        - build/coverage_report
+  artifacts:
+    paths:
+      - build/coverage_report
 
 html:
   stage: doc
