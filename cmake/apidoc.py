@@ -37,31 +37,57 @@ except NameError:
 TYPEDICT = {
 	'class': {
 		'translation': 'Class',
-		'params': [':members:', ':protected-members:', ':private-members:', ':undoc-members:']
+		'params': [
+			':members:',
+			':protected-members:',
+			':private-members:',
+			':undoc-members:'
+		]
 	},
 	'interface': {
 		'translation': 'Interface',
-		'params': []
+		'params': [
+
+		]
 	},
 	'struct': {
 		'translation': 'Struct',
-		'params': []
+		'params': [
+			':members:',
+			':protected-members:',
+			':private-members:',
+			':undoc-members:'
+		]
 	},
 	'union': {
 		'translation': 'Union',
-		'params': []
+		'params': [
+
+		]
 	},
 	'file': {
 		'translation': 'File',
-		'params': []
+		'params': [
+
+		]
 	},
 	'namespace': {
 		'translation': 'Namespace',
-		'params': []
+		'params': [
+			':members:',
+			':protected-members:',
+			':private-members:',
+			':undoc-members:'
+		]
 	},
 	'group': {
 		'translation': 'Group',
-		'params': []
+		'params': [
+			':members:',
+			':protected-members:',
+			':private-members:',
+			':undoc-members:'
+		]
 	}
 }
 
@@ -117,8 +143,10 @@ def create_package_file(package, package_type, package_id, args):
 	# Skip over types that weren't requested
 	if package_type not in args.outtypes:
 		return
-	text = format_heading(1, '%s %s' % (TYPEDICT[package_type]['translation'], package))
-	text += format_directive(package_type, TYPEDICT[package_type]['params'], package, args.project)
+	text = format_heading(1, '%s %s' %
+		(TYPEDICT[package_type]['translation'], package))
+	text += format_directive(package_type,
+		TYPEDICT[package_type]['params'], package, args.project)
 
 	write_file(os.path.join(package_type, package_id), text, args)
 
@@ -134,18 +162,30 @@ def create_modules_toc_file(key, value, args):
 
 	write_file('%slist' % key, text, args)
 
+def create_index_toc_file(args):
+	"""Create the global index."""
+	text = """API documentation
+==================
+
+.. toctree::
+   :glob:
+
+   *"""
+   	write_file('index', text, args)
+
 
 def recurse_tree(args):
 	"""
 	Look for every file in the directory tree and create the corresponding
 	ReST files.
 	"""
-	index = xml.etree.ElementTree.parse(os.path.join(args.rootpath, 'index.xml'))
+	index = xml.etree.ElementTree.parse(
+		os.path.join(args.rootpath, 'index.xml'))
 
 	# Assuming this is a valid Doxygen XML
 	for compound in index.getroot():
-		create_package_file(compound.findtext('name'), compound.get('kind'),
-							compound.get('refid'), args)
+		create_package_file(compound.findtext('name'),
+			compound.get('kind'), compound.get('refid'), args)
 
 
 class TypeAction(argparse.Action):
@@ -168,25 +208,27 @@ def main():
 		description="""\
 	Parse XML created by Doxygen in <rootpath> and create one reST file with
 	breathe generation directives per definition in the <DESTDIR>.
-	Note: By default this script will not overwrite already created files.""",
+	By default this script will not overwrite already created files.""",
 		formatter_class=argparse.RawDescriptionHelpFormatter)
 
-	parser.add_argument('-o', '--output-dir', action='store', dest='destdir',
-		help='Directory to place all output', required=True)
-	parser.add_argument('-f', '--force', action='store_true', dest='force',
-		help='Overwrite existing files')
-	parser.add_argument('-n', '--dry-run', action='store_true', dest='dryrun',
-		help='Run the script without creating files')
-	parser.add_argument('-T', '--no-toc', action='store_true', dest='notoc',
-		help='Don\'t create a table of contents file')
-	parser.add_argument('-s', '--suffix', action='store', dest='suffix',
-		help='file suffix (default: rst)', default='rst')
+	parser.add_argument('-o', '--output-dir', action='store',
+		dest='destdir', help='Directory to place all output',
+		required=True)
+	parser.add_argument('-f', '--force', action='store_true',
+		dest='force', help='Overwrite existing files')
+	parser.add_argument('-i', '--index', action='store_true',
+		dest='index', help='Generate index.rst for easy inclusion')
+	parser.add_argument('-n', '--dry-run', action='store_true',
+		dest='dryrun', help='Run the script without creating files')
+	parser.add_argument('-T', '--no-toc', action='store_true',
+		dest='notoc', help='Don\'t create a table of contents file')
+	parser.add_argument('-s', '--suffix', action='store',
+		dest='suffix', help='file suffix (default: rst)', default='rst')
 	parser.add_argument('-p', '--project', action='store', dest='project',
 		help='project to add to generated directives')
-	parser.add_argument('-g', '--generate', action=TypeAction, dest='outtypes',
+	parser.add_argument('-g', '--generate', action=TypeAction,
+		dest='outtypes',
 		help='types of output to generate, comma-separated list')
-	parser.add_argument('--version', action='version',
-		version='Breathe (breathe-apidoc) %s' % "Modified by Rowan Goemans")
 	parser.add_argument('rootpath', type=str,
 		help='The directory contains index.xml')
 	args = parser.parse_args()
@@ -197,7 +239,8 @@ def main():
 		print('%s is not a directory.' % args.rootpath, file=sys.stderr)
 		sys.exit(1)
 	if 'index.xml' not in os.listdir(args.rootpath):
-		print('%s does not contain a index.xml' % args.rootpath, file=sys.stderr)
+		print('%s does not contain a index.xml'
+			% args.rootpath, file=sys.stderr)
 		sys.exit(1)
 	if not os.path.isdir(args.destdir):
 		if not args.dryrun:
@@ -206,7 +249,11 @@ def main():
 	recurse_tree(args)
 	if not args.notoc:
 		for key in args.outtypes:
-			create_modules_toc_file(key, TYPEDICT[key]['translation'], args)
+			create_modules_toc_file(
+				key, TYPEDICT[key]['translation'], args)
+
+	if args.index:
+		create_index_toc_file(args)
 
 
 # So program can be started with "python -m breathe.apidoc ..."

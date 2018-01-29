@@ -40,7 +40,7 @@ add_custom_target(_copy_doc
 )
 
 add_custom_target(_postprocess_doc
-	COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f
+	COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i
 	-g group -g struct,union,namespace,file,interface,class
 	-o "${doc_dir}/doc/api"
 	"${doxydir}/xml"

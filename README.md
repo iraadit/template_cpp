@@ -3,6 +3,7 @@
 Magical template for C/C++ projects, improves quality of life.
 
 Released into the public domain so you don't have to bother with crediting this.
+The only exception is cmake/apidoc.py that is BSD licensed.
 
 ## Code
 

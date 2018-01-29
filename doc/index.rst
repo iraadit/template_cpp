@@ -4,7 +4,7 @@
    :name: mastertoc
    :glob:
 
-   api/*
+   api/index.rst
 
 Home
 ====
