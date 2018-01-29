@@ -25,19 +25,11 @@ set(PROJECT_LANGUAGES C)
 
 # enable c++ if building tests
 if(TEST)
-	set(CXX_REQUIRED ON)
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
-else()
-	unset(CXX_REQUIRED)
 endif()
 
 # declare project
 project(c_template VERSION 1.2.0 LANGUAGES ${PROJECT_LANGUAGES})
-
-# abort if compilers differ
-if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
-	message(FATAL_ERROR "c and c++ compilers differ")
-endif()
 
 # set standards to c11 and c++17
 set(CMAKE_C_STANDARD 11)
