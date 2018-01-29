@@ -32,7 +32,7 @@ else()
 endif()
 
 # declare project
-project(c_template VERSION 1.1.0 LANGUAGES ${PROJECT_LANGUAGES})
+project(c_template VERSION 1.2.0 LANGUAGES ${PROJECT_LANGUAGES})
 
 # abort if compilers differ
 if(CXX_REQUIRED AND (NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
