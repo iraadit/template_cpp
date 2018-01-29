@@ -99,9 +99,8 @@ pages:
   dependencies:
     - test:gcc
     - html
-# TODO enable before mering
-#  only:
-#    - master
+  only:
+    - master
   script:
     - mv build/doc/html public
     - mv build/coverage_report public/coverage
