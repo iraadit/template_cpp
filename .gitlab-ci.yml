@@ -37,7 +37,7 @@ doxygen:
   script:
     - mkdir build
     - cd build
-    - cmake -DDOC=doxygen ..
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen ..
     - make doc
 
 build:clang:
