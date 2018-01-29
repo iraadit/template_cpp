@@ -6,4 +6,4 @@ add_library(test_main OBJECT
 	main.cpp)
 
 # add test subdirectories
-add_subdirectory(functions)
+add_subdirectory(add)

@@ -15,7 +15,7 @@ clang_tidy:
     - mkdir build
     - cd build
     - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON
-      -DWERROR:BOOL=ON -DBUILD_TESTING:BOOL=ON ..
+      -DWERROR:BOOL=ON -DTEST:BOOL=ON ..
     - make -j $(nproc)
 
 cppcheck:
@@ -50,7 +50,7 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DBUILD_TESTING:BOOL=ON
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON
       -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
     - make -j $(nproc)
     - make test
@@ -61,7 +61,7 @@ test:gcc:
   script:
     - mkdir build
     - cd build
-    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON
+    - CC=gcc CXX=g++ cmake -DTEST:BOOL=ON
       -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
     - make -j $(nproc)
     - make test
