@@ -171,7 +171,7 @@ def create_index_toc_file(args):
    :glob:
 
    *"""
-   	write_file('index', text, args)
+	write_file('index', text, args)
 
 
 def recurse_tree(args):
