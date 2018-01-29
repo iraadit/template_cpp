@@ -16,15 +16,15 @@ option(WERROR "Make all warnings into errors." OFF)
 option(COVERAGE "Instrument code with coverage flags." OFF)
 
 # disable building tests if not specified
-if(NOT DEFINED BUILD_TESTING)
-	set(BUILD_TESTING OFF CACHE BOOL "Build tests.")
+if(NOT DEFINED TEST)
+	set(TEST OFF CACHE BOOL "Build tests.")
 endif()
 
 # set base language
 set(PROJECT_LANGUAGES C)
 
 # enable c++ if building tests
-if(BUILD_TESTING)
+if(TEST)
 	set(CXX_REQUIRED ON)
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
 else()
@@ -80,7 +80,7 @@ endif()
 add_subdirectory(src)
 
 # add test directory
-if(BUILD_TESTING)
+if(TEST)
 	enable_testing()
 	add_subdirectory(test)
 endif()
