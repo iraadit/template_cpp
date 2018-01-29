@@ -12,27 +12,24 @@ variables:
 
 clang_tidy:
   stage: analyse
+  allow_failure: true
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON
-      -DWERROR:BOOL=ON -DBUILD_TESTING:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCLANG_TIDY:BOOL=ON -DTEST:BOOL=ON
+      -DWERROR:BOOL=ON ..
     - make -j $(nproc)
 
 cppcheck:
   stage: analyse
+  allow_failure: true
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
+    - cmake ..
     - cd ..
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
-
-line_limit:
-  stage: analyse
-  script:
-    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
 
 build:clang:
   stage: build
@@ -55,19 +52,17 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DBUILD_TESTING:BOOL=ON
-      -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
-    - make coverage_report
 
 test:gcc:
   stage: test
   script:
     - mkdir build
     - cd build
-    - CC=gcc CXX=g++ cmake -DBUILD_TESTING:BOOL=ON
-      -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON ..
+    - CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON
+      -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
     - make coverage_report

@@ -5,4 +5,4 @@ add_executable(test_inheritance
 	$<TARGET_OBJECTS:inheritance>)
 
 # add executable to test list
-add_test(functions test_inheritance)
+add_test(inheritance test_inheritance)
