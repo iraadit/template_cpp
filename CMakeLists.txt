@@ -10,6 +10,12 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 		"Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
+# documentation flag.
+if (NOT DOC)
+	set(DOC OFF CACHE STRING
+		"The documentationtation target to build" FORCE)
+endif()
+
 # options
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(WERROR "Make all warnings into errors." OFF)
@@ -74,6 +80,11 @@ endif()
 # clang-tidy
 if(CLANG_TIDY)
 	include(clang_tidy)
+endif()
+
+# docs
+if(NOT DOC MATCHES "OFF")
+	add_subdirectory(doc)
 endif()
 
 # add src directory
