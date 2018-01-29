@@ -10,6 +10,7 @@ FILE_PATTERNS           =   *.hpp \
 GENERATE_HTML           =   @DOXY_BUILD_HTML@
 GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
 GENERATE_XML            =   @DOXY_BUILD_XML@
+HAVE_DOT                =   NO
 HIDE_UNDOC_RELATIONS    =   NO
 INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
                             "@CMAKE_SOURCE_DIR@/include"
