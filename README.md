@@ -36,6 +36,7 @@ Released into the public domain so you don't have to bother with crediting this.
   * like gcov, but with less enforced freedom
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
   * generate beautiful html-based coverage reports
+  * Use `^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$` regex for CI coverage
 
 ## CI CD
 
