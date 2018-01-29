@@ -23,15 +23,13 @@ endif()
 configure_file(
 	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
 	"${DOXYFILE}"
-	@ONLY
-)
+	@ONLY)
 
 if(${DOC} STREQUAL "doxygen")
 	add_custom_target(
 		doc
 		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
-		COMMENT "Generating API documentation with DoxyGen"
-	)
+		COMMENT "Generating API documentation with DoxyGen")
 
 	# show info where to find the report
 	add_custom_command(TARGET doc POST_BUILD
@@ -53,8 +51,7 @@ else()
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
 		"${CMAKE_BINARY_DIR}/doc/conf.py"
-		@ONLY
-	)
+		@ONLY)
 
 	add_custom_target(doc
 		# generate doxygen xml
@@ -74,8 +71,7 @@ else()
 		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
 			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
 			-c "${CMAKE_BINARY_DIR}/doc" -q
-		COMMENT "Generating sphinx ${DOC} documentation."
-	)
+		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")
 		add_custom_command(TARGET doc POST_BUILD

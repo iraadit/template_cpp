@@ -4,9 +4,9 @@ EXTRACT_LOCAL_CLASSES   =   YES
 EXTRACT_PACKAGE         =   YES
 EXTRACT_PRIVATE         =   YES
 EXTRACT_STATIC          =   YES
-FILE_PATTERNS           =   *.hpp \
+FILE_PATTERNS           =   *.dox \
                             *.h \
-                            *.dox
+                            *.hpp
 GENERATE_HTML           =   @DOXY_BUILD_HTML@
 GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
 GENERATE_XML            =   @DOXY_BUILD_XML@

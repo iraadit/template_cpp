@@ -20,27 +20,27 @@ public:
 	 * \brief Default copy constructor.
 	 * \param b
 	 */
-	base(const base& b) = default;
+	base(const base &b) = default;
 
 	/**
 	 * \brief Default move constructor.
 	 * \param b
 	 */
-	base(base&& b) = default;
+	base(base &&b) = default;
 
 	/**
 	 * \brief Default copy assignment operator.
 	 * \param b
 	 * \return
 	 */
-	base& operator=(const base& b) = default;
+	base &operator=(const base &b) = default;
 
 	/**
 	 * \brief Default move assignment operator.
 	 * \param b
 	 * \return
 	 */
-	base& operator=(base&& b) = default;
+	base &operator=(base &&b) = default;
 
 	/**
 	 * \brief Pure virtual member function.

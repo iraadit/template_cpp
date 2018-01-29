@@ -5,11 +5,11 @@
 
 namespace inheritance
 {
-
 /**
  * \brief Defines some known class types.
  */
-enum class class_type {
+enum class class_type
+{
 	/**
 	 * \brief Has no implementation.
 	 */
@@ -44,7 +44,6 @@ struct range
 
 /**
  * \brief Convert class_type to a string representation.
- *
  * \param t The type to translate.
  * \return The string variant.
  */
@@ -67,32 +66,31 @@ public:
 	 * \brief Default copy constructor
 	 * \param d
 	 */
-	derived(const derived& d) = default;
+	derived(const derived &d) = default;
 
 	/**
 	 * \brief Default move constructor.
 	 * \param d
 	 */
-	derived(derived&& d) = default;
+	derived(derived &&d) = default;
 
 	/**
 	 * \brief Default copy assignment operator.
 	 * \param d
 	 * \return
 	 */
-	derived& operator=(const derived& d) = default;
+	derived &operator=(const derived &d) = default;
 
 	/**
 	 * \brief Default move assignment operator.
 	 * \param d
 	 * \return
 	 */
-	derived& operator=(derived&& d) = delete;
+	derived &operator=(derived &&d) = delete;
 
 	/**
 	 * \brief Implemented function
 	 */
 	void init() override;
 };
-
 }
