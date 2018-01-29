@@ -5,6 +5,8 @@ Magical template for C/C++ projects, improves quality of life.
 Released into the public domain so you don't have to bother with crediting this.
 The only exception is cmake/apidoc.py which is BSD licensed.
 
+[Generated sphinx/doxygen-based documentation.](https://doc.mel.vin/template/c)
+
 ## Code
 
 * a nice directory layout that is easily extended
@@ -37,6 +39,15 @@ The only exception is cmake/apidoc.py which is BSD licensed.
   * like gcov, but with less enforced freedom
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
   * generate beautiful html-based coverage reports
+
+## Documentation
+
+* [DoxyGen](https://www.stack.nl/~dimitri/doxygen/)
+  * for technical API documentation in source code
+* [Sphinx](http://www.sphinx-doc.org/en/stable/)
+  * for all other documentation in wonderful reStructuredText
+* [Breathe](https://github.com/michaeljones/breathe)
+  * breathes in doxygen and exhales reStructuredText
 
 ## CI CD
 
