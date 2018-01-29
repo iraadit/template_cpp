@@ -4,6 +4,12 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 		"Code coverage is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
+# mixing compilers is not allowed when coverage is enabled
+if(CMAKE_CXX_COMPILER_ID AND
+		(NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
+	message(FATAL_ERROR "C, C++ compilers cannot differ for COVERAGE=ON.")
+endif()
+
 # find coverage tools, gcov is for GCC and llvm-cov for clang
 # llvm-cov has to wrapped with the gcov option
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
