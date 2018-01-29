@@ -39,9 +39,9 @@ project(c_template
 	VERSION 1.2.0
 	DESCRIPTION "Template for C and C++"
 	LANGUAGES ${PROJECT_LANGUAGES})
-set(PROJECT_AUTHOR "Melvin Vermeeren")
-set(PROJECT_COPYRIGHT "2018, ${PROJECT_AUTHOR}")
-set(PROJECT_MAIL "mail@mel.vin")
+set(CMAKE_PROJECT_AUTHOR "Melvin Vermeeren")
+set(CMAKE_PROJECT_COPYRIGHT "2018, ${CMAKE_PROJECT_AUTHOR}")
+set(CMAKE_PROJECT_MAIL "mail@mel.vin")
 
 # main code if enabled
 if(${CODE})
