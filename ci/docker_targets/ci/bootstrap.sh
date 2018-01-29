@@ -6,17 +6,17 @@ apt-get update
 
 apt-get install -y \
 	clang-6.0 \
-	clang-tidy-6.0 \
 	clang-format-6.0 \
+	clang-tidy-6.0 \
 	cmake \
 	cppcheck \
-	gcc \
+	doxygen \
 	g++ \
-	lcov \
+	gcc \
 	graphviz \
+	lcov \
+	python-breathe \
 	python-sphinx \
-	doxygen
-
-pip install breathe
+	python-sphinx-rtd-theme
 
 rm -rf /var/lib/apt/lists/*
