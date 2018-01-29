@@ -61,9 +61,11 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON ..
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DCMAKE_BUILD_TYPE:STRING=Debug
+      -DCOVERAGE:BOOL=ON -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
+    - make coverage_report
 
 test:gcc:
   stage: test
