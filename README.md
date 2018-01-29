@@ -36,14 +36,14 @@ Released into the public domain so you don't have to bother with crediting this.
   * like gcov, but with less enforced freedom
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
   * generate beautiful html-based coverage reports
-  * Use `^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$` regex for CI coverage
 
 ## CI CD
 
+* [GitLab CI/CD](https://docs.gitlab.com/ce/ci/)
+  * integrated with the entire very well designed workflow
+  * use `^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$` regex for CI coverage
 * [docker](https://git.mel.vin/cicd/docker)
   * easy building and deployment of docker images
-* [style](https://git.mel.vin/cicd/style)
-  * 80-char line limit enforcement
 
 ## Tips
 
