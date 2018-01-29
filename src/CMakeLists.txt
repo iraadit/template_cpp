@@ -7,3 +7,6 @@ add_library(c_template OBJECT
 add_executable(main
 	main.c
 	$<TARGET_OBJECTS:c_template>)
+
+# add subdirectories
+add_subdirectory(inheritance)

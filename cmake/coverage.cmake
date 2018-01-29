@@ -98,4 +98,5 @@ add_custom_target(coverage_report
 # show info where to find the report
 add_custom_command(TARGET coverage_report POST_BUILD
 	COMMAND ;
-	COMMENT "Report is available at ./coverage_report/index.html.")
+	COMMENT "Report is available at ${PROJECT_BINARY_DIR}\
+/coverage_report/index.html.")

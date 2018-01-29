@@ -16,6 +16,10 @@ option(CODE "Build primary libraries and executables." ON)
 option(COVERAGE "Instrument code with coverage flags." OFF)
 option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
+if (NOT DOC)
+	set(DOC OFF CACHE STRING
+		"The documentation type to generate. \"help\" for types." FORCE)
+endif()
 
 # disable base languages
 unset(PROJECT_LANGUAGES)
@@ -35,10 +39,18 @@ project(c_template
 	VERSION 1.2.0
 	DESCRIPTION "Template for C and C++"
 	LANGUAGES ${PROJECT_LANGUAGES})
+set(CMAKE_PROJECT_AUTHOR "Melvin Vermeeren")
+set(CMAKE_PROJECT_COPYRIGHT "2018, ${CMAKE_PROJECT_AUTHOR}")
+set(CMAKE_PROJECT_MAIL "mail@mel.vin")
 
 # main code if enabled
 if(${CODE})
 	include(code)
 elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${TEST} OR ${WERROR})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
+endif()
+
+# doc
+if(NOT DOC STREQUAL "OFF")
+	add_subdirectory(doc)
 endif()

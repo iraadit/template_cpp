@@ -11,9 +11,14 @@ apt-get install -y \
 	cmake \
 	cppcheck \
 	curl \
+	doxygen \
 	g++ \
 	gcc \
-	lcov
+	graphviz \
+	lcov \
+	python-breathe \
+	python-sphinx \
+	python-sphinx-rtd-theme
 
 mkdir -p /usr/local/include/catch
 curl -Lf \

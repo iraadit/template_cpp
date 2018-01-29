@@ -4,6 +4,8 @@ stages:
   - analyse
   - build
   - test
+  - doc
+  - deploy
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
@@ -29,6 +31,15 @@ cppcheck:
     - cppcheck -q --enable=all --project=build/compile_commands.json
       --error-exitcode=1 --suppressions-list=.cppcheck-suppress
 
+doxygen:
+  stage: analyse
+  allow_failure: true
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen ..
+    - make doc
+
 build:clang:
   stage: build
   script:
@@ -50,12 +61,15 @@ test:clang:
   script:
     - mkdir build
     - cd build
-    - CC=clang-6.0 CXX=clang++-6.0 cmake -DTEST:BOOL=ON ..
+    - CC=clang-6.0 CXX=clang++-6.0 cmake -DCMAKE_BUILD_TYPE:STRING=Debug
+      -DCOVERAGE:BOOL=ON -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
+    - make coverage_report
 
 test:gcc:
   stage: test
+  coverage: '/^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$/'
   script:
     - mkdir build
     - cd build
@@ -64,3 +78,32 @@ test:gcc:
     - make -j $(nproc)
     - make test
     - make coverage_report
+  artifacts:
+    paths:
+      - build/coverage_report
+
+html:
+  stage: doc
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=html ..
+    - make doc
+  artifacts:
+    paths:
+      - build/doc/html
+
+pages:
+  stage: deploy
+  dependencies:
+    - test:gcc
+    - html
+  only:
+    - master
+  script:
+    - mv build/doc/html public
+    - mv build/coverage_report public/coverage
+  artifacts:
+    paths:
+      - public

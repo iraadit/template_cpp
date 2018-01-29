@@ -1,0 +1,25 @@
+CLASS_DIAGRAMS          =   NO
+EXTRACT_ALL             =   NO
+EXTRACT_LOCAL_CLASSES   =   YES
+EXTRACT_PACKAGE         =   YES
+EXTRACT_PRIVATE         =   YES
+EXTRACT_STATIC          =   YES
+FILE_PATTERNS           =   *.dox \
+                            *.h \
+                            *.hpp
+GENERATE_HTML           =   @DOXY_BUILD_HTML@
+GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
+GENERATE_XML            =   @DOXY_BUILD_XML@
+HAVE_DOT                =   NO
+HIDE_UNDOC_RELATIONS    =   NO
+INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
+                            "@CMAKE_SOURCE_DIR@/include"
+OUTPUT_DIRECTORY        =   "@DOXYDIR@"
+PROJECT_NAME            =   "@PROJECT_NAME@"
+PROJECT_NUMBER          =   @PROJECT_VERSION@
+QUIET                   =   YES
+RECURSIVE               =   YES
+STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
+WARN_AS_ERROR           =   @DOXY_WARN_AS_ERR@
+WARN_IF_UNDOCUMENTED    =   YES
+WARN_NO_PARAMDOC        =   YES
