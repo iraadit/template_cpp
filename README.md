@@ -31,15 +31,20 @@ The only exception is cmake/apidoc.py that is BSD licensed.
 
 * [Catch2](https://github.com/catchorg/Catch2)
   * easy-to-use header-only unit testing framework
+* [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html)
+  * instrument code for coverage, with freedom
+* [llvm-cov](https://llvm.org/docs/CommandGuide/llvm-cov.html)
+  * like gcov, but with less enforced freedom
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
-  * generate beautiful coverage html reports
+  * generate beautiful html-based coverage reports
 
 ## CI CD
 
+* [GitLab CI/CD](https://docs.gitlab.com/ce/ci/)
+  * integrated with the entire very well designed workflow
+  * use `^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$` regex for CI coverage
 * [docker](https://git.mel.vin/cicd/docker)
   * easy building and deployment of docker images
-* [style](https://git.mel.vin/cicd/style)
-  * 80-char line limit enforcement
 
 ## Tips
 
