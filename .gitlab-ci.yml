@@ -10,6 +10,7 @@ variables:
 
 clang_tidy:
   stage: analyse
+  allow_failure: true
   script:
     - mkdir build
     - cd build
@@ -19,6 +20,7 @@ clang_tidy:
 
 cppcheck:
   stage: analyse
+  allow_failure: true
   script:
     - mkdir build
     - cd build
@@ -29,6 +31,7 @@ cppcheck:
 
 line_limit:
   stage: analyse
+  allow_failure: true
   script:
     - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' .
 
