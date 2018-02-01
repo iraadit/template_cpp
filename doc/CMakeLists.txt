@@ -46,7 +46,7 @@ else()
 	set(DOC_TMP_DIR ${CMAKE_BINARY_DIR}/tmp)
 
 	file(WRITE ${DOC_TMP_DIR}/copy_doc.cmake
-		"file( COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${DOC_TMP_DIR})")
+		"file(COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${DOC_TMP_DIR})")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"

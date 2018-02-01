@@ -116,7 +116,8 @@ def write_file(name, text, args):
 			with open(fname, 'r') as target:
 				orig = target.read()
 				if orig == text:
-					q_print('File %s up to date, skipping.' % fname, args)
+					q_print('File %s up to date, skipping.'\
+						% fname, args)
 					return
 		except FileNotFoundError:
 			# Don't mind if it isn't there
@@ -202,7 +203,8 @@ class TypeAction(argparse.Action):
 		value_list = values.split(',')
 		for value in value_list:
 			if value not in TYPEDICT:
-				raise ValueError("%s not a valid option" % value)
+				raise ValueError("%s not a valid option" \
+					% value)
 		setattr(namespace, self.dest, value_list)
 
 
