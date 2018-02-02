@@ -170,12 +170,12 @@ def create_modules_toc_file(key, value, args):
 def create_index_toc_file(args):
 	"""Create the global index."""
 	text = """API documentation
-==================
+=================
 
 .. toctree::
-   :glob:
+	:glob:
 
-   *"""
+	*"""
 	write_file('index', text, args)
 
 
