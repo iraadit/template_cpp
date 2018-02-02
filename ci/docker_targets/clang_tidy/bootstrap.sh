@@ -27,3 +27,4 @@ rm -rf /var/lib/apt/lists/*
 
 ln -s /usr/bin/clang-5.0 /usr/local/bin/cc
 ln -s /usr/bin/clang++-5.0 /usr/local/bin/c++
+ln -s /usr/bin/clang-tidy-5.0 /usr/local/bin/clang-tidy

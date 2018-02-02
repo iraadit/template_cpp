@@ -7,3 +7,4 @@ find_path(CATCH_INCLUDE_DIR
 if(NOT CATCH_INCLUDE_DIR)
 	message(FATAL_ERROR "Could not find Catch.")
 endif()
+message(STATUS "Found Catch include dir: ${CATCH_INCLUDE_DIR}")
