@@ -18,7 +18,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 			add_compile_options(-Werror)
 		endif()
 	else()
-		message(WARNING "warnings not supported for current compiler")
+		message(WARNING "Warnings not supported for current compiler.")
 	endif()
 endif()
 
