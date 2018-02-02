@@ -7,6 +7,7 @@ find_program(CLANG_TIDY_PATH
 if(NOT CLANG_TIDY_PATH)
 	message(FATAL_ERROR "Could not find clang-tidy.")
 endif()
+message(STATUS "Found clang-tidy: ${CLANG_TIDY_PATH}")
 
 # set clang-tidy options, support WERROR
 set(OPT "${CLANG_TIDY_PATH}")

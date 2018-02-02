@@ -13,19 +13,20 @@ endif()
 # find coverage tools, gcov is for GCC and llvm-cov for clang
 # llvm-cov has to wrapped with the gcov option
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
-	find_program(LLVM_COV_PATH
+	find_program(LLVMCOV_PATH
 		NAMES llvm-cov llvm-cov-6.0 llvm-cov-5.0
 		DOC "Path to llvm-cov")
 
-	if(NOT LLVM_COV_PATH)
+	if(NOT LLVMCOV_PATH)
 		message(FATAL_ERROR "Could not find llvm-cov.")
 	endif()
+	message(STATUS "Found llvm-cov: ${LLVMCOV_PATH}")
 
 	set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
 
 	# wrap llvm-cov to have behaviour like gcov
 	file(WRITE "${GCOV_PATH}"
-		"#!/bin/sh\nexec \"${LLVM_COV_PATH}\" gcov \"$@\"")
+		"#!/bin/sh\nexec \"${LLVMCOV_PATH}\" gcov \"$@\"")
 
 	execute_process(COMMAND chmod +x "${GCOV_PATH}")
 elseif (CMAKE_C_COMPILER_ID STREQUAL "GNU")
@@ -42,11 +43,13 @@ find_program(LCOV_PATH lcov)
 if(NOT LCOV_PATH)
 	message(FATAL_ERROR "Could not find lcov.")
 endif()
+message(STATUS "Found lcov: ${LCOV_PATH}")
 
 find_program(GENHTML_PATH genhtml)
 if(NOT GENHTML_PATH)
 	message(FATAL_ERROR "Could not find genhtml.")
 endif()
+message(STATUS "Found genhtml: ${GENHTML_PATH}")
 
 # add necessary compile and linker flags
 add_compile_options(--coverage)
