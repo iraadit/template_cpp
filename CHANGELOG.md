@@ -7,12 +7,13 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* add style/regex\_check.sh to find non-ASCII characters in sources
+* split docker images to make managing easier and builds more efficient
 * integrate doxygen, sphinx and gitlab pages to generate complete documentation
 * remove the catch submodule as it is a regular system dependency
 * building code is optional so there is no hard dependency on a compiler
 * do not prevent mixing C and C++ compilers
 * supply the regex for gitlab CI coverage in documentation
-* remove ci/style/line\_limit.sh in favour of clang-format
 * added support for coverage by using gcov, lcov and llvm-cov
 * jobs in the analyse stage will warn instead of failing the build
 * support stable clang-format which is currently 5

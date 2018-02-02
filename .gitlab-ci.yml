@@ -41,6 +41,20 @@ doxygen:
     - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen ..
     - make doc
 
+line_limit:
+  stage: analyse
+  allow_failure: true
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.0
+  script:
+    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' -i .
+
+regex_check:
+  stage: analyse
+  allow_failure: true
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.0
+  script:
+    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:9:' .
+
 clang:
   stage: build
   image: git.mel.vin:5005/template/c/ci/clang:1.0

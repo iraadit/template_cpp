@@ -176,6 +176,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, '@CMAKE_PROJECT_NAME@', '@CMAKE_PROJECT_NAME@',
-     '@CMAKE_PROJECT_AUTHOR@', '@CMAKE_PROJECT_NAME@', '@CMAKE_PROJECT_DESCRIPTION@',
-     'Documentation'),
+     '@CMAKE_PROJECT_AUTHOR@', '@CMAKE_PROJECT_NAME@',
+     '@CMAKE_PROJECT_DESCRIPTION@', 'Documentation'),
 ]
