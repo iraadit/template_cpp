@@ -8,6 +8,13 @@ stages:
 variables:
   GIT_SUBMODULE_STRATEGY: normal
 
+clang_format:
+  stage: analyse
+  allow_failure: true
+  image: git.mel.vin:5005/template/c/ci/clang_format:1.0
+  script:
+    - ./ci/clang_format.sh
+
 clang_tidy:
   stage: analyse
   allow_failure: true
