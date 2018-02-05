@@ -9,24 +9,18 @@ set(DOXY_BUILD_XML "YES")
 set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
 
-# Find plantuml
-find_program(PLANTUML_PATH
-	NAMES plantuml
-	DOC "Path to plantuml.")
-
-if(NOT PLANTUML_PATH)
-    message(FATAL_ERROR "Could not find plantuml.")
-endif()
-
 # if doxygen is specified only doxygen html output is generated.
 # This also enables warning as errors to verify complete doxygen
-# coverage.
+# coverage
 if(${DOC} STREQUAL "doxygen")
 	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
 	set(DOXY_BUILD_LATEX "NO")
 	set(DOXY_WARN_AS_ERR "YES")
+else()
+	# plantuml only required for non-doxygen targets
+	include(plantuml)
 endif()
 
 configure_file(
@@ -45,7 +39,6 @@ if(${DOC} STREQUAL "doxygen")
 		COMMAND ;
 		COMMENT "Doxygen HTML documentation is available \
 at ${DOXYDIR}/html/index.html")
-
 else()
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
