@@ -10,7 +10,8 @@ apk --no-cache add \
 	libc-dev \
 	make \
 	openjdk8-jre \
-	py2-pip
+	py2-pip \
+	ttf-liberation
 
 apk --no-cache add -t tmp \
 	curl
