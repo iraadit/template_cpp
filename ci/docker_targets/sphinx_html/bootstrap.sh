@@ -9,7 +9,7 @@ apk --no-cache add \
 	graphviz \
 	libc-dev \
 	make \
-	openjdk8-jre-base \
+	openjdk8-jre \
 	py2-pip
 
 apk --no-cache add -t tmp \
