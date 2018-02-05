@@ -10,14 +10,17 @@ set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
 
 # if doxygen is specified only doxygen html output is generated.
-# This also enables warning as errors to verify complete doxygen
-# coverage
+# This also supports warning as errors to verify complete doxygen coverage
 if(${DOC} STREQUAL "doxygen")
 	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
 	set(DOXY_BUILD_LATEX "NO")
-	set(DOXY_WARN_AS_ERR "YES")
+	if (${WERROR})
+		set(DOXY_WARN_AS_ERR "YES")
+	else()
+		set(DOXY_WARN_AS_ERR "NO")
+	endif()
 else()
 	# plantuml only required for non-doxygen targets
 	include(plantuml)

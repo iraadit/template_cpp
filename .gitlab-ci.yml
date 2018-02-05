@@ -45,7 +45,7 @@ doxygen:
   script:
     - mkdir build
     - cd build
-    - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen ..
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen -DWERROR:BOOL=ON ..
     - make doc
 
 line_limit:
