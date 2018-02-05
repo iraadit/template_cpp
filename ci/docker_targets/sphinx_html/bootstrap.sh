@@ -23,9 +23,13 @@ pip install \
 	sphinxcontrib-plantuml
 
 mkdir -p /opt/plantuml
-curl -Lf \
-	-o /opt/plantuml/plantuml.jar \
-	https://git.mel.vin/mirror/plantuml/raw/1.2018.1/plantuml.jar
+for i in batik-all-1.7.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar \
+	jlm_greek.jar plantuml.jar
+do
+	curl -Lf \
+		-o /opt/plantuml/$i \
+		https://git.mel.vin/mirror/plantuml/raw/1.2018.1/$i
+done
 
 printf '%s\n%s\n' \
 	'#!/bin/sh' \
