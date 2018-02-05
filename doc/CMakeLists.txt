@@ -21,9 +21,6 @@ if(${DOC} STREQUAL "doxygen")
 	else()
 		set(DOXY_WARN_AS_ERR "NO")
 	endif()
-else()
-	# plantuml only required for non-doxygen targets
-	include(plantuml)
 endif()
 
 configure_file(
@@ -47,6 +44,7 @@ else()
 	find_package(PythonInterp REQUIRED)
 	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
+	include(plantuml)
 
 	# support WERROR for sphinx
 	if(${WERROR})
