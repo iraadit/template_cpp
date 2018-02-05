@@ -34,7 +34,7 @@ sys.path.append("@PY_BREATHE@")
 extensions = ['sphinx.ext.todo', 'sphinxcontrib.plantuml', 'breathe']
 
 # plantuml config
-plantuml = 'java -jar @PLANTUML_JAR@'
+plantuml = '@PLANTUML_PATH@'
 plantuml_output_format = 'svg'
 plantuml_latex_output_format = 'pdf'
 

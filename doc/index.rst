@@ -19,5 +19,5 @@ source and test coverage.
 
 .. uml::
 
-   Alice -> Bob: Hi!
-   Alice <- Bob: How are you?
+	Evi -> Joost: voldoende_request()
+	Evi <- Joost: DENIED!!

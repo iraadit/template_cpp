@@ -5,6 +5,7 @@ set -e
 apk --no-cache add \
 	binutils \
 	cmake \
+	openjdk8-jre-base \
 	doxygen \
 	graphviz \
 	libc-dev \
@@ -14,4 +15,5 @@ apk --no-cache add \
 pip install \
 	breathe \
 	sphinx \
-	sphinx_rtd_theme
+	sphinx_rtd_theme \
+	sphinxcontrib.plantuml
