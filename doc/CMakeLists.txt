@@ -1,6 +1,14 @@
 # find doxygen prereqs
 find_package(Doxygen REQUIRED)
 
+if(NOT DOXYGEN_FOUND)
+	message(FATAL "Doxygen NOT FOUND!")
+endif()
+
+if(NOT DOXYGEN_DOT_FOUND)
+	message(FATAL "Doxygen dot NOT FOUND!")
+endif()
+
 set(DOXYDIR ${CMAKE_BINARY_DIR}/doxygen)
 set(DOXYFILE ${DOXYDIR}/Doxyfile)
 # due to a bug in doxygen HTML has to be enabled for xml to work
@@ -8,6 +16,33 @@ set(DOXY_BUILD_HTML "YES")
 set(DOXY_BUILD_XML "YES")
 set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
+
+# Find plantuml.jar
+if(IS_ABSOLUTE $ENV{PLANTUML_JAR})
+	set(PLANTUML_JAR $ENV{PLANTUML_JAR}
+		CACHE FILEPATH "PlantUML plantuml.jar path"
+	)
+else()
+	if(DEFINED ENV{PLANTUML_JAR})
+		find_file(PLANTUML_JAR $ENV{PLANTUML_JAR}
+			# Debian (and therefore Ubuntu) store plantuml.jar in
+			# /usr/share/plantuml when installing from the repos
+			#  Arch Linux's AUR package stores it in /opt/plantuml
+			PATHS /usr/local/share/plantuml /usr/share/plantuml /opt/plantuml ENV PATH
+			DOC "PlantUML plantuml.jar path"
+			NO_DEFAULT_PATH
+		)
+	else()
+		find_file(PLANTUML_JAR plantuml.jar
+			PATHS /usr/local/share/plantuml /usr/share/plantuml /opt/plantuml
+			DOC "PlantUML plantuml.jar path"
+		)
+	endif()
+endif()
+
+if(PLANTUML_JAR)
+	message(FATAL "Plantuml jar not found!")
+endif()
 
 # if doxygen is specified only doxygen html output is generated.
 # This also enables warning as errors to verify complete doxygen
