@@ -28,7 +28,8 @@ else()
 			# Debian (and therefore Ubuntu) store plantuml.jar in
 			# /usr/share/plantuml when installing from the repos
 			#  Arch Linux's AUR package stores it in /opt/plantuml
-			PATHS /usr/local/share/plantuml /usr/share/plantuml /opt/plantuml ENV PATH
+			PATHS /usr/local/share/plantuml /usr/share/plantuml
+				/opt/plantuml ENV PATH
 			DOC "PlantUML plantuml.jar path"
 			NO_DEFAULT_PATH
 		)
