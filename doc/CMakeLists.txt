@@ -45,6 +45,13 @@ else()
 	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
 
+	# support WERROR for sphinx
+	if(${WERROR})
+		set(SPHINX_WERROR "-W")
+	else()
+		unset(SPHINX_WERROR)
+	endif()
+
 	set(DOC_TMP_DIR ${CMAKE_BINARY_DIR}/tmp)
 
 	file(WRITE ${DOC_TMP_DIR}/copy_doc.cmake
@@ -72,7 +79,7 @@ else()
 		# build sphinx documentation
 		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
 			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
-			-c "${CMAKE_BINARY_DIR}/doc" -q
+			-c "${CMAKE_BINARY_DIR}/doc" -q ${SPHINX_WERROR}
 		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")
