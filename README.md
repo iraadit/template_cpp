@@ -59,5 +59,13 @@ The only exception is cmake/apidoc.py which is BSD licensed.
 
 ## Tips
 
+* [perf](https://perf.wiki.kernel.org/index.php/Main_Page)
+  * efficient profiler, requires Linux kernel
+* [hotspot](https://github.com/KDAB/hotspot)
+  * useful GUI for perf
+* [heaptrack](https://github.com/KDE/heaptrack)
+  * heap memory profiler, requires Linux kernel
+* [valgrind](http://valgrind.org/)
+  * still useful for undefined behaviour and data-race checking
 * [vim](https://git.mel.vin/conf/vim)
   * comfy config that neatly integrates into this template
