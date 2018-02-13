@@ -14,6 +14,7 @@ endif()
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(CODE "Build primary libraries and executables." ON)
 option(COVERAGE "Instrument code with coverage flags." OFF)
+option(FORMAT "Add \"format\" target which runs clang-format." OFF)
 option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
 if (NOT DOC)
@@ -53,4 +54,9 @@ endif()
 # doc
 if(NOT DOC STREQUAL "OFF")
 	add_subdirectory(doc)
+endif()
+
+# format
+if(${FORMAT})
+	include(clang_format)
 endif()
