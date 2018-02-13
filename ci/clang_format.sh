@@ -11,7 +11,7 @@ case "$1" in
 	;;
 *)
 	printf '%s\n' \
-"usage: $0 [check|format]
+"usage: $0 check|format [clang-tidy path]
 	always call from root of repo
 
 	check
@@ -19,6 +19,9 @@ case "$1" in
 
 	format
 		format sources in place
+
+	[clang-tidy path]
+		path to clang-tidy, defaults to searching path
 
 	EXIT CODE
 		0	[check] no replacements
@@ -30,17 +33,25 @@ case "$1" in
 	;;
 esac
 
+if [[ $2 ]]
+then
+	clang_format="$2"
+else
+	clang_format="$(which clang-format)"
+fi
+
+# set targets
 targets=({src,include,test}/**/*.{c,h,cpp,hpp})
 
 # run format if requested
 if [[ $1 == 'format' ]]
 then
-	clang-format -i -style=file "${targets[@]}"
+	"$clang_format" -i -style=file "${targets[@]}"
 	exit 0
 fi
 
 # checking logic otherwise
-xml="$(clang-format -output-replacements-xml -style=file "${targets[@]}")"
+xml="$("$clang_format" -output-replacements-xml -style=file "${targets[@]}")"
 
 # do not fail when no replacements
 set +e
