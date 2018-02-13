@@ -7,6 +7,7 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* add SANITISE flag which adds -fsanitize=address -fsanitize=undefined
 * add style/regex\_check.sh to find non-ASCII characters in sources
 * split docker images to make managing easier and builds more efficient
 * integrate doxygen, sphinx and gitlab pages to generate complete documentation

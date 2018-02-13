@@ -35,6 +35,11 @@ if(${CLANG_TIDY})
 	include(clang_tidy)
 endif()
 
+# sanitise
+if(${SANITISE})
+	include(sanitise)
+endif()
+
 # add src directory
 add_subdirectory(src)
 

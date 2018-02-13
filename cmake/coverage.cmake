@@ -10,6 +10,11 @@ if(CMAKE_CXX_COMPILER_ID AND
 	message(FATAL_ERROR "C, C++ compilers cannot differ for COVERAGE=ON.")
 endif()
 
+# coverage and sanitise are mutually exclusive
+if(${SANITISE})
+	message(FATAL_ERROR "COVERAGE and SANITISE are mutually exclusive.")
+endif()
+
 # find coverage tools, gcov is for GCC and llvm-cov for clang
 # llvm-cov has to wrapped with the gcov option
 if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
@@ -61,7 +66,8 @@ message(STATUS "Found genhtml: ${GENHTML_PATH}")
 add_compile_options(--coverage)
 if(NOT CMAKE_EXE_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage"
-		CACHE STRING "Linker flags for all executables." FORCE)
+		CACHE STRING "Flags used by the linker during all build types."
+		FORCE)
 endif()
 
 # Resets coverage counters.
