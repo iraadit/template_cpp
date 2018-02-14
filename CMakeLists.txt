@@ -14,6 +14,8 @@ endif()
 option(CLANG_TIDY "Check code with clang-tidy." OFF)
 option(CODE "Build primary libraries and executables." ON)
 option(COVERAGE "Instrument code with coverage flags." OFF)
+option(CPPCHECK "Add \"cppcheck\" target which checks code." OFF)
+option(FORMAT "Add \"format\" target which runs clang-format." OFF)
 option(SANITISE "Add -fsanitize=address and -fsanitize=undefined flags." OFF)
 option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
@@ -47,11 +49,16 @@ set(CMAKE_PROJECT_MAIL "mail@mel.vin")
 # main code if enabled
 if(${CODE})
 	include(code)
-elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${SANITISE} OR ${TEST})
+elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${CPPCHECK} OR ${SANITISE} OR ${TEST})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
 endif()
 
 # doc
 if(NOT DOC STREQUAL "OFF")
 	add_subdirectory(doc)
+endif()
+
+# format
+if(${FORMAT})
+	include(clang_format)
 endif()

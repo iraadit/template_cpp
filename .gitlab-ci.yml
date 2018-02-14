@@ -13,7 +13,7 @@ clang_format:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/clang_format:1.0
   script:
-    - ./ci/clang_format.sh
+    - ./ci/clang_format.sh check
 
 clang_tidy:
   stage: analyse
@@ -33,10 +33,9 @@ cppcheck:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug ..
-    - cd ..
-    - cppcheck -q --enable=all --project=build/compile_commands.json
-      --error-exitcode=1 --suppressions-list=.cppcheck-suppress
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCPPCHECK:BOOL=ON -DWERROR:BOOL=ON
+      ..
+    - make cppcheck
 
 doxygen:
   stage: analyse

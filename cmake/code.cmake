@@ -35,6 +35,11 @@ if(${CLANG_TIDY})
 	include(clang_tidy)
 endif()
 
+# cppcheck
+if(${CPPCHECK})
+	include(cppcheck)
+endif()
+
 # sanitise
 if(${SANITISE})
 	include(sanitise)

@@ -4,8 +4,54 @@ set -e
 shopt -s globstar
 shopt -s nullglob
 
-xml="$(clang-format -output-replacements-xml -style=file \
-	{src,include,test}/**/*.{c,h,cpp,hpp})"
+case "$1" in
+'check')
+	;;
+'format')
+	;;
+*)
+	printf '%s\n' \
+"usage: $0 check|format [clang-tidy path]
+	always call from root of repo
+
+	check
+		check sources and report replacements
+
+	format
+		format sources in place
+
+	[clang-tidy path]
+		path to clang-tidy, defaults to searching path
+
+	EXIT CODE
+		0	[check] no replacements
+			[format] completed ok
+		1	[check] found replacements
+		2	internal error
+		*	when any commands fails because of 'set -e'"
+	exit 2
+	;;
+esac
+
+if [[ $2 ]]
+then
+	clang_format="$2"
+else
+	clang_format="$(which clang-format)"
+fi
+
+# set targets
+targets=({src,include,test}/**/*.{c,h,cpp,hpp})
+
+# run format if requested
+if [[ $1 == 'format' ]]
+then
+	"$clang_format" -i -style=file "${targets[@]}"
+	exit 0
+fi
+
+# checking logic otherwise
+xml="$("$clang_format" -output-replacements-xml -style=file "${targets[@]}")"
 
 # do not fail when no replacements
 set +e
