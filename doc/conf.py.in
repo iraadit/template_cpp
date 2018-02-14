@@ -155,12 +155,16 @@ latex_elements = {
     # 'figure_align': 'htbp',
 }
 
+# Underscores can cause issues in the generated LaTeX.
+latex_prj_esc = '@CMAKE_PROJECT_NAME@'.replace("_", "\\_");
+latex_aut_esc = '@CMAKE_PROJECT_AUTHOR@'.replace("_", "\\_");
+
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, '@CMAKE_PROJECT_NAME@.tex', '@CMAKE_PROJECT_NAME@',
-     '@CMAKE_PROJECT_AUTHOR@', 'manual'),
+    (master_doc, '@CMAKE_PROJECT_NAME@.tex', latex_prj_esc,
+     latex_aut_esc, 'manual'),
 ]
 
 
