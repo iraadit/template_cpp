@@ -8,6 +8,7 @@ are listed below.
 ## 1.2.0 / unreleased
 
 * add cppcheck target which runs cppcheck on all sources
+* add format target that will format all sources with clang-format
 * add style/regex\_check.sh to find non-ASCII characters in sources
 * split docker images to make managing easier and builds more efficient
 * integrate doxygen, sphinx and gitlab pages to generate complete documentation

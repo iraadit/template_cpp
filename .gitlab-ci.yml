@@ -13,7 +13,7 @@ clang_format:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/clang_format:1.0
   script:
-    - ./ci/clang_format.sh
+    - ./ci/clang_format.sh check
 
 clang_tidy:
   stage: analyse
