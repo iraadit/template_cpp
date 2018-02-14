@@ -7,6 +7,7 @@ are listed below.
 
 ## 1.2.0 / unreleased
 
+* add SANITISE flag which adds -fsanitize=address -fsanitize=undefined
 * add cppcheck target which runs cppcheck on all sources
 * add format target that will format all sources with clang-format
 * add style/regex\_check.sh to find non-ASCII characters in sources

@@ -40,6 +40,11 @@ if(${CPPCHECK})
 	include(cppcheck)
 endif()
 
+# sanitise
+if(${SANITISE})
+	include(sanitise)
+endif()
+
 # add src directory
 add_subdirectory(src)
 
