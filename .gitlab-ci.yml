@@ -52,7 +52,7 @@ line_limit:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/coreutils:1.0
   script:
-    - ./ci/style/line_limit.sh -e '^\./\.clang-tidy$' -i .
+    - ./ci/style/line_limit.sh -e '^\.clang-tidy$' -i .
 
 regex_check:
   stage: analyse
