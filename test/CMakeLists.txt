@@ -5,5 +5,14 @@ include_directories(SYSTEM "${CATCH_INCLUDE_DIR}")
 add_library(test_obj OBJECT
 	main.cpp)
 
-# add test subdirectories
-add_subdirectory(add)
+# add all tests on this level separately
+foreach(file add)
+	# add test executable
+	add_executable("test_${file}"
+		"${file}.cpp"
+		$<TARGET_OBJECTS:c_template_obj>
+		$<TARGET_OBJECTS:test_obj>)
+
+	# add executable to test list
+	add_test("${file}" "test_${file}")
+endforeach(file)
