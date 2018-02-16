@@ -1,4 +1,4 @@
-#include "c_template/subtract.h"
+#include <c_template/subtract.h>
 
 int16_t subtract(uint8_t a, uint8_t b)
 {

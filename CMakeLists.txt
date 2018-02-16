@@ -40,7 +40,7 @@ endif()
 # declare project
 project(c_template
 	VERSION 1.2.0
-	DESCRIPTION "Template for C and C++"
+	DESCRIPTION "Template for C"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(CMAKE_PROJECT_AUTHOR "Melvin Vermeeren")
 set(CMAKE_PROJECT_COPYRIGHT "2018, ${CMAKE_PROJECT_AUTHOR}")
