@@ -6,7 +6,9 @@ add_library(test_obj OBJECT
 	main.cpp)
 
 # add all tests on this level separately
-foreach(file add)
+foreach(file
+		add
+		subtract)
 	# add test executable
 	add_executable("test_${file}"
 		"${file}.cpp"
