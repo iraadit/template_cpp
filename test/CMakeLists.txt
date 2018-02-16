@@ -7,4 +7,3 @@ add_library(test_obj OBJECT
 
 # add test subdirectories
 add_subdirectory(add)
-add_subdirectory(inheritance)
