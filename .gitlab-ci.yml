@@ -29,7 +29,7 @@ clang_tidy:
 cppcheck:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/cppcheck:1.0
+  image: git.mel.vin:5005/template/cpp/ci/cppcheck:1.0
   script:
     - mkdir build
     - cd build
@@ -76,7 +76,7 @@ clang:
 
 gcc:
   stage: build
-  image: git.mel.vin:5005/template/c/ci/gcc:1.0
+  image: git.mel.vin:5005/template/cpp/ci/gcc:1.0
   script:
     - mkdir build
     - cd build
