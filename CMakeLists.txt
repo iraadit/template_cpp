@@ -27,20 +27,15 @@ endif()
 # disable base languages
 unset(PROJECT_LANGUAGES)
 
-# enable c if building main code
+# enable c, c++ if building main code
 if(${CODE})
-	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} C)
-endif()
-
-# enable c++ if building tests
-if(${TEST})
-	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
+	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} C CXX)
 endif()
 
 # declare project
-project(c_template
+project(cpp_template
 	VERSION 1.2.0
-	DESCRIPTION "Template for C"
+	DESCRIPTION "Template for C++"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(CMAKE_PROJECT_AUTHOR "Melvin Vermeeren")
 set(CMAKE_PROJECT_COPYRIGHT "2018, ${CMAKE_PROJECT_AUTHOR}")

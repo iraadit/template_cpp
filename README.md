@@ -1,6 +1,6 @@
-# C Template
+# C++ Template
 
-Magical template for C projects, improves quality of life.
+Magical template for C++ projects, improves quality of life. Also supports C.
 
 Released into the public domain so you don't have to bother with crediting this.
 The only exception is cmake/apidoc.py which is BSD licensed.
