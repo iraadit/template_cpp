@@ -4,5 +4,5 @@ add_library(cpp_template_obj OBJECT
 
 # add main executable
 add_executable(cpp_template
-	main.c
+	main.cpp
 	$<TARGET_OBJECTS:cpp_template_obj>)
