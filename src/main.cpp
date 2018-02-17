@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	std::cout << "argc: " << argc << '\n';
 	for (int i = 0; i < argc; ++i) {
 		std::cout << "argv[" << i << "]: ";
-		// clang-tidy: avoid pointer arthritic in c++
+		// clang-tidy: avoid pointer arithmetic in c++
 		std::cout << argv[i]; // NOLINT
 		std::cout << '\n';
 	}
