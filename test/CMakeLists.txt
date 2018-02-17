@@ -6,6 +6,7 @@ add_library(test_obj OBJECT
 	main.cpp)
 
 # add all tests on this level separately
+# TODO add inheritence tests
 foreach(file
 		add
 		subtract)
