@@ -27,14 +27,9 @@ endif()
 # disable base languages
 unset(PROJECT_LANGUAGES)
 
-# enable c if building main code
+# enable c, c++ if building main code
 if(${CODE})
-	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} C)
-endif()
-
-# enable c++ if building tests
-if(${TEST})
-	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
+	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} C CXX)
 endif()
 
 # declare project
