@@ -1,10 +1,8 @@
 #pragma once
 
-#include "../base.hpp"
+#include "base.hpp"
 #include <string>
 
-namespace inheritance
-{
 /**
  * \brief Defines some known class types.
  */
@@ -93,4 +91,3 @@ public:
 	 */
 	void init() override;
 };
-}

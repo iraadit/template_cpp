@@ -1,14 +1,13 @@
-#include "c_template/base.hpp"
-#include "c_template/inheritance/derived.hpp"
 #include <catch/catch.hpp>
+#include <cpp_template/derived.hpp>
 
 #include <memory>
 
-SCENARIO("polymorphic classes", "[inheritance]")
+SCENARIO("polymorphic classes", "[derived]")
 {
 	GIVEN("one class that derives from an abstract base")
 	{
-		auto der = std::make_shared<inheritance::derived>();
+		auto der = std::make_shared<::derived>();
 		REQUIRE(der);
 
 		WHEN("derived class is cast to base")

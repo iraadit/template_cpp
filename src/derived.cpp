@@ -1,7 +1,5 @@
-#include <c_template/inheritance/derived.hpp>
+#include <cpp_template/derived.hpp>
 
-namespace inheritance
-{
 std::string class_types_to_string(class_type t)
 {
 	switch (t) {
@@ -18,5 +16,4 @@ std::string class_types_to_string(class_type t)
 
 void derived::init()
 {
-}
 }

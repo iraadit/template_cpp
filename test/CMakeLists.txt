@@ -6,14 +6,12 @@ add_library(test_obj OBJECT
 	main.cpp)
 
 # add all tests on this level separately
-# TODO add inheritence tests
 foreach(file
-		add
-		subtract)
+		derived)
 	# add test executable
 	add_executable("test_${file}"
 		"${file}.cpp"
-		$<TARGET_OBJECTS:c_template_obj>
+		$<TARGET_OBJECTS:cpp_template_obj>
 		$<TARGET_OBJECTS:test_obj>)
 
 	# add executable to test list
