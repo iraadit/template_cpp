@@ -1,5 +1,7 @@
 #include <cpp_template/derived.hpp>
 
+#include <iostream>
+
 std::string class_types_to_string(class_type t)
 {
 	switch (t) {
@@ -16,4 +18,5 @@ std::string class_types_to_string(class_type t)
 
 void derived::init()
 {
+	std::cout << "hello from ::derived::init()" << std::endl;
 }
