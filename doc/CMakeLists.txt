@@ -1,8 +1,8 @@
 # find doxygen prereqs
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
-set(DOXYDIR ${CMAKE_BINARY_DIR}/doxygen)
-set(DOXYFILE ${DOXYDIR}/Doxyfile)
+message(status "dot path: ${DOXYGEN_DOT_EXECUTABLE}")
+
 # due to a bug in doxygen HTML has to be enabled for xml to work
 set(DOXY_BUILD_HTML "YES")
 set(DOXY_BUILD_XML "YES")
@@ -23,6 +23,10 @@ if(${DOC} STREQUAL "doxygen")
 	endif()
 endif()
 
+set(DOC_DIR "${CMAKE_BINARY_DIR}/doc")
+set(DOXYDIR "${DOC_DIR}/doxygen")
+set(DOXYFILE "${DOXYDIR}/doxyfile")
+
 configure_file(
 	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
 	"${DOXYFILE}"
@@ -42,9 +46,31 @@ at ${DOXYDIR}/html/index.html")
 else()
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
-	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
 	include(plantuml)
+
+	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
+
+	# Determine whether to use autobuild or normal build.
+	if("${DOC}" MATCHES "^auto")
+		include(sphinx-autobuild)
+		set(sphinx_output ${DOC})
+		STRING(REGEX REPLACE "^auto" "" sphinx_output ${DOC})
+		set(sphinx_cmd 
+			${PYTHON_EXECUTABLE}
+			"${CMAKE_SOURCE_DIR}/cmake/autosymlink.py"
+			"-m" "-q"
+			"${CMAKE_SOURCE_DIR}/doc" "${DOC_TMP_DIR}" &
+			"${SPHINXAUTOBUILD_PATH}")
+	else()
+		include(sphinx-build)
+		set(sphinx_output "${DOC}")
+		set(sphinx_cmd 
+			${PYTHON_EXECUTABLE}
+			"${CMAKE_SOURCE_DIR}/cmake/autosymlink.py" "-q"
+			"${CMAKE_SOURCE_DIR}/doc" "${DOC_TMP_DIR}" &&
+			"${SPHINXBUILD_PATH}")
+	endif()
 
 	# support WERROR for sphinx
 	if(${WERROR})
@@ -53,40 +79,33 @@ else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	set(DOC_TMP_DIR ${CMAKE_BINARY_DIR}/tmp)
-
-	file(WRITE ${DOC_TMP_DIR}/copy_doc.cmake
-		"file(COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${DOC_TMP_DIR})")
-
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
-		"${CMAKE_BINARY_DIR}/doc/conf.py"
+		"${DOC_DIR}/sphinx/conf.py"
 		@ONLY)
 
 	add_custom_target(doc
 		# generate doxygen xml
-		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
-
-		# copy src doc to tmp director
-		COMMAND ${CMAKE_COMMAND} -P "${DOC_TMP_DIR}/copy_doc.cmake"
+		COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE}"
 
 		# convert doxygen xml to rst files
 		COMMAND ${PYTHON_EXECUTABLE}
 			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i -q
 			-g group,struct,union,namespace,file,interface,class
-			-o "${DOC_TMP_DIR}/doc/api"
+			-o "${DOC_TMP_DIR}/_api"
 			"${DOXYDIR}/xml"
 
 		# build sphinx documentation
-		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
-			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
-			-c "${CMAKE_BINARY_DIR}/doc" -q ${SPHINX_WERROR}
+		COMMAND ${sphinx_cmd} -b ${sphinx_output}
+			"${DOC_TMP_DIR}" "${DOC_DIR}/sphinx/${sphinx_output}"
+			-c "${DOC_DIR}/sphinx" -q ${SPHINX_WERROR}
 		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")
 		add_custom_command(TARGET doc POST_BUILD
 			COMMAND ;
 			COMMENT "Sphinx ${DOC} documentation is available \
-at ${CMAKE_BINARY_DIR}/doc/html/index.html")
-			endif()
+at ${DOC_DIR}/sphinx/${sphinx_output}")
+	endif()
 endif()
+

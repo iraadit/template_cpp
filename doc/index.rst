@@ -9,7 +9,7 @@ This is sphinx documentation with Doxygen integration.
 	:name: mastertoc
 	:glob:
 
-	api/index.rst
+	_api/index.rst
 
 Coverage
 --------
