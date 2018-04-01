@@ -18,6 +18,7 @@ apk --no-cache add -t tmp \
 
 pip install \
 	breathe \
+	livereload \
 	sphinx \
 	sphinx_rtd_theme \
 	sphinxcontrib-plantuml
