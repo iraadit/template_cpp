@@ -182,7 +182,6 @@ class SphinxBuilder(object):
 		self._builder_thread.start()
 
 	def build(self):
-		print(' '.join(self._args))
 		proc = subprocess.Popen(self._args, shell=False)
 		self.ret_code = proc.wait()
 
