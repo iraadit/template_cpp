@@ -7,4 +7,6 @@ apk --no-cache add \
 	coreutils \
 	findutils \
 	grep \
+	openssh-client \
+	rsync \
 	sed
