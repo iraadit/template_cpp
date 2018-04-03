@@ -24,10 +24,8 @@ if __name__ == '__main__':
 	quiet = args.quiet
 
 	sphinx_args = [
-		'-b', '@DOC@',
-		'-c', '@SHPINX_BASE_DIR@',
-		tmp_dir,
-		dest_dir
+		'-M', '@DOC@', tmp_dir, dest_dir,
+		'-c', '@SPHINX_OUTPUT_DIR@'
 	]
 
 	if quiet:

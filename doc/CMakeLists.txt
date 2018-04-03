@@ -59,21 +59,20 @@ else()
 	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
 	set(API_TMP_DIR "${DOC_TMP_DIR}/api")
 	set(RST_TMP_DIR "${DOC_TMP_DIR}/rst")
-	SET(SHPINX_BASE_DIR "${DOC_DIR}/sphinx")
+	SET(SPHINX_OUTPUT_DIR "${DOC_DIR}/sphinx")
 	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
-	set(SPHINX_OUTPUT_DIR "${SHPINX_BASE_DIR}/${DOC}")
 	set(
 		SPHINX_BUILD_RUNNER 
-		"${SHPINX_BASE_DIR}/sphinx_multibuild_runner.py")
+		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild_runner.py")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
-		"${SHPINX_BASE_DIR}/conf.py"
+		"${SPHINX_OUTPUT_DIR}/conf.py"
 		@ONLY)
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py" 
-		"${SHPINX_BASE_DIR}/sphinx_multibuild.py"
+		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild.py"
 		COPYONLY)
 
 	configure_file(
