@@ -11,17 +11,16 @@ apk --no-cache add \
 	make \
 	openjdk8-jre \
 	py2-pip \
-	ttf-liberation \
-	texlive
+	texlive \
+	texmf-dist-most \
+	ttf-liberation
 
 apk --no-cache add -t tmp \
 	curl
 
 pip install \
 	breathe \
-	livereload \
 	sphinx \
-	sphinx_rtd_theme \
 	sphinxcontrib-plantuml \
 	watchdog
 
