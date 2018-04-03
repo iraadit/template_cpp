@@ -50,7 +50,7 @@ doxygen:
 line_limit:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.0
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
     - ./ci/style/line_limit.sh -e '^\.clang-tidy$' -e '^include/' -e '^src/'
       -e '^test/' -i .
@@ -61,7 +61,7 @@ line_limit:
 regex_check:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.0
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
     - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:9:' .
 
@@ -120,6 +120,46 @@ sphinx_html:
   artifacts:
     paths:
       - build/doc/html
+
+review:
+  stage: deploy
+  only:
+    - branches
+  dependencies:
+    - gcc_coverage
+    - sphinx_html
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://doc.mel.vin/template/c/$CI_ENVIRONMENT_SLUG
+    on_stop: review_stop
+  script:
+    - mkdir -p ~/.ssh
+    - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
+    - eval $(ssh-agent)
+    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - mv build/doc/html public
+    - mv build/coverage_report public/coverage
+    - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
+
+review_stop:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  when: manual
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  script:
+    - mkdir -p ~/.ssh
+    - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
+    - eval $(ssh-agent)
+    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - mkdir /tmp/empty
+    - rsync -a --delete --include=$CI_ENVIRONMENT_SLUG '--exclude=*'
+      /tmp/empty/ doc@mel.vin:~/template/c
+    - rmdir /tmp/empty
 
 pages:
   stage: deploy
