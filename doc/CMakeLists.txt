@@ -50,6 +50,12 @@ else()
 	find_python_module(breathe REQUIRED)
 	include(plantuml)
 
+	if(${WERROR})
+		set(SPHINX_WERROR "-W")
+	else()
+		unset(SPHINX_WERROR)
+	endif()
+
 	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
 	set(API_TMP_DIR "${DOC_TMP_DIR}/api")
 	set(RST_TMP_DIR "${DOC_TMP_DIR}/rst")
