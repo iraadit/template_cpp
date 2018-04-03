@@ -6,6 +6,7 @@ apk --no-cache add \
 	binutils \
 	cmake \
 	doxygen \
+	ghostscript \
 	graphviz \
 	libc-dev \
 	make \
