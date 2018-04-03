@@ -3,12 +3,9 @@
 	.wy-nav-content {
 		max-width: 70% !important;
 	}
-
+	/* !important prevents the common CSS stylesheets from 
+	overridingvthis as on RTD they are loaded after this stylesheet */
 	.wy-table-responsive table td {
-		/* 
-		!important prevents the common CSS stylesheets from 
-		overridingvthis as on RTD they are loaded after this stylesheet 
-		*/
 		white-space: normal !important;
 	}
 
