@@ -123,6 +123,8 @@ sphinx_html:
 
 review:
   stage: deploy
+  variables:
+    GIT_STRATEGY: none
   only:
     - branches
   dependencies:
@@ -163,6 +165,8 @@ review_stop:
 
 pages:
   stage: deploy
+  variables:
+    GIT_STRATEGY: none
   only:
     - tags
   dependencies:
