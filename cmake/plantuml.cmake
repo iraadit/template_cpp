@@ -1,6 +1,6 @@
 # find plantuml
 find_program(PLANTUML_PATH
-	NAMES plantuml
+	NAMES plantuml plantuml.bat
 	DOC "Path to PlantUML wrapper script.")
 
 if(NOT PLANTUML_PATH)

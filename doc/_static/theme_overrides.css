@@ -1,0 +1,19 @@
+/* override table width restrictions */
+@media screen and (min-width: 767px)
+{
+	.wy-nav-content
+	{
+		max-width: 70% !important;
+	}
+	/* !important prevents the common CSS stylesheets from
+	overridingvthis as on RTD they are loaded after this stylesheet */
+	.wy-table-responsive table td
+	{
+		white-space: normal !important;
+	}
+
+	.wy-table-responsive
+	{
+		overflow: visible !important;
+	}
+}

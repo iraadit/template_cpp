@@ -98,9 +98,10 @@ default_role = 'any'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-import sphinx_rtd_theme
-html_theme = 'sphinx_rtd_theme'
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+if '@DOC@' == 'html':
+    import sphinx_rtd_theme
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -111,7 +112,13 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = []
+html_static_path = ['@CMAKE_SOURCE_DIR@/doc/_static']
+
+html_context = {
+    'css_files': [
+        '_static/theme_overrides.css',  # override wide tables in RTD theme
+    ],
+}
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -140,7 +147,7 @@ htmlhelp_basename = '@CMAKE_PROJECT_NAME@_doc'
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    # 'papersize': 'letterpaper',
+    'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -164,9 +171,8 @@ latex_aut_esc = '@CMAKE_PROJECT_AUTHOR@'.replace("_", "\\_");
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, '@CMAKE_PROJECT_NAME@.tex', latex_prj_esc,
-     latex_aut_esc, 'manual'),
+        latex_aut_esc, 'manual'),
 ]
-
 
 # -- Options for manual page output ---------------------------------------
 

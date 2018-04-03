@@ -1,8 +1,6 @@
 # find doxygen prereqs
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
-set(DOXYDIR ${CMAKE_BINARY_DIR}/doxygen)
-set(DOXYFILE ${DOXYDIR}/Doxyfile)
 # due to a bug in doxygen HTML has to be enabled for xml to work
 set(DOXY_BUILD_HTML "YES")
 set(DOXY_BUILD_XML "YES")
@@ -22,6 +20,10 @@ if(${DOC} STREQUAL "doxygen")
 		set(DOXY_WARN_AS_ERR "NO")
 	endif()
 endif()
+
+set(DOC_DIR "${CMAKE_BINARY_DIR}/doc")
+set(DOXYDIR "${DOC_DIR}/doxygen")
+set(DOXYFILE "${DOXYDIR}/doxyfile")
 
 configure_file(
 	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
@@ -46,47 +48,56 @@ else()
 	find_python_module(breathe REQUIRED)
 	include(plantuml)
 
-	# support WERROR for sphinx
 	if(${WERROR})
 		set(SPHINX_WERROR "-W")
 	else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	set(DOC_TMP_DIR ${CMAKE_BINARY_DIR}/tmp)
-
-	file(WRITE ${DOC_TMP_DIR}/copy_doc.cmake
-		"file(COPY ${CMAKE_SOURCE_DIR}/doc DESTINATION ${DOC_TMP_DIR})")
+	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
+	set(API_TMP_DIR "${DOC_TMP_DIR}/api")
+	set(RST_TMP_DIR "${DOC_TMP_DIR}/rst")
+	SET(SPHINX_OUTPUT_DIR "${DOC_DIR}/sphinx")
+	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
+	set(
+		SPHINX_BUILD_RUNNER 
+		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild_runner.py")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
-		"${CMAKE_BINARY_DIR}/doc/conf.py"
+		"${SPHINX_OUTPUT_DIR}/conf.py"
+		@ONLY)
+
+	configure_file(
+		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py" 
+		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild.py"
+		COPYONLY)
+
+	configure_file(
+		"${CMAKE_SOURCE_DIR}/doc/sphinx_multibuild_runner.py.in"
+		"${SPHINX_BUILD_RUNNER}"
 		@ONLY)
 
 	add_custom_target(doc
 		# generate doxygen xml
-		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
-
-		# copy src doc to tmp director
-		COMMAND ${CMAKE_COMMAND} -P "${DOC_TMP_DIR}/copy_doc.cmake"
+		COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE}"
 
 		# convert doxygen xml to rst files
 		COMMAND ${PYTHON_EXECUTABLE}
 			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i -q
 			-g group,struct,union,namespace,file,interface,class
-			-o "${DOC_TMP_DIR}/doc/api"
+			-o "${API_TMP_DIR}/_api"
 			"${DOXYDIR}/xml"
 
 		# build sphinx documentation
-		COMMAND ${PYTHON_EXECUTABLE} -msphinx -M ${DOC}
-			"${DOC_TMP_DIR}/doc" "${CMAKE_BINARY_DIR}/doc"
-			-c "${CMAKE_BINARY_DIR}/doc" -q ${SPHINX_WERROR}
+		COMMAND ${PYTHON_EXECUTABLE} "${SPHINX_BUILD_RUNNER}" "-q"
 		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")
 		add_custom_command(TARGET doc POST_BUILD
 			COMMAND ;
 			COMMENT "Sphinx ${DOC} documentation is available \
-at ${CMAKE_BINARY_DIR}/doc/html/index.html")
-			endif()
+at ${DOC_DIR}/sphinx/${sphinx_output}")
+	endif()
 endif()
+

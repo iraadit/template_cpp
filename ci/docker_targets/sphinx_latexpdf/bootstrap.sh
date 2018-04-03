@@ -6,11 +6,14 @@ apk --no-cache add \
 	binutils \
 	cmake \
 	doxygen \
+	ghostscript \
 	graphviz \
 	libc-dev \
 	make \
 	openjdk8-jre \
 	py2-pip \
+	texlive \
+	texmf-dist-most \
 	ttf-liberation
 
 apk --no-cache add -t tmp \
@@ -19,7 +22,6 @@ apk --no-cache add -t tmp \
 pip install \
 	breathe \
 	sphinx \
-	sphinx_rtd_theme \
 	sphinxcontrib-plantuml \
 	watchdog
 
