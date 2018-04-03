@@ -1,0 +1,42 @@
+import sphinx_multibuild
+import sys
+import argparse
+
+if __name__ == '__main__':
+	"""Parse and check the command line arguments."""
+	parser = argparse.ArgumentParser(
+		description="""Run build stop for documentation.""",
+		formatter_class=argparse.RawDescriptionHelpFormatter)
+
+	parser.add_argument('-m', '--monitor', action='store_true',
+		dest='monitor', help='Monitor for changes and autobuild')
+	
+	parser.add_argument('-q', '--quiet', action='store_true',
+		dest='quiet', help='Only print warnings and errors.')
+
+	args = parser.parse_args()
+
+	input_dirs = [@RST_INPUT_DIRS@]
+	tmp_dir =  "@RST_TMP_DIR@"
+	dest_dir = "@SPHINX_OUTPUT_DIR@"
+
+	monitor = args.monitor
+	quiet = args.quiet
+
+	sphinx_args = [
+		'-b', '@DOC@',
+		'-c', '@SHPINX_BASE_DIR@',
+		tmp_dir,
+		dest_dir
+	]
+
+	if quiet:
+		sphinx_args.append("-q")
+	
+	if '@SPHINX_WERROR@' != '':
+		sphinx_args.append("-W")
+
+	ret_code = sphinx_multibuild.sphinx_multibuild(input_dirs, dest_dir,\
+		tmp_dir, quiet, monitor, sphinx_args)
+
+	sys.exit(ret_code)

@@ -46,42 +46,31 @@ at ${DOXYDIR}/html/index.html")
 else()
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
+	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
 	include(plantuml)
 
 	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
-
-	# Determine whether to use autobuild or normal build.
-	if("${DOC}" MATCHES "^auto")
-		include(sphinx-autobuild)
-		set(sphinx_output ${DOC})
-		STRING(REGEX REPLACE "^auto" "" sphinx_output ${DOC})
-		set(sphinx_cmd 
-			${PYTHON_EXECUTABLE}
-			"${CMAKE_SOURCE_DIR}/cmake/autosymlink.py"
-			"-m" "-q"
-			"${CMAKE_SOURCE_DIR}/doc" "${DOC_TMP_DIR}" &
-			"${SPHINXAUTOBUILD_PATH}")
-	else()
-		include(sphinx-build)
-		set(sphinx_output "${DOC}")
-		set(sphinx_cmd 
-			${PYTHON_EXECUTABLE}
-			"${CMAKE_SOURCE_DIR}/cmake/autosymlink.py" "-q"
-			"${CMAKE_SOURCE_DIR}/doc" "${DOC_TMP_DIR}" &&
-			"${SPHINXBUILD_PATH}")
-	endif()
-
-	# support WERROR for sphinx
-	if(${WERROR})
-		set(SPHINX_WERROR "-W")
-	else()
-		unset(SPHINX_WERROR)
-	endif()
+	set(API_TMP_DIR "${DOC_TMP_DIR}/api")
+	set(RST_TMP_DIR "${DOC_TMP_DIR}/rst")
+	SET(SHPINX_BASE_DIR "${DOC_DIR}/sphinx")
+	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
+	set(SPHINX_OUTPUT_DIR "${SHPINX_BASE_DIR}/${DOC}")
+	set(SPHINX_BUILD_RUNNER "${SHPINX_BASE_DIR}/sphinx_multibuild_runner.py")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
-		"${DOC_DIR}/sphinx/conf.py"
+		"${SHPINX_BASE_DIR}/conf.py"
+		@ONLY)
+
+	configure_file(
+		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py" 
+		"${SHPINX_BASE_DIR}/sphinx_multibuild.py"
+		COPYONLY)
+
+	configure_file(
+		"${CMAKE_SOURCE_DIR}/doc/sphinx_multibuild_runner.py.in"
+		"${SPHINX_BUILD_RUNNER}"
 		@ONLY)
 
 	add_custom_target(doc
@@ -92,13 +81,11 @@ else()
 		COMMAND ${PYTHON_EXECUTABLE}
 			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i -q
 			-g group,struct,union,namespace,file,interface,class
-			-o "${DOC_TMP_DIR}/_api"
+			-o "${API_TMP_DIR}/_api"
 			"${DOXYDIR}/xml"
 
 		# build sphinx documentation
-		COMMAND ${sphinx_cmd} -b ${sphinx_output}
-			"${DOC_TMP_DIR}" "${DOC_DIR}/sphinx/${sphinx_output}"
-			-c "${DOC_DIR}/sphinx" -q ${SPHINX_WERROR}
+		COMMAND ${PYTHON_EXECUTABLE} "${SPHINX_BUILD_RUNNER}"
 		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")
