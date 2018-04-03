@@ -93,7 +93,7 @@ else()
 			"${DOXYDIR}/xml"
 
 		# build sphinx documentation
-		COMMAND ${PYTHON_EXECUTABLE} "${SPHINX_BUILD_RUNNER}"
+		COMMAND ${PYTHON_EXECUTABLE} "${SPHINX_BUILD_RUNNER}" "-q"
 		COMMENT "Generating sphinx ${DOC} documentation.")
 
 	if(NOT ${DOC} STREQUAL "help")

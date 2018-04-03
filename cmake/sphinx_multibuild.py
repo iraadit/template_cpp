@@ -218,11 +218,12 @@ def sphinx_multibuild(
 	input_paths, 
 	dest_path, 
 	symlink_path, 
-	quiet, 
+	quiet_log, 
 	monitor, 
 	sphinx_args
 ):
-	quiet = quiet
+	global quiet
+	quiet = quiet_log
 
 	mkdir_p(dest_path)
 	mkdir_p(symlink_path)
