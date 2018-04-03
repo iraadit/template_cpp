@@ -22,14 +22,14 @@ Documentation building
 
 When creating a build including documentation using ``cmake
 -DDOC=*somesphinxtarget*`` then a python script is created at
-``buildir/doc/sphinx/sphinx_multibuild_runner.py``. This is a runner script 
-that can build the documentation where all the necessary sphinx params are 
+``buildir/doc/sphinx/sphinx_multibuild_runner.py``. This is a runner script
+that can build the documentation where all the necessary sphinx params are
 handled for you. There is also a handy mode where build on change is supported.
 
 There are two optional arguments for the script:
 
 - **-q**: Quiet sphinx build.
-- **-m**: Monitor the doc directory and automatically rebuild on a change. 
+- **-m**: Monitor the doc directory and automatically rebuild on a change.
 
 PlantUML
 --------
