@@ -157,7 +157,7 @@ review_stop:
     - eval $(ssh-agent)
     - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
     - mkdir /tmp/empty
-    - rsync -a --delete --include=$CI_ENVIRONMENT_SLUG '--exclude=*'
+    - rsync -a --delete --filter="+ $CI_ENVIRONMENT_SLUG" --filter='-,p *'
       /tmp/empty/ doc@mel.vin:~/template/c
     - rmdir /tmp/empty
 
