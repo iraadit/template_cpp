@@ -124,7 +124,7 @@ sphinx_html:
 pages:
   stage: deploy
   only:
-    - master
+    - tags
   dependencies:
     - gcc_coverage
     - sphinx_html
