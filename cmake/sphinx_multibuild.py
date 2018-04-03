@@ -111,7 +111,7 @@ Removing old symlink and creating new\
 			print('Failed to create symlink: %s'
 				% (str(e)),
 				file=sys.stderr)
-		
+
 		self.build_event.set()
 
 	def on_deleted(self, event):
@@ -123,7 +123,7 @@ Removing old symlink and creating new\
 			print('Failed to create symlink: %s'
 				% (str(e)),
 				file=sys.stderr)
-		
+
 		self.build_event.set()
 
 	def on_modified(self, event):
@@ -223,7 +223,7 @@ def sphinx_multibuild(
 	sphinx_args
 ):
 	quiet = quiet
-		
+
 	mkdir_p(dest_path)
 	mkdir_p(symlink_path)
 
@@ -244,21 +244,22 @@ that is not symlink: %s""" % (path)
 			print('%s is not a directory.'\
 				% input_paths[i], file=sys.stderr)
 			sys.exit(1)
-		input_paths[i] = os.path.normpath(os.path.abspath(input_paths[i]))
+		input_paths[i] = \
+			os.path.normpath(os.path.abspath(input_paths[i]))
 
 	changed_event = threading.Event()
 
 	builder = SphinxBuilder(sphinx_args, changed_event)
 	handlers = [SymlinkHandler(x, symlink_path, changed_event)\
 		for x in input_paths]
-	
+
 	builder.build()
 
 	if monitor:
 		observer = Observer()
 		for h in handlers:
 			observer.schedule(h, h.rootpath, recursive=True)
-		
+
 		observer.start()
 		try:
 			while True:
@@ -299,7 +300,7 @@ Also supports automatic building.""",
 		else:
 			parser.add_argument('-{0}'.format(o), action='append',
 				metavar=m, help='See `sphinx-build -h`')
-	
+
 	parser.add_argument('filenames', nargs='*',\
 		help='See `sphinx-build -h`')
 
