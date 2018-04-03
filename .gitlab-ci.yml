@@ -149,6 +149,7 @@ review_stop:
   variables:
     GIT_STRATEGY: none
   when: manual
+  dependencies: []
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   environment:
     name: review/$CI_COMMIT_REF_NAME
