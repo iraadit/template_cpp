@@ -124,11 +124,11 @@ sphinx_html:
 sphinx_latex:
   stage: doc
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.2
+  image: git.mel.vin:5005/template/c/ci/sphinx_latexpdf:1.0
   script:
     - mkdir build
     - cd build
-    - cmake -DCODE:BOOL=OFF -DDOC:STRING=latex -DWERROR:BOOL=ON ..
+    - cmake -DCODE:BOOL=OFF -DDOC:STRING=latexpdf -DWERROR:BOOL=ON ..
     - make doc
   artifacts:
     paths:
