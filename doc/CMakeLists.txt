@@ -56,7 +56,9 @@ else()
 	SET(SHPINX_BASE_DIR "${DOC_DIR}/sphinx")
 	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
 	set(SPHINX_OUTPUT_DIR "${SHPINX_BASE_DIR}/${DOC}")
-	set(SPHINX_BUILD_RUNNER "${SHPINX_BASE_DIR}/sphinx_multibuild_runner.py")
+	set(
+		SPHINX_BUILD_RUNNER 
+		"${SHPINX_BASE_DIR}/sphinx_multibuild_runner.py")
 
 	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"

@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
 	parser.add_argument('-m', '--monitor', action='store_true',
 		dest='monitor', help='Monitor for changes and autobuild')
-	
+
 	parser.add_argument('-q', '--quiet', action='store_true',
 		dest='quiet', help='Only print warnings and errors.')
 
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
 	if quiet:
 		sphinx_args.append("-q")
-	
+
 	if '@SPHINX_WERROR@' != '':
 		sphinx_args.append("-W")
 

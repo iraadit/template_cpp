@@ -5,8 +5,10 @@
 	}
 
 	.wy-table-responsive table td {
-	/* !important prevents the common CSS stylesheets from overriding
-		this as on RTD they are loaded after this stylesheet */
+		/* 
+		!important prevents the common CSS stylesheets from 
+		overridingvthis as on RTD they are loaded after this stylesheet 
+		*/
 		white-space: normal !important;
 	}
 
