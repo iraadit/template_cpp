@@ -31,7 +31,6 @@ def log(msg):
 # small hackerino for windows
 if os.name == 'nt':
 	import ctypes
-	import subprocess
 	win = ctypes.windll
 
 	def win32_create_symlink(src, dst):
@@ -70,9 +69,9 @@ if os.name == 'nt':
 
 class SymlinkHandler(FileSystemEventHandler):
 	def __init__(self, rootpath, symlinkdir, build_event):
-		self.rootpath = rootpath
-		self.symlinkdir = symlinkdir
-		self.build_event = build_event
+		self.rootpath = os.path.normpath(os.path.abspath(rootpath))
+		self.symlinkdir = os.path.normpath(os.path.abspath(symlinkdir))
+		self._build_event = build_event
 
 		for n in os.listdir(rootpath):
 			try:
@@ -88,6 +87,10 @@ symlink: %s""" % (path)
 					file=sys.stderr)
 
 	def on_moved(self, event):
+		if self.is_root_path(event.src_path) \
+			or self.is_root_path(event.dest_path):
+			return
+
 		msg = """Move detected: %s -> %s, \
 Removing old symlink and creating new\
 """ % (event.src_path, event.dest_path)
@@ -100,9 +103,12 @@ Removing old symlink and creating new\
 				% (str(e)),
 				file=sys.stderr)
 
-		self.build_event.set()
+		self._build_event.set()
 
 	def on_created(self, event):
+		if self.is_root_path(event.src_path):
+			return
+
 		msg = 'Create detected: %s, Creating symlink' % (event.src_path)
 		log(msg)
 		try:
@@ -112,9 +118,11 @@ Removing old symlink and creating new\
 				% (str(e)),
 				file=sys.stderr)
 
-		self.build_event.set()
+		self._build_event.set()
 
 	def on_deleted(self, event):
+		if self.is_root_path(event.src_path):
+			return
 		msg = 'Delete detected: %s, Deleting symlink' % (event.src_path)
 		log(msg)
 		try:
@@ -124,9 +132,11 @@ Removing old symlink and creating new\
 				% (str(e)),
 				file=sys.stderr)
 
-		self.build_event.set()
+		self._build_event.set()
 
 	def on_modified(self, event):
+		if self.is_root_path(event.src_path):
+			return
 		msg = 'Change detected: %s, Recreating symlink' % \
 			(event.src_path)
 		log(msg)
@@ -138,7 +148,7 @@ Removing old symlink and creating new\
 				% (str(e)),
 				file=sys.stderr)
 
-		self.build_event.set()
+		self._build_event.set()
 
 	def create_link(self, target):
 		self.delete_link(target)
@@ -151,13 +161,17 @@ Removing old symlink and creating new\
 
 		os.unlink(link)
 
+	def is_root_path(self, target):
+		target = os.path.normpath(os.path.abspath(target))
+		return target == self.rootpath
+
 	def get_source(self, target):
-		target = os.path.abspath(target)
+		target =  os.path.normpath(os.path.abspath(target))
 		link_name = self.path_base(self.rootpath, target)
 		return os.path.join(self.rootpath, link_name)
 
 	def get_target(self, target):
-		target = os.path.abspath(target)
+		target =  os.path.normpath(os.path.abspath(target))
 		link_name = self.path_base(self.rootpath, target)
 		return os.path.join(self.symlinkdir, link_name)
 
@@ -176,7 +190,7 @@ class SphinxBuilder(object):
 	def __init__(self, args, build_event):
 		self.ret_code = 1
 		self._args = ['sphinx-build'] + args
-		self.build_event = build_event
+		self._build_event = build_event
 		self._builder_thread = threading.Thread(target=self._builder)
 		self._builder_thread.daemon = True
 		self._builder_thread.start()
@@ -187,8 +201,8 @@ class SphinxBuilder(object):
 
 	def _builder(self):
 		while True:
-			self.build_event.wait()
-			self.build_event.clear()
+			self._build_event.wait()
+			self._build_event.clear()
 			log("============ Triggered Sphinx build ============")
 			self.build()
 

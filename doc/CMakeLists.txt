@@ -1,8 +1,6 @@
 # find doxygen prereqs
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
-message(status "dot path: ${DOXYGEN_DOT_EXECUTABLE}")
-
 # due to a bug in doxygen HTML has to be enabled for xml to work
 set(DOXY_BUILD_HTML "YES")
 set(DOXY_BUILD_XML "YES")
