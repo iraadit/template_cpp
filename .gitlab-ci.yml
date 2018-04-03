@@ -130,7 +130,7 @@ sphinx_latexpdf:
     - cd build
     - cmake -DCODE:BOOL=OFF -DDOC:STRING=latexpdf -DWERROR:BOOL=ON ..
     - make doc
-    - mv build/doc/sphinx/latex/c_template.pdf .
+    - mv doc/sphinx/latex/c_template.pdf ..
   artifacts:
     paths:
       - c_template.pdf
