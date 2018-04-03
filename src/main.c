@@ -8,11 +8,6 @@
 static const uint8_t A = 4;
 static const uint8_t B = 37;
 
-int is_even(int* a, int* b, int restrict* c)
-{
-	return 0;
-}
-
 int main(int argc, char **argv)
 {
 	int i;
