@@ -89,7 +89,7 @@ clang_sanitise:
   script:
     - mkdir build
     - cd build
-    - cmake -DSANITISE:BOOL=ON -DTEST:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DSANITISE:BOOL=ON -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
 
