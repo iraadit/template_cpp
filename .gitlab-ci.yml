@@ -64,6 +64,7 @@ regex_check:
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
     - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:9:' .
+    - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
 
 clang:
   stage: build
