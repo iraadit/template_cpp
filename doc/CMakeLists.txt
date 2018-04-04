@@ -1,4 +1,3 @@
-# find doxygen prereqs
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
 # due to a bug in doxygen HTML has to be enabled for xml to work
@@ -7,8 +6,8 @@ set(DOXY_BUILD_XML "YES")
 set(DOXY_BUILD_LATEX "NO")
 set(DOXY_WARN_AS_ERR "NO")
 
-# if doxygen is specified only doxygen html output is generated.
-# This also supports warning as errors to verify complete doxygen coverage
+# If doxygen is specified only doxygen html output is generated.
+# This also supports warning as errors to verify complete doxygen coverage.
 if(${DOC} STREQUAL "doxygen")
 	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
@@ -60,7 +59,7 @@ else()
 	SET(SPHINX_OUTPUT_DIR "${DOC_DIR}/sphinx")
 	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
 	set(
-		SPHINX_BUILD_RUNNER 
+		SPHINX_BUILD_RUNNER
 		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild_runner.py")
 
 	configure_file(
@@ -69,7 +68,7 @@ else()
 		@ONLY)
 
 	configure_file(
-		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py" 
+		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py"
 		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild.py"
 		COPYONLY)
 

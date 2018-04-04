@@ -51,7 +51,7 @@ if os.name == 'nt':
 		win32 = ctypes.windll.kernel32
 		attributes = win.kernel32.GetFileAttributesW(
 			unicode(path))
-		return (attributes 
+		return (attributes
 			& FILE_ATTRIBUTE_REPARSE_POINT) > 0
 
 	def win32_unlink(path):
@@ -230,11 +230,11 @@ SHPINX_OPTS = (
 )
 
 def sphinx_multibuild(
-	input_paths, 
-	dest_path, 
-	symlink_path, 
-	quiet_log, 
-	monitor, 
+	input_paths,
+	dest_path,
+	symlink_path,
+	quiet_log,
+	monitor,
 	sphinx_args
 ):
 	global quiet
@@ -297,8 +297,8 @@ Also supports automatic building.""",
 
 	parser.add_argument('-i', '--input', action='append', type=str,
 		dest='inputdirs', help='An input directory.', required=True)
-	parser.add_argument('-s', '--symlinkpath', 
-		type=str, dest='tempdir', 
+	parser.add_argument('-s', '--symlinkpath',
+		type=str, dest='tempdir',
 		help='Temporary directory where symlinks are placed.',
 		required=True)
 	parser.add_argument('-q', '--quiet', action='store_true',
@@ -308,7 +308,7 @@ Also supports automatic building.""",
 	parser.add_argument('outputdir', type=str,
 		help='The directory where you want the output to be placed')
 
-	# sphinx build options.
+	# sphinx build options
 	for o, m in SHPINX_OPTS:
 		if m is None:
 			parser.add_argument('-{0}'.format(o), action='count',
