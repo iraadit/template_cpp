@@ -27,17 +27,15 @@ endif()
 # disable base languages
 unset(PROJECT_LANGUAGES)
 
-# enable c if building main code
 if(${CODE})
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} C)
 endif()
 
-# enable c++ if building tests
+# test framework requires c++
 if(${TEST})
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
 endif()
 
-# declare project
 project(c_template
 	VERSION 1.2.0
 	DESCRIPTION "Template for C"
@@ -46,19 +44,16 @@ set(CMAKE_PROJECT_AUTHOR "Melvin Vermeeren")
 set(CMAKE_PROJECT_COPYRIGHT "2018, ${CMAKE_PROJECT_AUTHOR}")
 set(CMAKE_PROJECT_MAIL "mail@mel.vin")
 
-# main code if enabled
 if(${CODE})
 	include(code)
 elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${CPPCHECK} OR ${SANITISE} OR ${TEST})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
 endif()
 
-# doc
 if(NOT DOC STREQUAL "OFF")
 	add_subdirectory(doc)
 endif()
 
-# format
 if(${FORMAT})
 	include(clang_format)
 endif()

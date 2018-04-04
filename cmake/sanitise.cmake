@@ -1,10 +1,8 @@
-# sanitise is not valid when it is not a debug build
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(FATAL_ERROR
 		"Sanitise is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
-# coverage and sanitise are mutually exclusive
 if(${COVERAGE})
 	message(FATAL_ERROR "COVERAGE and SANITISE are mutually exclusive.")
 endif()

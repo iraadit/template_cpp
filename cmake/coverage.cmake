@@ -1,16 +1,13 @@
-# coverage is not valid when it is not a debug build
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
 	message(FATAL_ERROR
 		"Code coverage is only supported for CMAKE_BUILD_TYPE=DEBUG.")
 endif()
 
-# mixing compilers is not allowed when coverage is enabled
 if(CMAKE_CXX_COMPILER_ID AND
 		(NOT CMAKE_C_COMPILER_ID STREQUAL CMAKE_CXX_COMPILER_ID))
 	message(FATAL_ERROR "C, C++ compilers cannot differ for COVERAGE=ON.")
 endif()
 
-# coverage and sanitise are mutually exclusive
 if(${SANITISE})
 	message(FATAL_ERROR "COVERAGE and SANITISE are mutually exclusive.")
 endif()
@@ -70,12 +67,12 @@ if(NOT CMAKE_EXE_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
 		FORCE)
 endif()
 
-# Resets coverage counters.
+# resets coverage counters
 add_custom_target(coverage_clear
 	COMMAND "${LCOV_PATH}" --directory . --zerocounters
 	COMMENT "Resetting coverage counters.")
 
-# setup target
+# add target for generating the actual coverage report
 add_custom_target(coverage_report
 	# create baselines to make sure untouched files show up in the report
 	COMMAND "${LCOV_PATH}" -q -c -i
