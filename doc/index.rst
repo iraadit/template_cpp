@@ -34,19 +34,19 @@ There are two optional arguments for the script:
 Sanitization
 ------------
 
-AddressSanitizer (ASan), LeakSanitizer (LSan), and UndefinedBehaviorSanitizer
-(UBSan) are used to catch memory errors and undefined behaviour during
-run-time.
+When the sanitization option is set in CMake various sanitizers will be used
+to verify correctness. AddressSanitizer (ASan), LeakSanitizer (LSan), and
+UndefinedBehaviorSanitizer (UBSan) are used to catch memory errors and
+undefined behaviour during run-time.
 
-.. WARNING::
+.. warning::
 
-	LSan is enabled by default on Linux and uses ptrace to attach a tracer
-	thread to the program that is being tested. Docker containers run
-	without the SYS_PTRACE capability by default. In order for the CI to
-	work properly the docker container should be run with the SYS_PTRACE
-	capability. See https://docs.docker.com/engine/reference/run on how
-	to add specific capabilities.
-
+	LSan uses ptrace to attach a tracer thread to the program that is
+	being tested. Docker containers run without the SYS_PTRACE capability
+	by default. In order for the CI to work properly the docker container
+	should be run with the SYS_PTRACE capability. See
+	https://docs.docker.com/engine/reference/run on how to add specific
+	capabilities.
 
 PlantUML
 --------
