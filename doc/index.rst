@@ -31,6 +31,23 @@ There are two optional arguments for the script:
 - **-q**: Quiet sphinx build.
 - **-m**: Monitor the doc directory and automatically rebuild on a change.
 
+Sanitization
+------------
+
+AddressSanitizer (ASan), LeakSanitizer (LSan), and UndefinedBehaviorSanitizer
+(UBSan) are used to catch memory errors and undefined behaviour during
+run-time.
+
+.. WARNING::
+
+	LSan is enabled by default on Linux and uses ptrace to attach a tracer
+	thread to the program that is being tested. Docker containers run
+	without the SYS_PTRACE capability by default. In order for the CI to
+	work properly the docker container should be run with the SYS_PTRACE
+	capability. See https://docs.docker.com/engine/reference/run on how
+	to add specific capabilities.
+
+
 PlantUML
 --------
 
