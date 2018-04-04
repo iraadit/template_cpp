@@ -17,7 +17,7 @@ apk --no-cache add -t tmp \
 mkdir -p /usr/local/include/catch
 curl -Lf \
 	-o /usr/local/include/catch/catch.hpp \
-	https://git.mel.vin/mirror/catch/raw/v2.1.1/catch/catch.hpp
+	https://git.mel.vin/mirror/catch/raw/v2.2.1/catch/catch.hpp
 
 apk --no-cache del tmp
 
