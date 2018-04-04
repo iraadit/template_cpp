@@ -83,13 +83,13 @@ gcc:
     - cmake ..
     - make -j $(nproc)
 
-clang_release:
+clang_sanitise:
   stage: test
   image: git.mel.vin:5005/template/c/ci/clang:1.0
   script:
     - mkdir build
     - cd build
-    - cmake -DTEST:BOOL=ON ..
+    - cmake -DSANITISE:BOOL=ON -DTEST:BOOL=ON ..
     - make -j $(nproc)
     - make test
 

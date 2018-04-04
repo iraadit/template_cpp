@@ -9,6 +9,7 @@ if(${COVERAGE})
 	message(FATAL_ERROR "COVERAGE and SANITISE are mutually exclusive.")
 endif()
 
+add_compile_options(-fno-sanitize-recover)
 foreach(flag -fsanitize=address -fsanitize=undefined)
 	add_compile_options("${flag}")
 	if(NOT CMAKE_EXE_LINKER_FLAGS MATCHES "(^| +)${flag}($| +)")
