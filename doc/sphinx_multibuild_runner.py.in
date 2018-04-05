@@ -1,42 +1,50 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
-import sphinx_multibuild
+from sphinx_multibuild import SphinxMultiBuilder
+import logging
+import time
 import sys
 import argparse
 
 if __name__ == '__main__':
-	"""Parse and check the command line arguments."""
-	parser = argparse.ArgumentParser(
-		description="""Run build stop for documentation.""",
-		formatter_class=argparse.RawDescriptionHelpFormatter)
+    """Parse and check the command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="""Run build stop for documentation.""",
+        formatter_class=argparse.RawDescriptionHelpFormatter)
 
-	parser.add_argument('-m', '--monitor', action='store_true',
-		dest='monitor', help='Monitor for changes and autobuild')
+    parser.add_argument('-m', '--monitor', action='store_true', dest='monitor',
+                        help='Monitor for changes and autobuild')
 
-	parser.add_argument('-q', '--quiet', action='store_true',
-		dest='quiet', help='Only print warnings and errors.')
+    parser.add_argument('-q', '--quiet', action='store_true', dest='quiet',
+                        help='Only print warnings and errors.')
 
-	args = parser.parse_args()
+    args = parser.parse_args()
 
-	input_dirs = [@RST_INPUT_DIRS@]
-	tmp_dir =  "@RST_TMP_DIR@"
-	dest_dir = "@SPHINX_OUTPUT_DIR@"
+    sphinx_args = [
+        '-M', '@DOC@',
+        '-c', '@SPHINX_OUTPUT_DIR@'
+    ]
 
-	monitor = args.monitor
-	quiet = args.quiet
+    if args.quiet:
+        sphinx_args.append("-q")
 
-	sphinx_args = [
-		'-M', '@DOC@', tmp_dir, dest_dir,
-		'-c', '@SPHINX_OUTPUT_DIR@'
-	]
+    if '@SPHINX_WERROR@' != '':
+        sphinx_args.append("-W")
 
-	if quiet:
-		sphinx_args.append("-q")
+    loglevel = logging.WARNING if args.quiet else logging.INFO
+    logging.basicConfig(format='%(message)s', level=loglevel)
 
-	if '@SPHINX_WERROR@' != '':
-		sphinx_args.append("-W")
+    builder = SphinxMultiBuilder([@RST_INPUT_DIRS@], "@RST_TMP_DIR@",
+                                 "@SPHINX_OUTPUT_DIR@", sphinx_args)
 
-	ret_code = sphinx_multibuild.sphinx_multibuild(input_dirs, dest_dir,\
-		tmp_dir, quiet, monitor, sphinx_args)
+    builder.build()
 
-	sys.exit(ret_code)
+    if args.monitor:
+        builder.start_autobuilding()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            builder.stop_autobuilding()
+
+    sys.exit(builder.get_last_exit_code())

@@ -21,7 +21,7 @@ pip install \
 	sphinx \
 	sphinx_rtd_theme \
 	sphinxcontrib-plantuml \
-	watchdog
+	sphinx-multibuild
 
 mkdir -p /opt/plantuml
 for i in batik-all-1.7.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar \

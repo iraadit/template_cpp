@@ -68,11 +68,6 @@ else()
 		@ONLY)
 
 	configure_file(
-		"${CMAKE_SOURCE_DIR}/cmake/sphinx_multibuild.py"
-		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild.py"
-		COPYONLY)
-
-	configure_file(
 		"${CMAKE_SOURCE_DIR}/doc/sphinx_multibuild_runner.py.in"
 		"${SPHINX_BUILD_RUNNER}"
 		@ONLY)
