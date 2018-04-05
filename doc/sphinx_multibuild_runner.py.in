@@ -9,7 +9,7 @@ import argparse
 if __name__ == '__main__':
     """Parse and check the command line arguments."""
     parser = argparse.ArgumentParser(
-        description="""Run build stop for documentation.""",
+        description='Run sphinx doc build step.',
         formatter_class=argparse.RawDescriptionHelpFormatter)
 
     parser.add_argument('-m', '--monitor', action='store_true', dest='monitor',
