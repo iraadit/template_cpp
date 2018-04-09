@@ -5,7 +5,9 @@ Magical template for C projects, improves quality of life.
 Released into the public domain so you don't have to bother with crediting this.
 The only exception is cmake/apidoc.py which is BSD licensed.
 
-[Generated sphinx/doxygen-based documentation.](https://doc.mel.vin/template/c)
+Generated sphinx/doxygen-based documentation:
+* [Latest release tag](https://template.doc.mel.vin/c)
+* [Development version](https://doc.mel.vin/template/c/review-master-sm85pj)
 
 ## Code
 
