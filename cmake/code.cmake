@@ -34,6 +34,10 @@ if(${CPPCHECK})
 	include(cppcheck)
 endif()
 
+if(${FLAWFINDER})
+	include(flawfinder)
+endif()
+
 if(${SANITISE})
 	include(sanitise)
 endif()

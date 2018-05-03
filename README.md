@@ -21,6 +21,8 @@ Generated sphinx/doxygen-based documentation:
   * both in-depth analysis of code and style enforcement
 * [cppcheck](http://cppcheck.sourceforge.net/)
   * bug and undefined behaviour hunting device
+* [flawfinder](https://www.dwheeler.com/flawfinder/)
+  * prevent embarrassing security flaws which the GDPR will fine you for
 
 ## Build
 
