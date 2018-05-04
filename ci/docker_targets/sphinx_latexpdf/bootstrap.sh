@@ -3,12 +3,10 @@
 set -e
 
 apk --no-cache add \
-	binutils \
 	cmake \
 	doxygen \
 	ghostscript \
 	graphviz \
-	libc-dev \
 	make \
 	openjdk8-jre \
 	py2-pip \
