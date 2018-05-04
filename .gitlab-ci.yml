@@ -43,8 +43,7 @@ flawfinder:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DFLAWFINDER:BOOL=ON -DWERROR:BOOL=ON
-      ..
+    - cmake -DCODE:BOOL=OFF -DFLAWFINDER:BOOL=ON -DWERROR:BOOL=ON ..
     - make flawfinder
 
 line_limit:

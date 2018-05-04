@@ -30,10 +30,6 @@ if(${CLANG_TIDY})
 	include(clang_tidy)
 endif()
 
-if(${FLAWFINDER})
-	include(flawfinder)
-endif()
-
 if(${SANITISE})
 	include(sanitise)
 endif()

@@ -46,7 +46,7 @@ set(CMAKE_PROJECT_MAIL "mail@mel.vin")
 
 if(${CODE})
 	include(code)
-elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${FLAWFINDER} OR ${SANITISE} OR ${TEST})
+elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${SANITISE} OR ${TEST})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
 endif()
 
@@ -56,4 +56,8 @@ endif()
 
 if(${FORMAT})
 	include(clang_format)
+endif()
+
+if(${FLAWFINDER})
+	include(flawfinder)
 endif()
