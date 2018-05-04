@@ -5,7 +5,10 @@ set -e
 apk --no-cache add \
 	binutils \
 	cmake \
-	cppcheck \
 	gcc \
 	libc-dev \
-	make
+	make \
+	py2-pip
+
+pip install \
+	flawfinder
