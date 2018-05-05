@@ -146,6 +146,8 @@ if use_ci == "yes":
                 for f in (file for file in files if file == "Tagfile"):
                         full_path = os.path.join(root, f)
                         taskq.put(ReplaceTask(full_path, or_url, url))
+
+        taskq.put(ReplaceTask(gitlabci, "__PROJECT_NAME__", pname))
 else:
         taskq.put(DeleteTask(gitlabci))
 
