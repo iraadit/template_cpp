@@ -120,7 +120,7 @@ sphinx_html:
     - make doc
   artifacts:
     paths:
-      - build/doc/sphinx/html
+      - build/doc/html
 
 review:
   stage: deploy
@@ -141,7 +141,7 @@ review:
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
     - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
-    - mv build/doc/sphinx/html public
+    - mv build/doc/html public
     - mv build/coverage_report public/coverage
     - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
 
@@ -176,7 +176,7 @@ pages:
     - sphinx_html
   image: busybox:latest
   script:
-    - mv build/doc/sphinx/html public
+    - mv build/doc/html public
     - mv build/coverage_report public/coverage
   artifacts:
     paths:
