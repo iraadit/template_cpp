@@ -56,7 +56,7 @@ PlantUML
 .. uml::
 	:caption: The harsh reality of being a thread.
 
-	you -> glibc: ptrhead_kill_other_threads_np()
+	you -> glibc: pthread_kill_other_threads_np()
 	you <- glibc: **deleted**
 
 .. uml::
