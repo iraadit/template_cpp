@@ -177,8 +177,10 @@ oldinclude = os.path.join(scp_dir, './include/c_template')
 newinclude = os.path.join(scp_dir, './include/%s' % pname)
 taskq.put(MoveTask(oldinclude, newinclude))
 
-# delete readme
-taskq.put(DeleteTask(os.path.join(scp_dir, 'README')))
+# delete c template descriptive files
+taskq.put(DeleteTask(os.path.join(scp_dir, 'README.md')))
+taskq.put(DeleteTask(os.path.join(scp_dir, 'CHANGELOG.md')))
+taskq.put(DeleteTask(os.path.join(scp_dir, 'LICENCE')))
 
 # confirmation
 confirm = def_input("Apply selected values?", "yes")
