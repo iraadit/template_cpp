@@ -54,10 +54,10 @@ PlantUML
 --------
 
 .. uml::
-	:caption: Arbitrary caption for arbitrary grading system.
+	:caption: The harsh reality of being a thread.
 
-	Evi -> Joost: voldoende_request()
-	Evi <- Joost: DENIED!!
+	you -> glibc: ptrhead_kill_other_threads_np()
+	you <- glibc: **deleted**
 
 .. uml::
 	:caption: Grade schooler's math.
