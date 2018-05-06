@@ -8,6 +8,7 @@ import os
 import configparser
 import re
 import getpass
+import datetime
 
 
 def uconfig():
@@ -124,7 +125,8 @@ taskq.put(ReplaceTask(cmakelist, "__AUTHOR_MAIL__", mail))
 version = def_input("Project version", "1.0.0")
 taskq.put(ReplaceTask(cmakelist, "0.0.0", version))
 
-copyright = def_input("Copyright", "2018, %s" % author)
+copyright = def_input("Copyright", "%s, %s" %
+                      (datetime.datetime.now().year,  author))
 taskq.put(ReplaceTask(cmakelist, "__COPYRIGHT__", copyright))
 
 description = def_input("Description", prj_dir)
