@@ -62,7 +62,7 @@ configure_file(
 
 if(${DOC} STREQUAL "doxygen")
 	add_custom_target(doc
-		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_DEST}/doxyfile"
+		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
 		COMMENT "Generating HTML API documentation with Doxygen")
 
 	add_custom_command(TARGET doc POST_BUILD
