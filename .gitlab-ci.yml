@@ -7,6 +7,7 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
+  PAPERSIZE: a4
 
 clang_format:
   stage: analyse
@@ -26,26 +27,25 @@ clang_tidy:
       -DWERROR:BOOL=ON ..
     - make -j $(nproc)
 
-cppcheck:
-  stage: analyse
-  allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/cppcheck:1.0
-  script:
-    - mkdir build
-    - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCPPCHECK:BOOL=ON -DWERROR:BOOL=ON
-      ..
-    - make cppcheck
-
 doxygen:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/doxygen:1.0
+  image: git.mel.vin:5005/template/c/ci/doxygen:1.1
   script:
     - mkdir build
     - cd build
     - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen -DWERROR:BOOL=ON ..
     - make doc
+
+flawfinder:
+  stage: analyse
+  allow_failure: true
+  image: git.mel.vin:5005/template/c/ci/flawfinder:1.1
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DFLAWFINDER:BOOL=ON -DWERROR:BOOL=ON ..
+    - make flawfinder
 
 line_limit:
   stage: analyse
@@ -53,7 +53,7 @@ line_limit:
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
     - ./ci/style/line_limit.sh -e '^\.clang-tidy$' -e '^include/' -e '^src/'
-      -e '^test/' -i .
+      -e '^test/' -e '^cmake/apidoc\.py$' -i .
     - ./ci/style/line_limit.sh include
     - ./ci/style/line_limit.sh src
     - ./ci/style/line_limit.sh test
@@ -63,7 +63,7 @@ regex_check:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
-    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:9:' .
+    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:11:' .
     - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
 
 clang:
@@ -112,7 +112,7 @@ gcc_coverage:
 sphinx_html:
   stage: doc
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.3
+  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.4
   script:
     - mkdir build
     - cd build
@@ -120,21 +120,7 @@ sphinx_html:
     - make doc
   artifacts:
     paths:
-      - build/doc/sphinx/html
-
-sphinx_latexpdf:
-  stage: doc
-  dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_latexpdf:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake -DCODE:BOOL=OFF -DDOC:STRING=latexpdf -DWERROR:BOOL=ON ..
-    - make doc
-    - mv doc/sphinx/latex/__PROJECT_NAME__.pdf ..
-  artifacts:
-    paths:
-      - __PROJECT_NAME__.pdf
+      - build/doc/html
 
 review:
   stage: deploy
@@ -155,7 +141,7 @@ review:
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
     - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
-    - mv build/doc/sphinx/html public
+    - mv build/doc/html public
     - mv build/coverage_report public/coverage
     - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
 
@@ -190,7 +176,7 @@ pages:
     - sphinx_html
   image: busybox:latest
   script:
-    - mv build/doc/sphinx/html public
+    - mv build/doc/html public
     - mv build/coverage_report public/coverage
   artifacts:
     paths:
