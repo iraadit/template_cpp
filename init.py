@@ -167,6 +167,7 @@ else:
 # update all code reference to c template
 sfiles = glob.glob("**/*.cpp", recursive=True) \
         + glob.glob("**/*.c", recursive=True) \
+        + glob.glob("**/*.hpp", recursive=True) \
         + glob.glob("**/*.h", recursive=True)
 for file in sfiles:
         full_path = os.path.join(scp_dir, file)
