@@ -122,20 +122,6 @@ sphinx_html:
     paths:
       - build/doc/sphinx/html
 
-sphinx_latexpdf:
-  stage: doc
-  dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_latexpdf:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake -DCODE:BOOL=OFF -DDOC:STRING=latexpdf -DWERROR:BOOL=ON ..
-    - make doc
-    - mv doc/sphinx/latex/c_template.pdf ..
-  artifacts:
-    paths:
-      - c_template.pdf
-
 review:
   stage: deploy
   variables:
