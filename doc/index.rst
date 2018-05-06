@@ -30,8 +30,8 @@ Documentation building
 In order to build documentation you can need to set ``DOC`` to:
 
 * ``doxygen`` to generate only Doxygen HTML API pages;
-* ``help`` to list output types supported by sphinx (``html``, ``latexpdf``);
 * any other string will be seen as a sphinx output type and handled as such.
+  Refer to http://www.sphinx-doc.org/en/master/builders.html for details.
 
 Sanitization
 ------------

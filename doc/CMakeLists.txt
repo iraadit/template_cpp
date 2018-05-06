@@ -68,13 +68,6 @@ if(${DOC} STREQUAL "doxygen")
 	add_custom_command(TARGET doc POST_BUILD
 		COMMAND ;
 		COMMENT "Output at ${DOC_DEST}/html/index.html")
-elseif(${DOC} STREQUAL "help")
-	# sphinx needs to run in makefile mode in order to print target list
-	# the SOURCEDIR and OUTPUTDIR args can be dummy in this case
-	# point it to the conf.py in case it needs it in the future
-	add_custom_target(doc
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -M help
-			"${DOC_TMP}/sphinx" "${DOC_TMP}/sphinx")
 else()
 	configure_file("${DOC_SRC}/api/file/index.rst.in"
 		"${DOC_TMP}/api/file/index.rst" @ONLY)
