@@ -53,7 +53,7 @@ line_limit:
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
     - ./ci/style/line_limit.sh -e '^\.clang-tidy$' -e '^include/' -e '^src/'
-      -e '^test/' -i .
+      -e '^test/' -e '^cmake/apidoc\.py$' -i .
     - ./ci/style/line_limit.sh include
     - ./ci/style/line_limit.sh src
     - ./ci/style/line_limit.sh test
@@ -63,7 +63,7 @@ regex_check:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
-    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:9:' .
+    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:11:' .
     - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
 
 clang:
