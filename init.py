@@ -136,11 +136,11 @@ taskq.put(ReplaceTask(cmakelist, "__DESCRIPTION__", description))
 use_ci = def_input("Use gitlab ci?", "yes")
 if use_ci == "yes":
         # get new registry url
-        reg_url = req_input("Docker registry url")
+        reg_domain = req_input("Docker registry domain")
         reg_port = req_input("Docker registry port")
         gitlab_group = req_input("Gitlab group/user name")
         or_url = "git.mel.vin:5005/template/c"
-        url = "%s:%s/%s/%s" % (reg_url, reg_port, gitlab_group, pname)
+        url = "%s:%s/%s/%s" % (reg_domain, reg_port, gitlab_group, pname)
         taskq.put(ReplaceTask(gitlabci, or_url, url))
 
         # update image registry location
