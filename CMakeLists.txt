@@ -21,7 +21,7 @@ option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
 if (NOT DOC)
 	set(DOC OFF CACHE STRING
-		"The documentation type to generate. \"help\" for types." FORCE)
+		"The documentation type to generate." FORCE)
 endif()
 
 # disable base languages
