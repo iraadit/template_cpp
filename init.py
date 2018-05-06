@@ -127,7 +127,7 @@ taskq.put(ReReplaceTask(cmakelist, "__AUTHOR__", author))
 mail = def_input("Project email", config['email'])
 taskq.put(ReReplaceTask(cmakelist, "__AUTHOR_MAIL__", mail))
 
-version = def_input("Project version", "1.0.0")
+version = def_input("Project version", "0.0.0")
 taskq.put(ReReplaceTask(cmakelist, "0.0.0", version))
 
 copyright = def_input("Copyright", "%s, %s" %
@@ -143,8 +143,8 @@ gitlabci = os.path.join(scp_dir, ".gitlab-ci.yml")
 if use_ci == "yes":
         # get new registry url
         dockertarget = os.path.join(scp_dir, "./ci/docker_targets")
-        ver_cur = ":[0-9]\.[0-9]"
-        ver_new = ":1.0"
+        ver_cur = ":[0-9]+\.[0-9]+"
+        ver_new = ":0.0"
         reg_domain = req_input("Docker registry domain")
         reg_port = req_input("Docker registry port")
         gitlab_group = req_input("Gitlab group/user name")
