@@ -1,8 +1,8 @@
 # build code as object library for easier linking to tests
-add_library(c_template_obj OBJECT
+add_library(${CMAKE_PROJECT_NAME}_obj OBJECT
 	add.c
 	subtract.c)
 
-add_executable(c_template
+add_executable(${CMAKE_PROJECT_NAME}
 	main.c
-	$<TARGET_OBJECTS:c_template_obj>)
+	$<TARGET_OBJECTS:${CMAKE_PROJECT_NAME}_obj>)
