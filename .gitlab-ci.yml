@@ -7,7 +7,6 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: normal
-  PAPERSIZE: a4
 
 clang_format:
   stage: analyse
