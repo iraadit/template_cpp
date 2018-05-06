@@ -1,13 +1,10 @@
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
-# due to a bug in doxygen HTML has to be enabled for xml to work
-set(DOXY_BUILD_HTML "YES")
-set(DOXY_BUILD_XML "YES")
-set(DOXY_BUILD_LATEX "NO")
-set(DOXY_WARN_AS_ERR "NO")
+set(DOC_SRC "${CMAKE_SOURCE_DIR}/doc")
+set(DOC_DEST "${CMAKE_BINARY_DIR}/doc/${DOC}")
+set(DOC_TMP "${CMAKE_BINARY_DIR}/tmp/doc")
 
-# If doxygen is specified only doxygen html output is generated.
-# This also supports warning as errors to verify complete doxygen coverage.
+# if doxygen is specified only doxygen html output is generated
 if(${DOC} STREQUAL "doxygen")
 	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
@@ -18,34 +15,27 @@ if(${DOC} STREQUAL "doxygen")
 	else()
 		set(DOXY_WARN_AS_ERR "NO")
 	endif()
-endif()
-
-set(DOC_DIR "${CMAKE_BINARY_DIR}/doc")
-set(DOXYDIR "${DOC_DIR}/doxygen")
-set(DOXYFILE "${DOXYDIR}/doxyfile")
-
-configure_file(
-	"${CMAKE_SOURCE_DIR}/doc/Doxyfile.in"
-	"${DOXYFILE}"
-	@ONLY)
-
-if(${DOC} STREQUAL "doxygen")
-	add_custom_target(
-		doc
-		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYFILE}
-		COMMENT "Generating API documentation with DoxyGen")
-
-	# show info where to find the report
-	add_custom_command(TARGET doc POST_BUILD
-		COMMAND ;
-		COMMENT "Doxygen HTML documentation is available \
-at ${DOXYDIR}/html/index.html")
+	set(DOXY_OUTPUT_DIR "${DOC_DEST}")
 else()
+	# due to a bug in doxygen html has to be enabled for xml to work
+	set(DOXY_BUILD_HTML "YES")
+	set(DOXY_BUILD_XML "YES")
+	set(DOXY_BUILD_LATEX "NO")
+	# another bug is that you get warnings when building with xml output
+	set(DOXY_WARN_AS_ERR "NO")
+	set(DOXY_OUTPUT_DIR "${DOC_TMP}/doxygen")
+
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
-	find_python_module(sphinx REQUIRED)
 	find_python_module(breathe REQUIRED)
-	include(plantuml)
+	find_python_module(sphinx REQUIRED)
+
+	if($ENV{PYTHONPATH})
+		set(ENV{PYTHONPATH}
+			"${PY_breathe}:${PY_sphinx}:$ENV{PYTHONPATH}")
+	else()
+		set(ENV{PYTHONPATH} "${PY_breathe}:${PY_sphinx}")
+	endif()
 
 	if(${WERROR})
 		set(SPHINX_WERROR "-W")
@@ -53,45 +43,82 @@ else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	set(DOC_TMP_DIR "${DOC_DIR}/tmp")
-	set(API_TMP_DIR "${DOC_TMP_DIR}/api")
-	set(RST_TMP_DIR "${DOC_TMP_DIR}/rst")
-	SET(SPHINX_OUTPUT_DIR "${DOC_DIR}/sphinx")
-	set(RST_INPUT_DIRS "\"${API_TMP_DIR}\",\"${CMAKE_SOURCE_DIR}/doc\"")
-	set(
-		SPHINX_BUILD_RUNNER
-		"${SPHINX_OUTPUT_DIR}/sphinx_multibuild_runner.py")
+	# https://git.mel.vin/template/c/issues/76
+	#include(breathe_apidoc)
+	set(BREATHE_APIDOC_PATH "${CMAKE_SOURCE_DIR}/cmake/apidoc.py")
+
+	include(plantuml)
 
 	configure_file(
-		"${CMAKE_SOURCE_DIR}/doc/conf.py.in"
-		"${SPHINX_OUTPUT_DIR}/conf.py"
+		"${DOC_SRC}/conf.py.in"
+		"${DOC_TMP}/sphinx/conf.py"
 		@ONLY)
+endif()
 
-	configure_file(
-		"${CMAKE_SOURCE_DIR}/doc/sphinx_multibuild_runner.py.in"
-		"${SPHINX_BUILD_RUNNER}"
-		@ONLY)
+configure_file(
+	"${DOC_SRC}/doxyfile.in"
+	"${DOC_TMP}/doxygen/doxyfile"
+	@ONLY)
+
+if(${DOC} STREQUAL "doxygen")
+	add_custom_target(doc
+		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_DEST}/doxyfile"
+		COMMENT "Generating HTML API documentation with Doxygen")
+
+	add_custom_command(TARGET doc POST_BUILD
+		COMMAND ;
+		COMMENT "Output at ${DOC_DEST}/html/index.html")
+elseif(${DOC} STREQUAL "help")
+	# sphinx needs to run in makefile mode in order to print target list
+	# the SOURCEDIR and OUTPUTDIR args can be dummy in this case
+	# point it to the conf.py in case it needs it in the future
+	add_custom_target(doc
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -M help
+			"${DOC_TMP}/sphinx" "${DOC_TMP}/sphinx")
+else()
+	configure_file("${DOC_SRC}/api/file/index.rst.in"
+		"${DOC_TMP}/api/file/index.rst" @ONLY)
+	configure_file("${DOC_SRC}/api/type/index.rst.in"
+		"${DOC_TMP}/api/type/index.rst" @ONLY)
 
 	add_custom_target(doc
-		# generate doxygen xml
-		COMMAND ${DOXYGEN_EXECUTABLE} "${DOXYFILE}"
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Generating Doxygen XML API output"
+		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
 
-		# convert doxygen xml to rst files
-		COMMAND ${PYTHON_EXECUTABLE}
-			"${CMAKE_SOURCE_DIR}/cmake/apidoc.py" -f -i -q
-			-g group,struct,union,namespace,file,interface,class
-			-o "${API_TMP_DIR}/_api"
-			"${DOXYDIR}/xml"
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Converting Doxygen XML to RST by source file"
+		COMMAND "${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
+			-o "${DOC_TMP}/api/file" -f -g file -q
+			"${DOC_TMP}/doxygen/xml"
 
-		# build sphinx documentation
-		COMMAND ${PYTHON_EXECUTABLE} "${SPHINX_BUILD_RUNNER}" "-q"
-		COMMENT "Generating sphinx ${DOC} documentation.")
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Converting Doxygen XML to RST by element type"
+		COMMAND "${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
+			-o "${DOC_TMP}/api/type" -f
+			-g class,interface,struct,union,namespace,group -q
+			"${DOC_TMP}/doxygen/xml"
 
-	if(NOT ${DOC} STREQUAL "help")
-		add_custom_command(TARGET doc POST_BUILD
-			COMMAND ;
-			COMMENT "Sphinx ${DOC} documentation is available \
-at ${DOC_DIR}/sphinx/${sphinx_output}")
-	endif()
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Generating sphinx ${DOC} API by source file"
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
+			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
+
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Generating sphinx ${DOC} API by element type"
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
+			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
+
+		COMMAND "${CMAKE_COMMAND}" -E echo
+			"Generating sphinx ${DOC} documentation"
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
+			"${DOC_SRC}" "${DOC_DEST}")
+
+	add_custom_command(TARGET doc POST_BUILD
+		COMMAND ;
+		COMMENT "Output at ${DOC_DEST}")
 endif()
 

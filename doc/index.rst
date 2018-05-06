@@ -9,7 +9,7 @@ This is sphinx documentation with Doxygen integration.
 	:name: mastertoc
 	:glob:
 
-	_api/index.rst
+	api/index
 
 Coverage
 --------
@@ -20,16 +20,18 @@ source and test coverage.
 Documentation building
 ----------------------
 
-When creating a build including documentation using ``cmake
--DDOC=*somesphinxtarget*`` then a python script is created at
-``buildir/doc/sphinx/sphinx_multibuild_runner.py``. This is a runner script
-that can build the documentation where all the necessary sphinx params are
-handled for you. There is also a handy mode where build on change is supported.
+.. code-block:: bash
 
-There are two optional arguments for the script:
+	mkdir build
+	cd build
+	cmake -DCODE:BOOL=OFF -DDOC:STRING=html ..
+	make doc
 
-- **-q**: Quiet sphinx build.
-- **-m**: Monitor the doc directory and automatically rebuild on a change.
+In order to build documentation you can need to set ``DOC`` to:
+
+* ``doxygen`` to generate only Doxygen HTML API pages;
+* ``help`` to list output types supported by sphinx (``html``, ``latexpdf``);
+* any other string will be seen as a sphinx output type and handled as such.
 
 Sanitization
 ------------

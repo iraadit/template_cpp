@@ -44,7 +44,7 @@ Generated sphinx/doxygen-based documentation:
 
 ## Documentation
 
-* [DoxyGen](https://www.stack.nl/~dimitri/doxygen/)
+* [Doxygen](https://www.stack.nl/~dimitri/doxygen/)
   * for technical API documentation in source code
 * [Sphinx](http://www.sphinx-doc.org/en/stable/)
   * for all other documentation in wonderful reStructuredText

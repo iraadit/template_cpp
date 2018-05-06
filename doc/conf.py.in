@@ -34,7 +34,7 @@ sys.path.append("@PY_BREATHE@")
 extensions = ['breathe', 'sphinxcontrib.plantuml']
 
 # breathe config
-breathe_projects = {"@CMAKE_PROJECT_NAME@": "@DOXYDIR@/xml" }
+breathe_projects = {"@CMAKE_PROJECT_NAME@": "@DOXY_OUTPUT_DIR@/xml" }
 breathe_default_project = "@CMAKE_PROJECT_NAME@"
 
 # plantuml config
