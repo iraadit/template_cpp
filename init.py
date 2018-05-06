@@ -9,6 +9,7 @@ import configparser
 import re
 import getpass
 import datetime
+import glob
 
 
 def uconfig():
@@ -80,8 +81,19 @@ class ReReplaceTask(InitTask):
                         f.truncate()
 
 
+class MoveTask(InitTask):
+        """MoveTask is the task for moving files and directories."""
+        def __init__(self, ofile, nfile):
+                self._ofile = ofile
+                self._nfile = nfile
+
+        def exec(self):
+                """Moves the old file/dir to new file/dir."""
+                os.rename(self._ofile, self._nfile)
+
+
 class DeleteTask(InitTask):
-        """DeleteTask is the task for deleting files and directories"""
+        """DeleteTask is the task for deleting files and directories."""
         def __init__(self, filename):
                 self._filename = filename
 
@@ -101,13 +113,11 @@ scp_dir = os.path.dirname(os.path.abspath(__file__))
 prj_dir = os.path.basename(scp_dir)
 taskq = queue.Queue()
 config = uconfig()
-cmakelist = os.path.join(scp_dir, "CMakeLists.txt")
-gitlabci = os.path.join(scp_dir, ".gitlab-ci.yml")
-dockertarget = os.path.join(scp_dir, "./ci/docker_targets")
 
 print("Initializing the template.")
 
 # basic project info
+cmakelist = os.path.join(scp_dir, "CMakeLists.txt")
 pname = def_input("Project name", prj_dir)
 taskq.put(ReReplaceTask(cmakelist, "__PROJECT_NAME__", pname))
 
@@ -129,8 +139,10 @@ taskq.put(ReReplaceTask(cmakelist, "__DESCRIPTION__", description))
 
 # gitlab ci
 use_ci = def_input("Use gitlab ci?", "yes")
+gitlabci = os.path.join(scp_dir, ".gitlab-ci.yml")
 if use_ci == "yes":
         # get new registry url
+        dockertarget = os.path.join(scp_dir, "./ci/docker_targets")
         ver_cur = ":[0-9]\.[0-9]"
         ver_new = ":1.0"
         reg_domain = req_input("Docker registry domain")
@@ -151,6 +163,22 @@ if use_ci == "yes":
                         taskq.put(ReReplaceTask(full_path, ver_cur, ver_new))
 else:
         taskq.put(DeleteTask(gitlabci))
+
+# update all code reference to c template
+sfiles = glob.glob("**/*.cpp", recursive=True) \
+        + glob.glob("**/*.c", recursive=True) \
+        + glob.glob("**/*.h", recursive=True)
+for file in sfiles:
+        full_path = os.path.join(scp_dir, file)
+        taskq.put(ReReplaceTask(full_path, "c_template", pname))
+
+# move project include dir
+oldinclude = os.path.join(scp_dir, './include/c_template')
+newinclude = os.path.join(scp_dir, './include/%s' % pname)
+taskq.put(MoveTask(oldinclude, newinclude))
+
+# delete readme
+taskq.put(DeleteTask(os.path.join(scp_dir, 'README')))
 
 # confirmation
 confirm = def_input("Apply selected values?", "yes")
