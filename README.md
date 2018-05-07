@@ -3,9 +3,14 @@
 Magical template for C projects, improves quality of life.
 
 Released into the public domain so you don't have to bother with crediting this.
-The only exception is cmake/apidoc.py which is BSD licensed.
+The only exception is cmake/apidoc.py which is BSD licensed and will be removed
+in the future.
 
-Generated sphinx/doxygen-based documentation:
+A list of software used can be found in this file. For absolute minimum
+requirements for build steps refer to `ci/docker_targets/*/bootstrap.sh`.
+
+Further details and diagrams are provided in the generated sphinx/doxygen-based
+html documentation:
 * [Latest release tag](https://template.doc.mel.vin/c)
 * [Development version](https://doc.mel.vin/template/c/review-master-sm85pj)
 
@@ -68,6 +73,10 @@ Generated sphinx/doxygen-based documentation:
 * [heaptrack](https://github.com/KDE/heaptrack)
   * heap memory profiler, requires Linux kernel
 * [valgrind](http://valgrind.org/)
-  * still useful for undefined behaviour and data-race checking
-* [vim](https://git.mel.vin/conf/vim)
-  * comfy config that neatly integrates into this template
+  * still useful for undefined behaviour and data-race checking at times
+* [spacevim](http://spacevim.org/)
+  * the brilliant cult again creates the superior user experience
+* [spacemacs](http://spacemacs.org/)
+  * the evil church can never escape from their bloated foundations
+
+*Note: The authors may have been slightly biased when this section was written.*
