@@ -1,5 +1,5 @@
-regex_check
-===========
+analyse/regex_check
+===================
 
 .. note:: Requires an UNIX environment.
 

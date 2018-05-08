@@ -1,5 +1,5 @@
-line_limit
-==========
+analyse/line_limit
+==================
 
 .. note:: Requires an UNIX environment.
 

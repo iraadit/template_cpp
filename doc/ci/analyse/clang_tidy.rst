@@ -1,5 +1,5 @@
-clang_tidy
-==========
+analyse/clang_tidy
+==================
 
 When configuring with ``-DCLANG_TIDY:BOOL=ON`` all source files will be checked
 by ``clang-tidy`` when compiling. This happens only when any source file itself

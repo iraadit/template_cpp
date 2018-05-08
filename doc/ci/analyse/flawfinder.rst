@@ -1,5 +1,5 @@
-flawfinder
-==========
+analyse/flawfinder
+==================
 
 When configuring with ``-DFLAWFINDER:BOOL=ON`` target ``flawfinder`` will be
 added. Running ``make flawfinder`` will then check all source code for potential

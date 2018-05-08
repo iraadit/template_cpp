@@ -1,5 +1,5 @@
-clang_format
-============
+analyse/clang_format
+====================
 
 .. note:: Requires an UNIX environment.
 
