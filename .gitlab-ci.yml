@@ -89,7 +89,8 @@ clang_sanitise:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DSANITISE:BOOL=ON -DTEST:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DSANITISE:BOOL=ON -DTEST:BOOL=ON
+      -DWERROR:BOOL=ON ..
     - make -j $(nproc)
     - make test
 
@@ -100,7 +101,8 @@ gcc_coverage:
   script:
     - mkdir build
     - cd build
-    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON -DTEST:BOOL=ON ..
+    - cmake -DCMAKE_BUILD_TYPE:STRING=Debug -DCOVERAGE:BOOL=ON -DTEST:BOOL=ON
+      -DWERROR:BOOL=ON ..
     - make -j $(nproc)
     - make test
     - make coverage_report
