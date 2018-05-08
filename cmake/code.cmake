@@ -12,7 +12,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	if(CMAKE_C_COMPILER_ID STREQUAL "Clang" OR
 		CMAKE_C_COMPILER_ID STREQUAL "GNU")
 		add_compile_options(-Wall -Wextra -Wconversion)
-		if(WERROR)
+		if(${WERROR})
 			add_compile_options(-Werror)
 		endif()
 	else()
