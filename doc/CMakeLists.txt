@@ -94,19 +94,19 @@ else()
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by source file"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by element type"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
+		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_SRC}" "${DOC_DEST}")
 
