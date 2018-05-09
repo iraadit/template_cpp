@@ -1,9 +1,7 @@
-analyse/line_limit
-==================
+line_limit
+==========
 
 .. note:: Requires an UNIX environment.
-
-This check is not integrated with CMake. CI runs this script directly.
 
 Used to enforce line limits for all files but code, since code it handled
 by ``clang-format``. The script provides options to exclude files and lines

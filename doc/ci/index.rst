@@ -1,11 +1,10 @@
 Continuous integration
 ======================
 
-All things possible run on GitLab CI, including some checks that aren't
-integrated with CMake. View the page of a job for details.
+These checks are currently not integrated with CMake and are instead run
+separately on CI. This may change in the future depending on demand.
 
 .. toctree::
-	:maxdepth: 2
 	:glob:
 
-	*/*
+	*

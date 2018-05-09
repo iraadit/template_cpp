@@ -1,9 +1,7 @@
-analyse/regex_check
-===================
+regex_check
+===========
 
 .. note:: Requires an UNIX environment.
-
-This check is not integrated with CMake. CI runs this script directly.
 
 Used to check for non-ASCII characters in source code and documentation.
 The script provides options to exclude files and lines from checking.
