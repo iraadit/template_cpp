@@ -4,26 +4,27 @@ set(DOC_SRC "${CMAKE_SOURCE_DIR}/doc")
 set(DOC_DEST "${CMAKE_BINARY_DIR}/doc/${DOC}")
 set(DOC_TMP "${CMAKE_BINARY_DIR}/tmp/doc")
 
-# if doxygen is specified only doxygen html output is generated
+set(DOXY_BUILD_LATEX "NO")
+if (${WERROR})
+	set(DOXY_WARN_AS_ERR "YES")
+else()
+	set(DOXY_WARN_AS_ERR "NO")
+endif()
+
+# if the target is doxygen build only only doxygen HTML
 if(${DOC} STREQUAL "doxygen")
-	set(DOXY_TARGET_NAME "doc")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
-	set(DOXY_BUILD_LATEX "NO")
-	if (${WERROR})
-		set(DOXY_WARN_AS_ERR "YES")
-	else()
-		set(DOXY_WARN_AS_ERR "NO")
-	endif()
 	set(DOXY_OUTPUT_DIR "${DOC_DEST}")
+# otherwise generate only XML and configure sphinx
 else()
-	# due to a bug in doxygen html has to be enabled for xml to work
-	set(DOXY_BUILD_HTML "YES")
+	set(DOXY_BUILD_HTML "NO")
 	set(DOXY_BUILD_XML "YES")
-	set(DOXY_BUILD_LATEX "NO")
-	# another bug is that you get warnings when building with xml output
-	set(DOXY_WARN_AS_ERR "NO")
 	set(DOXY_OUTPUT_DIR "${DOC_TMP}/doxygen")
+
+	# https://git.mel.vin/template/c/issues/50
+	# https://bugzilla.gnome.org/show_bug.cgi?id=792676
+	set(DOXY_WARN_AS_ERR "NO")
 
 	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
