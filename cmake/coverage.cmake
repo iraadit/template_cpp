@@ -68,8 +68,8 @@ if(NOT CMAKE_EXE_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
 endif()
 
 # resets coverage counters
-add_custom_target(coverage_clear
-	COMMAND "${LCOV_PATH}" --directory . --zerocounters
+add_custom_target(coverage_reset
+	COMMAND "${LCOV_PATH}" --zerocounters --directory .
 	COMMENT "Resetting coverage counters.")
 
 # add target for generating the actual coverage report
