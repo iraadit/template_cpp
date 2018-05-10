@@ -11,8 +11,8 @@ requirements for build steps refer to `ci/docker_targets/*/bootstrap.sh`.
 
 Further details and diagrams are provided in the generated sphinx/doxygen-based
 html documentation:
-* [Latest release tag](https://template.doc.mel.vin/c)
-* [Development version](https://doc.mel.vin/template/c/review-master-sm85pj)
+* [Latest release tag](https://template.doc.mel.vin/cpp)
+* [Development version](https://doc.mel.vin/template/cpp/review-master-8phwor)
 
 ## Code
 
