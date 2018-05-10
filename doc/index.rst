@@ -1,7 +1,7 @@
 Index
 =====
 
-Two things to know when in a hurry and already know the tooling.
+Two things to know when in a hurry and you already know the tooling.
 
 * Use ``init.py`` to setup the project name, registry address, etc.
 * Note the version of the template so updates with a diff are possible later.
@@ -9,7 +9,6 @@ Two things to know when in a hurry and already know the tooling.
 .. toctree::
 	:caption: Table of Contents
 	:glob:
-	:numbered:
 
 	*/index
 
