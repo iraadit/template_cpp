@@ -5,10 +5,12 @@ Reverse chronologically sorted, i.e. newest on top.
 View the commit history for minor fixes and improvements, only important changes
 are listed below.
 
-## 1.2.0 / unreleased
+## 1.2.0 / 2018-05-10
 
+* add documentation for all options and checks in the template
+* remove cppcheck
+* add flawfinder target which checks code with flawfinder
 * add SANITISE flag which adds -fsanitize=address -fsanitize=undefined
-* add cppcheck target which runs cppcheck on all sources
 * add format target that will format all sources with clang-format
 * add style/regex\_check.sh to find non-ASCII characters in sources
 * split docker images to make managing easier and builds more efficient
@@ -26,13 +28,9 @@ are listed below.
 
 ## 1.1.0 / 2017-11-27
 
-Donald Knuth
-
 * break before binary and ternary operators
 
 ## 1.0.0 / 2017-11-26
-
-One and a half year in the making!
 
 * directory layout
 * formatting with clang-format

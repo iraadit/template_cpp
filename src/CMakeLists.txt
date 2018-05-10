@@ -1,8 +1,6 @@
-# build code as object library for easier linking to tests
-add_library(cpp_template_obj OBJECT
+add_library(${CMAKE_PROJECT_NAME}_obj OBJECT
 	derived.cpp)
 
-# add main executable
-add_executable(cpp_template
+add_executable(${CMAKE_PROJECT_NAME}
 	main.cpp
-	$<TARGET_OBJECTS:cpp_template_obj>)
+	$<TARGET_OBJECTS:${CMAKE_PROJECT_NAME}_obj>)

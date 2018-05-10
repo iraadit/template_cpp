@@ -5,7 +5,7 @@ if(NOT PY_${module_upper})
 		set(${module}_FIND_REQUIRED TRUE)
 	endif()
 	# A module's location is usually a directory, but for binary modules
-	# it's a .so file.
+	# it's an .so file.
 	execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c"
 		"import re, ${module}; print(re.compile('/__init__.py.*') \
 		.sub('',${module}.__file__))"
