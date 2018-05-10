@@ -51,11 +51,11 @@ line_limit:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   script:
-    - ./ci/style/line_limit.sh -e '^\.clang-tidy$' -e '^include/' -e '^src/'
-      -e '^test/' -e '^cmake/apidoc\.py$' -i .
-    - ./ci/style/line_limit.sh include
-    - ./ci/style/line_limit.sh src
-    - ./ci/style/line_limit.sh test
+    - ./ci/style/line_limit.sh -e '\.(c|cpp|h|hpp)$' -e '^\.clang-tidy$'
+      -e '^cmake/apidoc\.py$' -i .
+    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' include
+    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' src
+    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' test
 
 regex_check:
   stage: analyse
