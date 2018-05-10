@@ -8,7 +8,6 @@ in the future.
 
 A list of software used can be found in this file. For absolute minimum
 requirements for build steps refer to `ci/docker_targets/*/bootstrap.sh`.
-Note that CI scripts require an UNIX-style environment.
 
 Further details and diagrams are provided in the generated sphinx/doxygen-based
 html documentation:
