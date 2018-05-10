@@ -3,11 +3,9 @@
 set -e
 
 apk --no-cache add \
-	binutils \
 	cmake \
 	doxygen \
 	graphviz \
-	libc-dev \
 	make \
 	openjdk8-jre \
 	py2-pip \
@@ -20,7 +18,8 @@ pip install \
 	breathe \
 	sphinx \
 	sphinx_rtd_theme \
-	sphinxcontrib-plantuml
+	sphinxcontrib-plantuml \
+	sphinx-multibuild
 
 mkdir -p /opt/plantuml
 for i in batik-all-1.7.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar \

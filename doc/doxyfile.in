@@ -10,11 +10,11 @@ FILE_PATTERNS           =   *.dox \
 GENERATE_HTML           =   @DOXY_BUILD_HTML@
 GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
 GENERATE_XML            =   @DOXY_BUILD_XML@
-HAVE_DOT                =   NO
+HAVE_DOT                =   YES
 HIDE_UNDOC_RELATIONS    =   NO
 INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
                             "@CMAKE_SOURCE_DIR@/include"
-OUTPUT_DIRECTORY        =   "@DOXYDIR@"
+OUTPUT_DIRECTORY        =   "@DOXY_OUTPUT_DIR@"
 PROJECT_NAME            =   "@PROJECT_NAME@"
 PROJECT_NUMBER          =   @PROJECT_VERSION@
 QUIET                   =   YES
@@ -23,3 +23,7 @@ STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
 WARN_AS_ERROR           =   @DOXY_WARN_AS_ERR@
 WARN_IF_UNDOCUMENTED    =   YES
 WARN_NO_PARAMDOC        =   YES
+ENABLE_PREPROCESSING    =   YES
+MACRO_EXPANSION         =   YES
+EXPAND_ONLY_PREDEF      =   YES
+PREDEFINED              =   restrict=
