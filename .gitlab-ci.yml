@@ -135,7 +135,7 @@ review:
   image: git.mel.vin:5005/template/c/ci/coreutils:1.1
   environment:
     name: review/$CI_COMMIT_REF_NAME
-    url: https://doc.mel.vin/template/c/$CI_ENVIRONMENT_SLUG
+    url: https://doc.mel.vin/template/cpp/$CI_ENVIRONMENT_SLUG
     on_stop: review_stop
   script:
     - mkdir -p ~/.ssh
@@ -144,7 +144,7 @@ review:
     - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
     - mv build/doc/html public
     - mv build/coverage_report public/coverage
-    - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
+    - rsync -a --delete public/ doc@mel.vin:~/template/cpp/$CI_ENVIRONMENT_SLUG
 
 review_stop:
   stage: deploy
@@ -163,7 +163,7 @@ review_stop:
     - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
     - mkdir /tmp/empty
     - rsync -a --delete --filter="+ $CI_ENVIRONMENT_SLUG" --filter='-,p *'
-      /tmp/empty/ doc@mel.vin:~/template/c
+      /tmp/empty/ doc@mel.vin:~/template/cpp
     - rmdir /tmp/empty
 
 pages:
