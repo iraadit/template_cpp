@@ -14,6 +14,11 @@ html documentation:
 * [Latest release tag](https://template.doc.mel.vin/c)
 * [Development version](https://doc.mel.vin/template/c/review-master-sm85pj)
 
+The official project home and all official mirrors:
+* Home: https://git.mel.vin/template/c
+* GitLab: https://gitlab.com/melvinvermeeren/template\_c
+* GitHub: https://github.com/melvinvermeeren/template\_c
+
 ## Code
 
 * a nice directory layout that is easily extended
