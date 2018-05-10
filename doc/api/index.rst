@@ -1,4 +1,4 @@
-API Documentation
+API documentation
 =================
 
 API documentation is automatically generated with two methods, each with two
