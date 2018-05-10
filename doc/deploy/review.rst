@@ -3,7 +3,7 @@ Per-branch documentation review
 
 .. note::
 	The templates uses the shared host ``doc.mel.vin`` which is for internal
-	use only. You need is a webserver with ``rsync`` (secure) or some other
+	use only. You need a webserver with ``rsync`` (secure) or some other
 	way to upload and delete things from a CI job like ``ftp`` (insecure).
 
 For every commit pushed to any branch generated documentation is published to a
@@ -15,9 +15,9 @@ request doesn't have to check out locally and build documentation in order to
 look at the changes. A link to the online environment is shown on the merge
 request page itself.
 
-The deployment environment is dynamically created and also dynamically stopped
-and cleaned up when no longer needed. In practice after the branch has been
-deleted, usually when the merge request has been accepted.
+The deployment environment is dynamically created when a new branch is created
+on GitLab. The environment is also dynamically stopped and cleaned up after the
+branch has been deleted, usually when the merge request has been accepted.
 
 GitLab has more documentation regarding this:
 
