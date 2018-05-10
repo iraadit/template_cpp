@@ -148,11 +148,13 @@ if use_ci == "yes":
         reg_domain = req_input("Docker registry domain")
         reg_port = req_input("Docker registry port")
         gitlab_group = req_input("Gitlab group/user name")
-        org_url = "git.mel.vin:5005/template/c"
+        org_url = "git.mel.vin:5005/template/cpp"
+        org_url_upstream = "git.mel.vin:5005/template/c"
         new_url = "%s:%s/%s/%s" % (reg_domain, reg_port, gitlab_group, pname)
 
         # update urls
         taskq.put(ReReplaceTask(gitlabci, org_url, new_url))
+        taskq.put(ReReplaceTask(gitlabci, org_url_upstream, new_url))
         taskq.put(ReReplaceTask(gitlabci, ver_cur, ver_new))
 
         # update image registry location
@@ -160,6 +162,8 @@ if use_ci == "yes":
                 for f in (file for file in files if file == "Tagfile"):
                         full_path = os.path.join(root, f)
                         taskq.put(ReReplaceTask(full_path, org_url, new_url))
+                        taskq.put(ReReplaceTask(full_path, org_url_upstream,
+                            new_url))
                         taskq.put(ReReplaceTask(full_path, ver_cur, ver_new))
 else:
         taskq.put(DeleteTask(gitlabci))
@@ -171,10 +175,10 @@ sfiles = glob.glob("**/*.cpp", recursive=True) \
         + glob.glob("**/*.h", recursive=True)
 for file in sfiles:
         full_path = os.path.join(scp_dir, file)
-        taskq.put(ReReplaceTask(full_path, "c_template", pname))
+        taskq.put(ReReplaceTask(full_path, "cpp_template", pname))
 
 # move project include dir
-oldinclude = os.path.join(scp_dir, './include/c_template')
+oldinclude = os.path.join(scp_dir, './include/cpp_template')
 newinclude = os.path.join(scp_dir, './include/%s' % pname)
 taskq.put(MoveTask(oldinclude, newinclude))
 
