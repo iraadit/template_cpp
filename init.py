@@ -163,7 +163,7 @@ if use_ci == "yes":
                         full_path = os.path.join(root, f)
                         taskq.put(ReReplaceTask(full_path, org_url, new_url))
                         taskq.put(ReReplaceTask(full_path, org_url_upstream,
-                            new_url))
+                                                new_url))
                         taskq.put(ReReplaceTask(full_path, ver_cur, ver_new))
 else:
         taskq.put(DeleteTask(gitlabci))
