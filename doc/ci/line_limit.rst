@@ -1,7 +1,7 @@
 line_limit
 ==========
 
-.. note:: Requires an UNIX environment.
+.. note:: Requires a Unix-like environment.
 
 Used to enforce line limits for all files but code, since code it handled
 by ``clang-format``. The script provides options to exclude files and lines

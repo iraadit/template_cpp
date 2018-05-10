@@ -1,7 +1,7 @@
 Managing docker images
 ======================
 
-.. note:: Requires an UNIX environment.
+.. note:: Requires a Unix-like environment.
 
 Helper script
 -------------

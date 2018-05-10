@@ -1,7 +1,7 @@
 format
 ======
 
-.. note:: Requires an UNIX environment.
+.. note:: Requires a Unix-like environment.
 
 When configuring with ``-DFORMAT:BOOL=ON`` target ``format`` will be added.
 Running ``make format`` will then format all source code in place.

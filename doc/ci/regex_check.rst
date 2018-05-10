@@ -1,7 +1,7 @@
 regex_check
 ===========
 
-.. note:: Requires an UNIX environment.
+.. note:: Requires a Unix-like environment.
 
 Used to check for non-ASCII characters in source code and documentation.
 The script provides options to exclude files and lines from checking.
