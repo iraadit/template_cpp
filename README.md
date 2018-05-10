@@ -15,9 +15,9 @@ html documentation:
 * [Development version](https://doc.mel.vin/template/cpp/review-master-8phwor)
 
 The official project home and all official mirrors:
-* Home: https://git.mel.vin/template/c
-* GitLab: https://gitlab.com/melvinvermeeren/template\_c
-* GitHub: https://github.com/melvinvermeeren/template\_c
+* Home: https://git.mel.vin/template/cpp
+* GitLab: https://gitlab.com/melvinvermeeren/template\_cpp
+* GitHub: https://github.com/melvinvermeeren/template\_cpp
 
 ## Code
 
