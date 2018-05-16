@@ -1,22 +1,31 @@
 function(find_python_module module)
-string(TOUPPER ${module} module_upper)
-if(NOT PY_${module_upper})
-	if(ARGC GREATER 1 AND ARGV1 STREQUAL "REQUIRED")
-		set(${module}_FIND_REQUIRED TRUE)
-	endif()
+
+string(TOUPPER "${module}" module_u)
+
+# do not override user-specified values
+if(NOT ${module_u}_PATH)
+	# set the default in case nothing is found
+	set("${module_u}_PATH" "" CACHE STRING "Path to ${module}." FORCE)
+
 	# A module's location is usually a directory, but for binary modules
 	# it's an .so file.
 	execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c"
-		"import re, ${module}; print(re.compile('/__init__.py.*') \
-		.sub('',${module}.__file__))"
-		RESULT_VARIABLE _${module}_status
-		OUTPUT_VARIABLE _${module}_location
+		"import os, re, ${module}; print(os.path.dirname( \
+		re.compile('/__init__.py.*').sub('',${module}.__file__)))"
+		RESULT_VARIABLE "${module_u}_RESULT"
+		OUTPUT_VARIABLE "${module_u}_OUTPUT"
 		ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
-	if(NOT _${module}_status)
-		set(PY_${module_upper} ${_${module}_location} CACHE STRING
-			"Location of Python module ${module}")
-	endif(NOT _${module}_status)
-endif(NOT PY_${module_upper})
-find_package_handle_standard_args(PY_${module}
-	DEFAULT_MSG PY_${module_upper})
+
+	# if the exit code (RESULT) is non-zero python couldn't import module
+	if(NOT ${module_u}_RESULT)
+		set("${module_u}_PATH" "${${module_u}_OUTPUT}" CACHE STRING
+			"Path to ${module}." FORCE)
+	endif()
+endif()
+
+if(NOT ${module_u}_PATH)
+	message(FATAL_ERROR "Could not find ${module}.")
+endif()
+message(STATUS "Found ${module}: ${${module_u}_PATH}")
+
 endfunction(find_python_module)
