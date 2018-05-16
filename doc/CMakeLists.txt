@@ -26,10 +26,10 @@ else()
 	# https://bugzilla.gnome.org/show_bug.cgi?id=792676
 	set(DOXY_WARN_AS_ERR "NO")
 
-	include(find_python_module)
 	find_package(PythonInterp REQUIRED)
-	find_python_module(breathe REQUIRED)
-	find_python_module(sphinx REQUIRED)
+	include(find_python_module)
+	find_python_module(breathe)
+	find_python_module(sphinx)
 
 	if($ENV{PYTHONPATH})
 		set(ENV{PYTHONPATH}
