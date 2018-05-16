@@ -10,8 +10,8 @@ if(NOT ${module_u}_PATH)
 	# A module's location is usually a directory, but for binary modules
 	# it's an .so file.
 	execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c"
-		"import re, ${module}; print(re.compile('/__init__.py.*') \
-		.sub('',${module}.__file__))"
+		"import os, re, ${module}; print(os.path.dirname( \
+		re.compile('/__init__.py.*').sub('',${module}.__file__)))"
 		RESULT_VARIABLE "${module_u}_RESULT"
 		OUTPUT_VARIABLE "${module_u}_OUTPUT"
 		ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
