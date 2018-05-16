@@ -37,7 +37,11 @@ else()
 		set(PYTHONPATH
 			"${BREATHE_PATH}:${SPHINX_PATH}:$ENV{PYTHONPATH}")
 	else()
-		set(PYTHONPATH "${BREATHE_PATH}:${SPHINX_PATH}")
+		# PYTHONPATH disables defaults, manually append them
+		execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c"
+		"import sys; sys.stdout.write(':'.join(sys.path))"
+		OUTPUT_VARIABLE PYTHONPATH)
+		set(PYTHONPATH "${BREATHE_PATH}:${SPHINX_PATH}:${PYTHONPATH}")
 	endif()
 
 	if(${WERROR})
