@@ -31,11 +31,13 @@ else()
 	find_python_module(breathe)
 	find_python_module(sphinx)
 
-	if($ENV{PYTHONPATH})
-		set(ENV{PYTHONPATH}
-			"${PY_breathe}:${PY_sphinx}:$ENV{PYTHONPATH}")
+	# do not change the ENV, doesn't work with add_custom_target
+	# https://cmake.org/Bug/view.php?id=5145
+	if(ENV{PYTHONPATH})
+		set(PYTHONPATH
+			"${BREATHE_PATH}:${SPHINX_PATH}:$ENV{PYTHONPATH}")
 	else()
-		set(ENV{PYTHONPATH} "${PY_breathe}:${PY_sphinx}")
+		set(PYTHONPATH "${BREATHE_PATH}:${SPHINX_PATH}")
 	endif()
 
 	if(${WERROR})
@@ -82,32 +84,37 @@ else()
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Converting Doxygen XML to RST by source file"
-		COMMAND "${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
+		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
+			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
 			-o "${DOC_TMP}/api/file" -f -g file -q
 			"${DOC_TMP}/doxygen/xml"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Converting Doxygen XML to RST by element type"
-		COMMAND "${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
+		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
+			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
 			-o "${DOC_TMP}/api/type" -f
 			-g class,interface,struct,union,namespace,group -q
 			"${DOC_TMP}/doxygen/xml"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by source file"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by element type"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
-		COMMAND "${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_SRC}" "${DOC_DEST}")
 
