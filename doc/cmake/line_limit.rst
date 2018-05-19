@@ -3,6 +3,9 @@ line_limit
 
 .. note:: Requires a Unix-like environment.
 
+When configuring with ``-DLINE_LIMIT:BOOL=ON`` target ``line_limit`` will be 
+added.
+
 Used to enforce line limits for all files in the repository. The script
 provides options to exclude files and lines from checking.
 
