@@ -59,7 +59,7 @@ line_limit:
 regex_check:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   script:
     - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:11:' .
     - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
@@ -131,7 +131,7 @@ review:
   dependencies:
     - gcc_coverage
     - sphinx_html
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://doc.mel.vin/template/c/$CI_ENVIRONMENT_SLUG
@@ -151,7 +151,7 @@ review_stop:
     GIT_STRATEGY: none
   when: manual
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
