@@ -3,7 +3,7 @@
 # intermediate script to support extra options for line_limit.sh
 
 # current script dir
-SCRIPT_DIR=$(dirname $(readlink -f "$0"))
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 # support WERROR option
 [[ $WERROR == "ON" ]] && set -e
