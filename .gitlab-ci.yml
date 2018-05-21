@@ -61,8 +61,10 @@ regex_check:
   allow_failure: true
   image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   script:
-    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:11:' .
-    - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DREGEX_CHECK:BOOL=ON -DWERROR:BOOL=ON ..
+    - make regex_check
 
 clang:
   stage: build

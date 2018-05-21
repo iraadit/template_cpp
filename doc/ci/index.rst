@@ -1,8 +1,7 @@
 Continuous integration
 ======================
 
-These checks are currently not integrated with CMake and are instead run
-separately on CI. This may change in the future depending on demand.
+Below is a list of extra information about the CI process.
 
 .. toctree::
 	:glob:
