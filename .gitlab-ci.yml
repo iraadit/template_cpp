@@ -53,7 +53,7 @@ line_limit:
   script:
     - mkdir build
     - cd build
-    - cmake -DCODE:BOOL=OFF -DLINE_LIMIT:BOOL=ON ..
+    - cmake -DCODE:BOOL=OFF -DLINE_LIMIT:BOOL=ON -DWERROR:BOOL=ON ..
     - make line_limit
 
 regex_check:
