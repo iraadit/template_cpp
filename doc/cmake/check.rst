@@ -8,6 +8,6 @@ When configuring with either
 * ``-DFLAWFINDER:BOOL=ON`` or,
 * ``-DFORMAT:BOOL=ON``
 
-an addition target ``check`` will be added. This target is a simple
+an additional target ``check`` will be added. This target is a simple
 convenience target that will call the above mentioned checks if they are
 enabled.
