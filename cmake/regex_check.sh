@@ -11,10 +11,10 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 # call regex_check.sh to check repo
 "$SCRIPT_DIR/../ci/style/regex_check.sh" \
 	-e '^cmake/apidoc\.py:11:' \
-	-e '^build.*/' \
+	-e '^build[^/]*/' \
 	"$SCRIPT_DIR/.."
 "$SCRIPT_DIR/../ci/style/regex_check.sh" \
-	-e '^build.*/' \
+	-e '^build[^/]*/' \
 	-r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' \
 	"$SCRIPT_DIR/.."
 
