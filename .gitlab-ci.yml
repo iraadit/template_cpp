@@ -68,6 +68,8 @@ regex_check:
 
 clang:
   stage: build
+  only:
+    - master
   image: git.mel.vin:5005/template/c/ci/clang:1.1
   script:
     - mkdir build
@@ -77,6 +79,8 @@ clang:
 
 gcc:
   stage: build
+  only:
+    - master
   image: git.mel.vin:5005/template/c/ci/gcc:1.0
   script:
     - mkdir build
