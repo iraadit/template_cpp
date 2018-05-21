@@ -18,8 +18,8 @@ doxygen
 	reported on by CI. https://bugzilla.gnome.org/show_bug.cgi?id=792676
 
 When configuring with ``-DDOC:STRING=doxygen`` target ``doc`` will be added.
-Running ``make doc`` will then run ``doxygen`` over all source code. This
-generates HTML API documentation.
+The target will run ``doxygen`` over all source code. This generates HTML API
+documentation.
 
 This will not run any sphinx-based jobs and therefore will not build any
 documentation stored in ``/doc``.
@@ -31,8 +31,8 @@ sphinx-based
 ------------
 
 When configuring with ``-DDOC:STRING=${BUILDER}`` where ``${BUILDER}`` is not
-one of either ``OFF`` or ``doxygen`` target ``doc`` will be added. Running
-``make doc`` will then run ``sphinx`` with builder type ``${BUILDER}``.
+one of either ``OFF`` or ``doxygen`` target ``doc`` will be added. The target
+will then run ``sphinx`` with builder type ``${BUILDER}``.
 
 ``doxygen`` will still be used to generate XML output for API documentation
 of source files. The XML is then used to generate HTML pages.
