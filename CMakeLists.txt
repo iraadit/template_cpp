@@ -71,3 +71,7 @@ endif()
 if(${REGEX_CHECK})
 	include(regex_check)
 endif()
+
+if(${LINE_LIMIT} OR ${REGEX_CHECK} OR ${FLAWFINDER} OR ${FORMAT})
+	include(check)
+endif()
