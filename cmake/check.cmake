@@ -1,5 +1,5 @@
 # add check target as a convience target to invoke all checks
-add_custom_target(check COMMENT "Analyzing repo")
+add_custom_target(check)
 
 if(${LINE_LIMIT})
 	add_dependencies(check line_limit)

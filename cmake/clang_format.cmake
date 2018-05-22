@@ -13,6 +13,6 @@ add_custom_target(format
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 add_custom_target(format_check
-	COMMENT "Checking if source code meets format standards"
+	COMMENT "Running format check"
 	COMMAND WERROR=${WERROR} ./cmake/format_check.sh
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
