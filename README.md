@@ -3,8 +3,6 @@
 Magical template for C projects, improves quality of life.
 
 Released into the public domain so you don't have to bother with crediting this.
-The only exception is cmake/apidoc.py which is BSD licensed and will be removed
-in the future.
 
 A list of software used can be found in this file. For absolute minimum
 requirements for build steps refer to `ci/docker_targets/*/bootstrap.sh`.
