@@ -121,7 +121,7 @@ gcc_coverage:
 sphinx_html:
   stage: doc
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.4
+  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.5
   script:
     - mkdir build
     - cd build
