@@ -50,10 +50,7 @@ else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	# https://git.mel.vin/template/c/issues/76
-	#include(breathe_apidoc)
-	set(BREATHE_APIDOC_PATH "${CMAKE_SOURCE_DIR}/cmake/apidoc.py")
-
+	include(breathe_apidoc)
 	include(plantuml)
 
 	configure_file(
