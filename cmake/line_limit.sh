@@ -12,7 +12,6 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 "$SCRIPT_DIR/../ci/style/line_limit.sh" \
 	-e '\.(c|cpp|h|hpp)$' \
 	-e '^\.clang-tidy$' \
-	-e '^cmake/apidoc\.py$' \
 	-e '^build[^/]*/' \
 	-i "$SCRIPT_DIR/.."
 "$SCRIPT_DIR/../ci/style/line_limit.sh" \
