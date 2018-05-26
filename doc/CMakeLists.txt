@@ -101,21 +101,21 @@ else()
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by source file"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} API by element type"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_SRC}" "${DOC_DEST}")
 
