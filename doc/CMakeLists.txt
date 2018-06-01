@@ -75,8 +75,6 @@ if(${DOC} STREQUAL "doxygen")
 else()
 	configure_file("${DOC_SRC}/api/file/index.rst.in"
 		"${DOC_TMP}/api/file/index.rst" @ONLY)
-	configure_file("${DOC_SRC}/api/type/index.rst.in"
-		"${DOC_TMP}/api/type/index.rst" @ONLY)
 
 	add_custom_target(doc
 		COMMAND "${CMAKE_COMMAND}" -E echo
@@ -84,33 +82,18 @@ else()
 		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML to RST by source file"
+			"Converting Doxygen XML to RST"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
 			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
 			-o "${DOC_TMP}/api/file" -f -g file -q
 			"${DOC_TMP}/doxygen/xml"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML to RST by element type"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
-			-o "${DOC_TMP}/api/type" -f
-			-g class,interface,struct,union,namespace,group -q
-			"${DOC_TMP}/doxygen/xml"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API by source file"
+			"Generating sphinx ${DOC} API"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
 			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API by element type"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
-			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
-			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
