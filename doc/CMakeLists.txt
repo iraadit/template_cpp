@@ -78,18 +78,18 @@ else()
 
 	add_custom_target(doc
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating Doxygen XML API output"
+			"Generating Doxygen XML API documentation"
 		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML to RST"
+			"Converting Doxygen XML API to RST API documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
 			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
 			-o "${DOC_TMP}/api/file" -f -g file -q
 			"${DOC_TMP}/doxygen/xml"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API"
+			"Generating sphinx ${DOC} API documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
 			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
