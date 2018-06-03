@@ -6,5 +6,8 @@ They are ``build/clang`` and ``build/gcc``. These jobs compile the project in
 a way that an end-user or distro maintainer would likely do. No CMake options
 are set and the standard compiler is used with CMake's release mode flags.
 
-You could also set these jobs to run only for the master branch so you still
-avoid broken things before tagging a release.
+By default these jobs only run in ``master``, which saves CPU time compared
+to always running them. It will still help find bugs in the project's
+``CMakeLists.txt`` which only occur when building in release mode or issues with
+the compiler that only occur when optimisations are enabled. This avoids tagging
+a broken release.

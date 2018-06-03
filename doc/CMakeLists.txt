@@ -50,10 +50,7 @@ else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	# https://git.mel.vin/template/c/issues/76
-	#include(breathe_apidoc)
-	set(BREATHE_APIDOC_PATH "${CMAKE_SOURCE_DIR}/cmake/apidoc.py")
-
+	include(breathe_apidoc)
 	include(plantuml)
 
 	configure_file(
@@ -78,47 +75,30 @@ if(${DOC} STREQUAL "doxygen")
 else()
 	configure_file("${DOC_SRC}/api/file/index.rst.in"
 		"${DOC_TMP}/api/file/index.rst" @ONLY)
-	configure_file("${DOC_SRC}/api/type/index.rst.in"
-		"${DOC_TMP}/api/type/index.rst" @ONLY)
 
 	add_custom_target(doc
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating Doxygen XML API output"
+			"Generating Doxygen XML API documentation"
 		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML to RST by source file"
+			"Converting Doxygen XML API to RST API documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
 			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
 			-o "${DOC_TMP}/api/file" -f -g file -q
 			"${DOC_TMP}/doxygen/xml"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML to RST by element type"
+			"Generating sphinx ${DOC} API documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
-			-o "${DOC_TMP}/api/type" -f
-			-g class,interface,struct,union,namespace,group -q
-			"${DOC_TMP}/doxygen/xml"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API by source file"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API by element type"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
-			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
-			"${DOC_TMP}/api/type" "${DOC_DEST}/api/type"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
 		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}"
+			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
 			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
 			"${DOC_SRC}" "${DOC_DEST}")
 

@@ -11,9 +11,12 @@ variables:
 clang_format:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/clang_format:1.0
+  image: git.mel.vin:5005/template/c/ci/clang_format:1.1
   script:
-    - ./ci/clang_format.sh check
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DFORMAT:BOOL=ON -DWERROR:BOOL=ON ..
+    - make format_check
 
 clang_tidy:
   stage: analyse
@@ -49,24 +52,27 @@ flawfinder:
 line_limit:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   script:
-    - ./ci/style/line_limit.sh -e '\.(c|cpp|h|hpp)$' -e '^\.clang-tidy$'
-      -e '^cmake/apidoc\.py$' -i .
-    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' include
-    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' src
-    - ./ci/style/line_limit.sh -e 'CMakeLists\.txt$' test
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DLINE_LIMIT:BOOL=ON -DWERROR:BOOL=ON ..
+    - make line_limit
 
 regex_check:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   script:
-    - ./ci/style/regex_check.sh -e '^cmake/apidoc\.py:11:' .
-    - ./ci/style/regex_check.sh -r '(^$)|(^.*[^[:cntrl:][:blank:]]$)' .
+    - mkdir build
+    - cd build
+    - cmake -DCODE:BOOL=OFF -DREGEX_CHECK:BOOL=ON -DWERROR:BOOL=ON ..
+    - make regex_check
 
 clang:
   stage: build
+  only:
+    - master
   image: git.mel.vin:5005/template/c/ci/clang:1.1
   script:
     - mkdir build
@@ -76,6 +82,8 @@ clang:
 
 gcc:
   stage: build
+  only:
+    - master
   image: git.mel.vin:5005/template/cpp/ci/gcc:1.0
   script:
     - mkdir build
@@ -113,7 +121,7 @@ gcc_coverage:
 sphinx_html:
   stage: doc
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.4
+  image: git.mel.vin:5005/template/c/ci/sphinx_html:1.5
   script:
     - mkdir build
     - cd build
@@ -132,7 +140,7 @@ review:
   dependencies:
     - gcc_coverage
     - sphinx_html
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://doc.mel.vin/template/cpp/$CI_ENVIRONMENT_SLUG
@@ -152,7 +160,7 @@ review_stop:
     GIT_STRATEGY: none
   when: manual
   dependencies: []
-  image: git.mel.vin:5005/template/c/ci/coreutils:1.1
+  image: git.mel.vin:5005/template/c/ci/coreutils:1.2
   environment:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
