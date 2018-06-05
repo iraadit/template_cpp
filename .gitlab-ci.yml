@@ -39,16 +39,6 @@ doxygen:
     - cmake -DCODE:BOOL=OFF -DDOC:STRING=doxygen -DWERROR:BOOL=ON ..
     - make doc
 
-flawfinder:
-  stage: analyse
-  allow_failure: true
-  image: git.mel.vin:5005/template/c/ci/flawfinder:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake -DCODE:BOOL=OFF -DFLAWFINDER:BOOL=ON -DWERROR:BOOL=ON ..
-    - make flawfinder
-
 line_limit:
   stage: analyse
   allow_failure: true
