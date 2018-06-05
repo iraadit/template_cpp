@@ -1,5 +1,9 @@
 find_package(Doxygen REQUIRED COMPONENTS dot)
 
+get_target_property(DOXY_DOT_PATH Doxygen::dot IMPORTED_LOCATION)
+get_filename_component(DOXY_DOT_PATH "${DOXY_DOT_PATH}" DIRECTORY)
+file(TO_NATIVE_PATH "${DOXY_DOT_PATH}" DOXY_DOT_PATH)
+
 set(DOC_SRC "${CMAKE_SOURCE_DIR}/doc")
 set(DOC_DEST "${CMAKE_BINARY_DIR}/doc/${DOC}")
 set(DOC_TMP "${CMAKE_BINARY_DIR}/tmp/doc")
@@ -66,7 +70,7 @@ configure_file(
 
 if(${DOC} STREQUAL "doxygen")
 	add_custom_target(doc
-		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
+		COMMAND Doxygen::doxygen "${DOC_TMP}/doxygen/doxyfile"
 		COMMENT "Generating HTML API documentation with Doxygen")
 
 	add_custom_command(TARGET doc POST_BUILD
@@ -79,7 +83,7 @@ else()
 	add_custom_target(doc
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating Doxygen XML API documentation"
-		COMMAND "${DOXYGEN_EXECUTABLE}" "${DOC_TMP}/doxygen/doxyfile"
+		COMMAND Doxygen::doxygen "${DOC_TMP}/doxygen/doxyfile"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Converting Doxygen XML API to RST API documentation"

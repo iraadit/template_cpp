@@ -1,29 +1,23 @@
-CLASS_DIAGRAMS          =   NO
-EXTRACT_ALL             =   NO
-EXTRACT_LOCAL_CLASSES   =   YES
-EXTRACT_PACKAGE         =   YES
-EXTRACT_PRIVATE         =   YES
-EXTRACT_STATIC          =   YES
-FILE_PATTERNS           =   *.dox \
-                            *.h \
-                            *.hpp
-GENERATE_HTML           =   @DOXY_BUILD_HTML@
-GENERATE_LATEX          =   @DOXY_BUILD_LATEX@
-GENERATE_XML            =   @DOXY_BUILD_XML@
-HAVE_DOT                =   YES
-HIDE_UNDOC_RELATIONS    =   NO
-INPUT                   =   "@CMAKE_SOURCE_DIR@/src" \
-                            "@CMAKE_SOURCE_DIR@/include"
-OUTPUT_DIRECTORY        =   "@DOXY_OUTPUT_DIR@"
-PROJECT_NAME            =   "@PROJECT_NAME@"
-PROJECT_NUMBER          =   @PROJECT_VERSION@
-QUIET                   =   YES
-RECURSIVE               =   YES
-STRIP_FROM_PATH         =   "@CMAKE_SOURCE_DIR@"
-WARN_AS_ERROR           =   @DOXY_WARN_AS_ERR@
-WARN_IF_UNDOCUMENTED    =   YES
-WARN_NO_PARAMDOC        =   YES
-ENABLE_PREPROCESSING    =   YES
-MACRO_EXPANSION         =   YES
-EXPAND_ONLY_PREDEF      =   YES
-PREDEFINED              =   restrict=
+DOT_MULTI_TARGETS     = YES
+DOT_PATH              = "@DOXY_DOT_PATH@"
+ENABLE_PREPROCESSING  = YES
+EXPAND_ONLY_PREDEF    = YES
+EXTRACT_LOCAL_CLASSES = NO
+GENERATE_HTML         = @DOXY_BUILD_HTML@
+GENERATE_LATEX        = @DOXY_BUILD_LATEX@
+GENERATE_XML          = @DOXY_BUILD_XML@
+HAVE_DOT              = YES
+INPUT                 = "@CMAKE_SOURCE_DIR@/src" \
+                        "@CMAKE_SOURCE_DIR@/include"
+JAVADOC_AUTOBRIEF     = YES
+MACRO_EXPANSION       = YES
+OUTPUT_DIRECTORY      = "@DOXY_OUTPUT_DIR@"
+PREDEFINED            = restrict=
+PROJECT_NAME          = "@PROJECT_NAME@"
+PROJECT_NUMBER        = @PROJECT_VERSION@
+QT_AUTOBRIEF          = YES
+QUIET                 = YES
+RECURSIVE             = YES
+STRIP_FROM_PATH       = "@CMAKE_SOURCE_DIR@"
+WARN_AS_ERROR         = @DOXY_WARN_AS_ERR@
+WARN_NO_PARAMDOC      = YES
