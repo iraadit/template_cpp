@@ -11,6 +11,7 @@ apt-get install --no-install-recommends -y \
 	binutils \
 	ca-certificates \
 	clang-$CLANG \
+	clang-format-$CLANG \
 	clang-tidy-$CLANG \
 	cmake \
 	curl \
@@ -30,4 +31,5 @@ rm -rf /var/lib/apt/lists/*
 
 ln -s /usr/bin/clang-$CLANG /usr/local/bin/cc
 ln -s /usr/bin/clang++-$CLANG /usr/local/bin/c++
+ln -s /usr/bin/clang-format-$CLANG /usr/local/bin/clang-format
 ln -s /usr/bin/clang-tidy-$CLANG /usr/local/bin/clang-tidy
