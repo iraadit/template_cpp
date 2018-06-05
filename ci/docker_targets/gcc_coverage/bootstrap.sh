@@ -1,5 +1,7 @@
 #!/bin/sh
 
+CATCH=2.2.2
+
 set -e
 
 echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' \
@@ -20,6 +22,6 @@ apk --no-cache add -t tmp \
 mkdir -p /usr/local/include/catch
 curl -Lf \
 	-o /usr/local/include/catch/catch.hpp \
-	https://git.mel.vin/mirror/catch/raw/v2.2.1/catch/catch.hpp
+	https://git.mel.vin/mirror/catch/raw/v$CATCH/catch/catch.hpp
 
 apk --no-cache del tmp
