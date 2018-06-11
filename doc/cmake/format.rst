@@ -12,10 +12,10 @@ When also configuring with ``-DWERROR:BOOL=ON`` a nonzero exit code will be
 returned if at least one line does not pass the checks while invoking
 ``format_check``.
 
-The script invoked is ``/ci/clang_format.sh`` and can also be used to check
+The script invoked is ``/cicd/clang_format.sh`` and can also be used to check
 source files, reporting replacements in XML.
 
 .. code-block:: console
 
 	# always call script from root of the repo
-	./ci/clang_format.sh --help
+	./cicd/clang_format.sh --help

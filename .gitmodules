@@ -1,6 +1,6 @@
-[submodule "ci/docker"]
-	path = ci/docker
+[submodule "cicd/docker"]
+	path = cicd/docker
 	url = https://git.mel.vin/cicd/docker.git
-[submodule "ci/style"]
-	path = ci/style
+[submodule "cicd/style"]
+	path = cicd/style
 	url = https://git.mel.vin/cicd/style.git

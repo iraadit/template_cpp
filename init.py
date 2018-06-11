@@ -142,7 +142,7 @@ use_ci = def_input("Use gitlab ci?", "yes")
 gitlabci = os.path.join(scp_dir, ".gitlab-ci.yml")
 if use_ci == "yes":
         # get new registry url
-        dockertarget = os.path.join(scp_dir, "./ci/docker_targets")
+        dockertarget = os.path.join(scp_dir, "./cicd/docker_targets")
         ver_cur = ":[0-9]+\.[0-9]+"
         ver_new = ":0.0"
         reg_domain = req_input("Docker registry domain")

@@ -9,7 +9,7 @@ message(STATUS "Found clang-format: ${CLANG_FORMAT_PATH}")
 
 add_custom_target(format
 	COMMENT "Formatting source code"
-	COMMAND ./ci/clang_format.sh format "${CLANG_FORMAT_PATH}"
+	COMMAND ./cicd/clang_format.sh format "${CLANG_FORMAT_PATH}"
 	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 add_custom_target(format_check

@@ -9,18 +9,18 @@ Helper script
 For managing docker images which are described inside the repository a helper
 script exists for building and pushing those images to arbitrary locations.
 
-The script itself is located in ``/ci/docker/image.sh``. You may want to read
+The script itself is located in ``/cicd/docker/image.sh``. You may want to read
 its ``--help`` before continuing.
 
 .. code-block:: console
 
-	./ci/docker/image.sh --help
+	./cicd/docker/image.sh --help
 
 Docker targets
 --------------
 
 As mentioned, docker targets go into ``../docker_targets`` from the perspective
-of the script. In the repo that would be ``/ci/docker_targets``.
+of the script. In the repo that would be ``/cicd/docker_targets``.
 
 All directories in this directory are seen as docker targets. Each directory
 should contain a standard ``Dockerfile`` and a non-standard ``Tagfile``. The
