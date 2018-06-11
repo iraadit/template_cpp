@@ -17,4 +17,4 @@ whitespace, or actually anything that is not a control or blank character.
 
 .. code-block:: console
 
-	./ci/style/regex_check.sh --help
+	./cicd/style/regex_check.sh --help

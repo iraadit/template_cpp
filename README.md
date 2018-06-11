@@ -5,7 +5,7 @@ Magical template for C projects, improves quality of life.
 Released into the public domain so you don't have to bother with crediting this.
 
 A list of software used can be found in this file. For absolute minimum
-requirements for build steps refer to `ci/docker_targets/*/bootstrap.sh`.
+requirements for build steps refer to `cicd/docker_targets/*/bootstrap.sh`.
 
 Further details and diagrams are provided in the generated sphinx/doxygen-based
 html documentation:

@@ -20,4 +20,4 @@ in ``.c .cpp .h .hpp``. This avoids potential conflicts with the formatter.
 
 .. code-block:: console
 
-	./ci/style/line_limit.sh --help
+	./cicd/style/line_limit.sh --help
