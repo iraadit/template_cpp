@@ -2,39 +2,21 @@
 
 Reverse chronologically sorted, i.e. newest on top.
 
-View the commit history for minor fixes and improvements, only important changes
-are listed below.
+For details view the associated milestone of a release which are linked below.
+View the commit history for minor fixes and improvements.
+
+## 1.3.0 / 2018-06-11
+
+https://git.mel.vin/template/c/milestones/5
 
 ## 1.2.0 / 2018-05-10
 
-* add documentation for all options and checks in the template
-* remove cppcheck
-* add flawfinder target which checks code with flawfinder
-* add SANITISE flag which adds -fsanitize=address -fsanitize=undefined
-* add format target that will format all sources with clang-format
-* add style/regex\_check.sh to find non-ASCII characters in sources
-* split docker images to make managing easier and builds more efficient
-* integrate doxygen, sphinx and gitlab pages to generate complete documentation
-* remove the catch submodule as it is a regular system dependency
-* building code is optional so there is no hard dependency on a compiler
-* do not prevent mixing C and C++ compilers
-* supply the regex for gitlab CI coverage in documentation
-* added support for coverage by using gcov, lcov and llvm-cov
-* jobs in the analyse stage will warn instead of failing the build
-* support stable clang-format which is currently 5
-* add CLANG\_TIDY flag that will check on make
-* add WERROR flag that will turn warnings into errors
-* disable modernize-deprecated-headers which is buggy with extern C blocks
+https://git.mel.vin/template/c/milestones/3
 
 ## 1.1.0 / 2017-11-27
 
-* break before binary and ternary operators
+https://git.mel.vin/template/c/milestones/2
 
 ## 1.0.0 / 2017-11-26
 
-* directory layout
-* formatting with clang-format
-* analyse with clang-tidy, cppcheck
-* build with cmake, gcc, clang
-* test with Catch2
-* CI CD with docker, style
+https://git.mel.vin/template/c/milestones/1
