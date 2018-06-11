@@ -6,14 +6,14 @@ extern "C" {
 
 #include <stdint.h>
 
-/** \brief This is an arbitrary struct. */
+/** This is an arbitrary struct. */
 struct arbitrary_struct
 {
-	/** \brief The amount of a in the universe. */
+	/** The amount of a in the universe. */
 	uint8_t a;
-	/** \brief The amount of b in the universe. */
+	/** The amount of b in the universe. */
 	uint8_t b;
-	/** \brief One-letter code for universe condition. */
+	/** One-letter code for universe condition. */
 	char c;
 };
 
