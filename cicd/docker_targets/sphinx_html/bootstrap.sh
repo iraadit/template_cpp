@@ -1,5 +1,7 @@
 #!/bin/sh
 
+PLANTUML=1.2018.6
+
 set -e
 
 apk --no-cache add \
@@ -26,7 +28,7 @@ for i in batik-all-1.7.jar jlatexmath-minimal-1.0.3.jar jlm_cyrillic.jar \
 do
 	curl -Lf \
 		-o /opt/plantuml/$i \
-		https://git.mel.vin/mirror/plantuml/raw/1.2018.1/$i
+		https://git.mel.vin/mirror/plantuml/raw/$PLANTUML/$i
 done
 
 printf '%s\n%s\n' \

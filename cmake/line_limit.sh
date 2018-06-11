@@ -9,18 +9,18 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 [[ $WERROR == "ON" ]] && set -e
 
 # call line_limit.sh to check repo
-"$SCRIPT_DIR/../ci/style/line_limit.sh" \
+"$SCRIPT_DIR/../cicd/style/line_limit.sh" \
 	-e '\.(c|cpp|h|hpp)$' \
 	-e '^\.clang-tidy$' \
 	-e '^build[^/]*/' \
 	-i "$SCRIPT_DIR/.."
-"$SCRIPT_DIR/../ci/style/line_limit.sh" \
+"$SCRIPT_DIR/../cicd/style/line_limit.sh" \
 	-e 'CMakeLists\.txt$' \
 	"$SCRIPT_DIR/../include"
-"$SCRIPT_DIR/../ci/style/line_limit.sh" \
+"$SCRIPT_DIR/../cicd/style/line_limit.sh" \
 	-e 'CMakeLists\.txt$' \
 	"$SCRIPT_DIR/../src"
-"$SCRIPT_DIR/../ci/style/line_limit.sh" \
+"$SCRIPT_DIR/../cicd/style/line_limit.sh" \
 	-e 'CMakeLists\.txt$' \
 	"$SCRIPT_DIR/../test"
 
