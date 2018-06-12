@@ -63,7 +63,22 @@ message(STATUS "Found genhtml: ${GENHTML_PATH}")
 add_compile_options(--coverage)
 if(NOT CMAKE_EXE_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage"
-		CACHE STRING "Flags used by the linker during all build types."
+		CACHE STRING "Linker flags used to create executables."
+		FORCE)
+endif()
+if(NOT CMAKE_MODULE_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
+	set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} --coverage"
+		CACHE STRING "Linker flags used to create modules."
+		FORCE)
+endif()
+if(NOT CMAKE_SHARED_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --coverage"
+		CACHE STRING "Linker flags used to create shared libraries."
+		FORCE)
+endif()
+if(NOT CMAKE_STATIC_LINKER_FLAGS MATCHES "(^| +)--coverage($| +)")
+	set(CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS} --coverage"
+		CACHE STRING "Linker flags used to create static libraries."
 		FORCE)
 endif()
 
