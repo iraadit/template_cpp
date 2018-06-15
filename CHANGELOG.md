@@ -5,6 +5,10 @@ Reverse chronologically sorted, i.e. newest on top.
 For details view the associated milestone of a release which are linked below.
 View the commit history for minor fixes and improvements.
 
+## 1.3.2 / 2018-06-15
+
+https://git.mel.vin/template/c/milestones/7
+
 ## 1.3.1 / 2018-06-13
 
 https://git.mel.vin/template/c/milestones/6
