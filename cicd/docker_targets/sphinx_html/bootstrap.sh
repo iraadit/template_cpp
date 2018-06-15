@@ -7,10 +7,12 @@ set -e
 apk --no-cache add \
 	cmake \
 	doxygen \
+	font-noto \
 	graphviz \
 	make \
 	openjdk8-jre \
 	py2-pip \
+	ttf-dejavu \
 	ttf-liberation
 
 apk --no-cache add -t tmp \
