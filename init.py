@@ -128,7 +128,8 @@ mail = def_input("Project email", config['email'])
 taskq.put(ReReplaceTask(cmakelist, "__AUTHOR_MAIL__", mail))
 
 version = def_input("Project version", "0.0.0")
-taskq.put(ReReplaceTask(cmakelist, "0.0.0", version))
+taskq.put(ReReplaceTask(cmakelist, "(\n\tVERSION )([0-9]\.?)+(\n)",
+                        "\\g<1>" + version + "\\g<3>"))
 
 copyright = def_input("Copyright", "%s, %s" %
                       (datetime.datetime.now().year,  author))
