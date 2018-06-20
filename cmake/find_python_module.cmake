@@ -2,6 +2,10 @@ function(find_python_module module)
 
 string(TOUPPER "${module}" module_u)
 
+if(${module_u}_FOUND)
+	return()
+endif()
+
 # do not override user-specified values
 if(NOT ${module_u}_PATH)
 	# set the default in case nothing is found
@@ -26,6 +30,8 @@ endif()
 if(NOT ${module_u}_PATH)
 	message(FATAL_ERROR "Could not find ${module}.")
 endif()
+set(${module_u}_FOUND ON CACHE BOOL "Found ${module}.")
+mark_as_advanced(${module_u}_FOUND)
 message(STATUS "Found ${module}: ${${module_u}_PATH}")
 
 endfunction(find_python_module)
