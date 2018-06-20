@@ -52,6 +52,5 @@ unset(TMP_TAG)
 # dirty detection won't run every for every build so it may outdated
 # when the index/staging area changes it will however trigger
 # this balances configuration time and dirty index detection
-configure_file("${CMAKE_SOURCE_DIR}/.git/index"
-	"${CMAKE_BINARY_DIR}/tmp/version/index"
-	COPYONLY)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS
+	"${CMAKE_SOURCE_DIR}/.git/index")
