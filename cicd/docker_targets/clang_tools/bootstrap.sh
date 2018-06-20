@@ -15,6 +15,7 @@ apt-get install --no-install-recommends -y \
 	clang-tidy-$CLANG \
 	cmake \
 	curl \
+	git \
 	make
 
 mkdir -p /usr/local/include/catch

@@ -8,6 +8,7 @@ apk --no-cache add \
 	cmake \
 	doxygen \
 	font-noto \
+	git \
 	graphviz \
 	make \
 	openjdk8-jre \

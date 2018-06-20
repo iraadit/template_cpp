@@ -12,6 +12,7 @@ apk --no-cache add \
 	cmake \
 	g++ \
 	gcc \
+	git \
 	lcov \
 	libc-dev \
 	make
