@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CATCH=2.2.2
+CATCH=2.2.3
 CLANG=6.0
 
 set -e
