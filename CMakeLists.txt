@@ -42,9 +42,11 @@ project(__PROJECT_NAME__
 	VERSION 0.0.0
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
-set(CMAKE_PROJECT_AUTHOR "__AUTHOR__")
-set(CMAKE_PROJECT_COPYRIGHT "__COPYRIGHT__")
-set(CMAKE_PROJECT_MAIL "__AUTHOR_MAIL__")
+foreach (prefix "" "CMAKE_")
+	set(${prefix}PROJECT_AUTHOR "__AUTHOR__")
+	set(${prefix}PROJECT_COPYRIGHT "__COPYRIGHT__")
+	set(${prefix}PROJECT_MAIL "__AUTHOR_MAIL__")
+endforeach(prefix)
 
 if(${CODE})
 	include(code)
