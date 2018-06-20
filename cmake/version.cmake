@@ -1,5 +1,6 @@
-# do absolutely nothing when not a git repo
-if(IS_DIRECTORY "${CMAKE_SOURCE_DIR}/.git")
+if(NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/.git")
+	return()
+endif()
 
 find_package(Git REQUIRED)
 
@@ -54,5 +55,3 @@ unset(TMP_TAG)
 configure_file("${CMAKE_SOURCE_DIR}/.git/index"
 	"${CMAKE_BINARY_DIR}/tmp/version/index"
 	COPYONLY)
-
-endif()
