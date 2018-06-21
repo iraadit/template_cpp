@@ -18,7 +18,7 @@ execute_process(COMMAND "${GIT_EXECUTABLE}" describe --dirty=+ --tags --always
 
 # if there is no git tag prefix the CMake version
 if(TMP_VER MATCHES "^[0-9a-f]+\\+?$")
-	set(TMP_VER "${PROJECT_VERSION}-${TMP_VER}")
+	set(TMP_VER "${PROJECT_VERSION}-1-g${TMP_VER}")
 endif()
 
 # error if CMakeLists.txt version does not match the latest tag
