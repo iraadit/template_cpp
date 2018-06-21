@@ -7,6 +7,7 @@ apk --no-cache add \
 	cmake \
 	coreutils \
 	findutils \
+	git \
 	grep \
 	make \
 	openssh-client \

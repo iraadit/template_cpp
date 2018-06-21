@@ -9,7 +9,7 @@ foreach(file
 		derived)
 	add_executable("test_${file}"
 		"${file}.cpp"
-		$<TARGET_OBJECTS:${CMAKE_PROJECT_NAME}_obj>
+		$<TARGET_OBJECTS:${PROJECT_NAME}_obj>
 		$<TARGET_OBJECTS:test_obj>)
 
 	add_test("${file}" "test_${file}")

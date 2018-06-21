@@ -7,5 +7,6 @@ apk --no-cache add \
 	cmake \
 	g++ \
 	gcc \
+	git \
 	libc-dev \
 	make

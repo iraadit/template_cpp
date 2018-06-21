@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLANTUML=1.2018.6
+PLANTUML=1.2018.7
 
 set -e
 
@@ -8,6 +8,7 @@ apk --no-cache add \
 	cmake \
 	doxygen \
 	font-noto \
+	git \
 	graphviz \
 	make \
 	openjdk8-jre \

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CATCH=2.2.2
+CATCH=2.2.3
 
 set -e
 
@@ -12,6 +12,7 @@ apk --no-cache add \
 	cmake \
 	g++ \
 	gcc \
+	git \
 	lcov \
 	libc-dev \
 	make
