@@ -38,7 +38,7 @@ if(${TEST})
 	set(PROJECT_LANGUAGES ${PROJECT_LANGUAGES} CXX)
 endif()
 
-project(__PROJECT_NAME__
+project(c_template
 	VERSION 1.4.0
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
@@ -51,7 +51,9 @@ foreach (prefix "" "CMAKE_")
 	set("${prefix}PROJECT_COPYRIGHT" "__COPYRIGHT__")
 	set("${prefix}PROJECT_MAIL" "__AUTHOR_MAIL__")
 endforeach(prefix)
+string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
 include(version)
+include(version_header)
 
 if(${CODE})
 	include(code)
