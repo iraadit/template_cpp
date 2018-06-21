@@ -39,12 +39,19 @@ if(${TEST})
 endif()
 
 project(__PROJECT_NAME__
-	VERSION 0.0.0
+	VERSION 1.3.2
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
-set(CMAKE_PROJECT_AUTHOR "__AUTHOR__")
-set(CMAKE_PROJECT_COPYRIGHT "__COPYRIGHT__")
-set(CMAKE_PROJECT_MAIL "__AUTHOR_MAIL__")
+set(PROJECT_VERSION_SUFFIX "") # alpha/beta/rc, e.g. "-rc0"
+set(CMAKE_PROJECT_VERSION_SUFFIX "${PROJECT_VERSION_SUFFIX}")
+foreach (prefix "" "CMAKE_")
+	set("${prefix}PROJECT_VERSION"
+		"${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
+	set("${prefix}PROJECT_AUTHOR" "__AUTHOR__")
+	set("${prefix}PROJECT_COPYRIGHT" "__COPYRIGHT__")
+	set("${prefix}PROJECT_MAIL" "__AUTHOR_MAIL__")
+endforeach(prefix)
+include(version)
 
 if(${CODE})
 	include(code)

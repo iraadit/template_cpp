@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CATCH=2.2.2
+CATCH=2.2.3
 CLANG=6.0
 
 set -e
@@ -15,6 +15,7 @@ apt-get install --no-install-recommends -y \
 	clang-tidy-$CLANG \
 	cmake \
 	curl \
+	git \
 	make
 
 mkdir -p /usr/local/include/catch
