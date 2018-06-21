@@ -119,7 +119,8 @@ print("Initializing the template.")
 # basic project info
 cmakelist = os.path.join(scp_dir, "CMakeLists.txt")
 pname = def_input("Project name", prj_dir)
-taskq.put(ReReplaceTask(cmakelist, "__PROJECT_NAME__", pname))
+taskq.put(ReReplaceTask(cmakelist, "(\nproject\\()cpp_template(\n)",
+                        "\\g<1>" + pname + "\\g<2>"))
 
 author = def_input("Project author", config['name'])
 taskq.put(ReReplaceTask(cmakelist, "__AUTHOR__", author))
@@ -128,7 +129,7 @@ mail = def_input("Project email", config['email'])
 taskq.put(ReReplaceTask(cmakelist, "__AUTHOR_MAIL__", mail))
 
 version = def_input("Project version", "0.0.0")
-taskq.put(ReReplaceTask(cmakelist, "(\n\tVERSION )([0-9]\.?)+(\n)",
+taskq.put(ReReplaceTask(cmakelist, "(\n\tVERSION )([0-9]\\.?)+(\n)",
                         "\\g<1>" + version + "\\g<3>"))
 
 copyright = def_input("Copyright", "%s, %s" %
@@ -144,7 +145,7 @@ gitlabci = os.path.join(scp_dir, ".gitlab-ci.yml")
 if use_ci == "yes":
         # get new registry url
         dockertarget = os.path.join(scp_dir, "./cicd/docker_targets")
-        ver_cur = ":[0-9]+\.[0-9]+"
+        ver_cur = ":[0-9]+\\.[0-9]+"
         ver_new = ":0.0"
         reg_domain = req_input("Docker registry domain")
         reg_port = req_input("Docker registry port")
@@ -177,6 +178,7 @@ sfiles = glob.glob("**/*.cpp", recursive=True) \
 for file in sfiles:
         full_path = os.path.join(scp_dir, file)
         taskq.put(ReReplaceTask(full_path, "cpp_template", pname))
+        taskq.put(ReReplaceTask(full_path, "CPP_TEMPLATE", pname.upper()))
 
 # move project include dir
 oldinclude = os.path.join(scp_dir, './include/cpp_template')
