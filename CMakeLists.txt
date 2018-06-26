@@ -21,7 +21,7 @@ option(REGEX_CHECK "Check files with regex_check." OFF)
 option(SANITISE "Add -fsanitize=address and -fsanitize=undefined flags." OFF)
 option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
-if(NOT DOC)
+if(NOT DEFINED DOC)
 	set(DOC OFF CACHE STRING
 		"The documentation type to generate." FORCE)
 endif()
