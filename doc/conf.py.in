@@ -85,8 +85,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 pygments_style = 'sphinx'
 
 # The name of a reST role to use as the default role, that is, for text marked
-# up `like this`. The default role can always be set within individual documents
-# using the standard reST default-role directive.
+# up `like this`. The default role can always be set within individual
+# documents using the standard reST default-role directive.
 default_role = 'any'
 
 # -- Options for HTML output ----------------------------------------------
@@ -153,8 +153,8 @@ latex_elements = {
 }
 
 # Underscores can cause issues in the generated LaTeX.
-latex_prj_esc = '@PROJECT_NAME@'.replace("_", "\\_");
-latex_aut_esc = '@PROJECT_AUTHOR@'.replace("_", "\\_");
+latex_prj_esc = '@PROJECT_NAME@'.replace("_", "\\_")
+latex_aut_esc = '@PROJECT_AUTHOR@'.replace("_", "\\_")
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,

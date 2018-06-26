@@ -21,7 +21,7 @@ option(REGEX_CHECK "Check files with regex_check." OFF)
 option(SANITISE "Add -fsanitize=address and -fsanitize=undefined flags." OFF)
 option(TEST "Build unit and functional tests." OFF)
 option(WERROR "Make all warnings into errors." OFF)
-if(NOT DOC)
+if(NOT DEFINED DOC)
 	set(DOC OFF CACHE STRING
 		"The documentation type to generate." FORCE)
 endif()
@@ -34,7 +34,7 @@ if(${CODE})
 endif()
 
 project(cpp_template
-	VERSION 1.5.0
+	VERSION 1.5.1
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(PROJECT_VERSION_SUFFIX "") # alpha/beta/rc, e.g. "-rc0"
