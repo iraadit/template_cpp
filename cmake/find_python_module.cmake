@@ -1,6 +1,4 @@
-function(find_python_module module)
-
-string(TOUPPER "${module}" module_u)
+function(find_python_module module module_u)
 
 if(${module_u}_FOUND)
 	return()

@@ -32,21 +32,23 @@ else()
 
 	find_package(PythonInterp REQUIRED)
 	include(find_python_module)
-	find_python_module(breathe)
-	find_python_module(sphinx)
 
 	# do not change the ENV, doesn't work with add_custom_target
 	# https://cmake.org/Bug/view.php?id=5145
 	if(ENV{PYTHONPATH})
-		set(PYTHONPATH
-			"${BREATHE_PATH}:${SPHINX_PATH}:$ENV{PYTHONPATH}")
+		set(PYTHONPATH "$ENV{PYTHONPATH}")
 	else()
 		# PYTHONPATH disables defaults, manually append them
 		execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c"
-		"import sys; sys.stdout.write(':'.join(sys.path))"
-		OUTPUT_VARIABLE PYTHONPATH)
-		set(PYTHONPATH "${BREATHE_PATH}:${SPHINX_PATH}:${PYTHONPATH}")
+			"import sys; sys.stdout.write(':'.join(sys.path))"
+			OUTPUT_VARIABLE PYTHONPATH)
 	endif()
+
+	foreach(module breathe sphinx sphinxcontrib.plantuml)
+		string(TOUPPER "${module}" module_upper)
+		find_python_module("${module}" "${module_upper}")
+		set(PYTHONPATH "${${module_upper}_PATH}:${PYTHONPATH}")
+	endforeach(module)
 
 	if(${WERROR})
 		set(SPHINX_WERROR "-W")
