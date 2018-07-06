@@ -15,7 +15,7 @@ else()
 	set(DOXY_WARN_AS_ERR "NO")
 endif()
 
-# if the target is doxygen build only only doxygen HTML
+# if the target is doxygen build only doxygen HTML
 if(DOC STREQUAL "doxygen")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
