@@ -16,12 +16,18 @@ else()
 endif()
 
 # if the target is doxygen build only only doxygen HTML
-if(${DOC} STREQUAL "doxygen")
+if(DOC STREQUAL "doxygen")
 	set(DOXY_BUILD_HTML "YES")
 	set(DOXY_BUILD_XML "NO")
 	set(DOXY_OUTPUT_DIR "${DOC_DEST}")
 # otherwise generate only XML and configure sphinx
 else()
+	if(DOC STREQUAL "html")
+		set(EXTRA_PYTHON_MODULES "sphinx_rtd_theme")
+	else()
+		unset(EXTRA_PYTHON_MODULES)
+	endif()
+
 	set(DOXY_BUILD_HTML "NO")
 	set(DOXY_BUILD_XML "YES")
 	set(DOXY_OUTPUT_DIR "${DOC_TMP}/doxygen")
@@ -44,7 +50,11 @@ else()
 			OUTPUT_VARIABLE PYTHONPATH)
 	endif()
 
-	foreach(module breathe sphinx sphinxcontrib.plantuml)
+	foreach(module
+			breathe
+			sphinx
+			sphinxcontrib.plantuml
+			${EXTRA_PYTHON_MODULES})
 		string(TOUPPER "${module}" module_upper)
 		find_python_module("${module}" "${module_upper}")
 		set(PYTHONPATH "${${module_upper}_PATH}:${PYTHONPATH}")
@@ -70,7 +80,7 @@ configure_file(
 	"${DOC_TMP}/doxygen/doxyfile"
 	@ONLY)
 
-if(${DOC} STREQUAL "doxygen")
+if(DOC STREQUAL "doxygen")
 	add_custom_target(doc
 		COMMAND Doxygen::doxygen "${DOC_TMP}/doxygen/doxyfile"
 		COMMENT "Generating HTML API documentation with Doxygen")
