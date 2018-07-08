@@ -157,6 +157,11 @@ if use_ci == "yes":
         taskq.put(ReReplaceTask(gitlabci, org_url, new_url))
         taskq.put(ReReplaceTask(gitlabci, ver_cur, ver_new))
 
+        # update review/pages only for project, not forks
+        taskq.put(ReReplaceTask(gitlabci, "(\n +- [a-z]+@)template/c(\n)",
+                                "\\g<1>" + gitlab_group + '/' + pname
+                                + "\\g<2>"))
+
         # update image registry location
         for root, dirs, files in os.walk(dockertarget):
                 for f in (file for file in files if file == "Tagfile"):
