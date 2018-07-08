@@ -34,7 +34,7 @@ if(${CODE})
 endif()
 
 project(cpp_template
-	VERSION 1.5.3
+	VERSION 1.6.0
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(PROJECT_VERSION_SUFFIX "") # alpha/beta/rc, e.g. "-rc0"
