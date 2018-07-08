@@ -126,7 +126,7 @@ review:
   variables:
     GIT_STRATEGY: none
   only:
-    - branches
+    - branches@template/c
   dependencies:
     - gcc_coverage
     - sphinx_html
@@ -169,7 +169,7 @@ pages:
   variables:
     GIT_STRATEGY: none
   only:
-    - tags
+    - tags@template/c
   dependencies:
     - gcc_coverage
     - sphinx_html
