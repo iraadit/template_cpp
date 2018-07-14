@@ -6,6 +6,7 @@ your compilation and test environment in a way not dependant on the CI server
 configuration.
 
 .. toctree::
+	:caption: Index
 	:glob:
 
 	*

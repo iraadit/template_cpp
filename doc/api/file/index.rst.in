@@ -4,6 +4,7 @@ API by source file name
 `Return to the main documentation index. <../../index.html>`_
 
 .. toctree::
+	:caption: Index
 	:glob:
 
 	*

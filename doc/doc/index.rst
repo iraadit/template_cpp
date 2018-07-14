@@ -5,6 +5,7 @@ Sphinx is used for building documentation. The format used for the source files
 is reStructuredText, usually abbreviated to RST.
 
 .. toctree::
+	:caption: Index
 	:glob:
 
 	*
