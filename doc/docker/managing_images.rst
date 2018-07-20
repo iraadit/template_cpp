@@ -1,7 +1,9 @@
 Managing docker images
 ======================
 
-.. note:: Requires a Unix-like environment.
+.. note::
+
+	Requires a Unix-like environment.
 
 Helper script
 -------------
@@ -35,6 +37,7 @@ Version management
 ~~~~~~~~~~~~~~~~~~
 
 .. note::
+
 	When two branches would need to edit the exact same docker image they
 	will overwrite each other on push. This is a limitation of the way
 	docker images are managed with this "version control". For most use

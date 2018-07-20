@@ -1,7 +1,9 @@
 line_limit
 ==========
 
-.. note:: Requires a Unix-like environment.
+.. note::
+
+	Requires a Unix-like environment.
 
 When configuring with ``-DLINE_LIMIT:BOOL=ON`` target ``line_limit`` will be
 added. The target will invoke the ``line_limit.sh`` script.
