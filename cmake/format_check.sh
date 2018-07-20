@@ -9,6 +9,6 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 [[ $WERROR == "ON" ]] && set -e
 
 # call clang_format.sh to check repo
-"$SCRIPT_DIR/../cicd/clang_format.sh" check
+"$SCRIPT_DIR/../cicd/style/clang_format.sh" check "$1"
 
 exit 0
