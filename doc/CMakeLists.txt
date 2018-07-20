@@ -66,13 +66,16 @@ else()
 		unset(SPHINX_WERROR)
 	endif()
 
-	include(breathe_apidoc)
 	include(plantuml)
 
 	configure_file(
 		"${DOC_SRC}/conf.py.in"
 		"${DOC_TMP}/sphinx/conf.py"
 		@ONLY)
+	configure_file(
+		"${DOC_SRC}/_static/theme_overrides.css.in"
+		"${DOC_TMP}/sphinx/_static/theme_overrides.css"
+		COPYONLY)
 endif()
 
 configure_file(
@@ -89,27 +92,10 @@ if(DOC STREQUAL "doxygen")
 		COMMAND ;
 		COMMENT "Output at ${DOC_DEST}/html/index.html")
 else()
-	configure_file("${DOC_SRC}/api/file/index.rst.in"
-		"${DOC_TMP}/api/file/index.rst" @ONLY)
-
 	add_custom_target(doc
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating Doxygen XML API documentation"
 		COMMAND Doxygen::doxygen "${DOC_TMP}/doxygen/doxyfile"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Converting Doxygen XML API to RST API documentation"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" "${BREATHE_APIDOC_PATH}"
-			-o "${DOC_TMP}/api/file" -f -g file -q
-			"${DOC_TMP}/doxygen/xml"
-
-		COMMAND "${CMAKE_COMMAND}" -E echo
-			"Generating sphinx ${DOC} API documentation"
-		COMMAND "${CMAKE_COMMAND}" -E env "PYTHONPATH=${PYTHONPATH}"
-			"${PYTHON_EXECUTABLE}" -m sphinx -b "${DOC}" -j auto
-			-c "${DOC_TMP}/sphinx" -q ${SPHINX_WERROR}
-			"${DOC_TMP}/api/file" "${DOC_DEST}/api/file"
 
 		COMMAND "${CMAKE_COMMAND}" -E echo
 			"Generating sphinx ${DOC} documentation"
