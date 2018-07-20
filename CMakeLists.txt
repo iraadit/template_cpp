@@ -39,7 +39,7 @@ if(${TEST})
 endif()
 
 project(c_template
-	VERSION 1.7.0
+	VERSION 1.8.0
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(PROJECT_VERSION_SUFFIX "") # alpha/beta/rc, e.g. "-rc0"
