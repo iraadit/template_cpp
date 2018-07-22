@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLANTUML=1.2018.7
+PLANTUML=1.2018.8
 
 set -e
 
