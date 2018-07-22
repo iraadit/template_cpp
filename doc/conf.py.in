@@ -40,7 +40,7 @@ breathe_projects = {"@PROJECT_NAME@": "@DOXY_OUTPUT_DIR@/xml"}
 
 # plantuml config
 plantuml = '@PLANTUML_PATH@ -config "@CMAKE_SOURCE_DIR@/doc/plantuml.cfg"'
-plantuml_output_format = 'svg'
+plantuml_output_format = 'svg_img'
 plantuml_latex_output_format = 'pdf'
 
 # Add any paths that contain templates here, relative to this directory.
