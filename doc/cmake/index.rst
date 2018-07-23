@@ -13,10 +13,15 @@ effect on the build and integrations with other options is also described.
 In case you haven't used CMake before, there are three tools to configure:
 
 * ``cmake``
+
 	* command-line interface, have to specify all options at once
+
 * ``ccmake``
+
 	* curses interface, can see the options and select them
+
 * ``cmake-gui``
+
 	* Qt interface, can see the options and select them
 
 Typically an interactive interface is used, unless CMake is being used in a
