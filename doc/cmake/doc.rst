@@ -12,6 +12,7 @@ doxygen
 -------
 
 .. note::
+
 	You may notice doxygen runs seperate in CI as ``analyse/doxygen``. Due
 	to a bug in Doxygen warnings will be emitted when XML output is enabled.
 	This job builds only HTML so that valid warnings can be caught and

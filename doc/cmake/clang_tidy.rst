@@ -2,6 +2,7 @@ clang_tidy
 ==========
 
 .. note::
+
 	Checking happens during compilation of a source file. If you want to
 	check tests you must also configure with ``-DTEST:BOOL=ON`` in addition
 	to the below.

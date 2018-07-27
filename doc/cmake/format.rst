@@ -1,7 +1,9 @@
 format
 ======
 
-.. note:: Requires a Unix-like environment.
+.. note::
+
+	Requires a Unix-like environment.
 
 When configuring with ``-DFORMAT:BOOL=ON`` targets ``format`` and
 ``format_check`` will be added. The ``format`` target will format all source
