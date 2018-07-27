@@ -72,10 +72,6 @@ else()
 		"${DOC_SRC}/conf.py.in"
 		"${DOC_TMP}/sphinx/conf.py"
 		@ONLY)
-	configure_file(
-		"${DOC_SRC}/_static/theme_overrides.css.in"
-		"${DOC_TMP}/sphinx/_static/theme_overrides.css"
-		COPYONLY)
 endif()
 
 configure_file(
