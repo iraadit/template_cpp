@@ -1,7 +1,9 @@
 regex_check
 ===========
 
-.. note:: Requires a Unix-like environment.
+.. note::
+
+	Requires a Unix-like environment.
 
 When configuring with ``-DREGEX_CHECK:BOOL=ON`` target ``regex_check`` will be
 added. The target will invoke the ``regex_check.sh`` script.

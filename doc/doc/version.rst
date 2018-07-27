@@ -1,7 +1,9 @@
 Version
 =======
 
-.. note:: If there is no root commit yet git will emit a fatal error.
+.. note::
+
+	If there is no root commit yet git will emit a fatal error.
 
 Based upon the current state of the git repository CMake automatically updates
 the version number with details. The format is

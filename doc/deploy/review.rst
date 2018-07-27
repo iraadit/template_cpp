@@ -2,6 +2,7 @@ Per-branch documentation review
 ===============================
 
 .. note::
+
 	The templates uses the shared host ``doc.mel.vin`` which is for internal
 	use only. You need a webserver with ``rsync`` (secure) or some other
 	way to upload and delete things from a CI job like ``ftp`` (insecure).
