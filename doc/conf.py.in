@@ -89,6 +89,9 @@ pygments_style = 'sphinx'
 # documents using the standard reST default-role directive.
 default_role = 'any'
 
+# The default language to highlight source code.
+highlight_language = 'c'
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
