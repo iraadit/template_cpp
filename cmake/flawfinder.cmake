@@ -20,4 +20,4 @@ endif()
 add_custom_target(flawfinder
 	COMMENT "Running flawfinder"
 	COMMAND "${FLAWFINDER_PATH}" -m 1 -C -c -D -Q ${OPT} -- .
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")

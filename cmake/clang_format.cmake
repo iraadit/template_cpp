@@ -14,9 +14,9 @@ endif()
 add_custom_target(format
 	COMMENT "Formatting source code"
 	COMMAND ./cicd/style/clang_format.sh -c "${CLANG_FORMAT_PATH}" format
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
 add_custom_target(format_check
 	COMMENT "Running format check"
 	COMMAND WERROR=${WERROR} ./cmake/format_check.sh "${CLANG_FORMAT_PATH}"
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
