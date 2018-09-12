@@ -1,11 +1,15 @@
-find_program(CLANG_FORMAT_PATH
-	NAMES clang-format
-	DOC "Path to clang-format.")
+if(NOT CLANG_FORMAT_FOUND)
+	find_program(CLANG_FORMAT_PATH
+		NAMES clang-format
+		DOC "Path to clang-format.")
 
-if(NOT CLANG_FORMAT_PATH)
-	message(FATAL_ERROR "Could not find clang-format.")
+	if(NOT CLANG_FORMAT_PATH)
+		message(FATAL_ERROR "Could not find clang-format.")
+	endif()
+	set(CLANG_FORMAT_FOUND ON CACHE BOOL "Found clang-format.")
+	mark_as_advanced(CLANG_FORMAT_FOUND)
+	message(STATUS "Found clang-format: ${CLANG_FORMAT_PATH}")
 endif()
-message(STATUS "Found clang-format: ${CLANG_FORMAT_PATH}")
 
 add_custom_target(format
 	COMMENT "Formatting source code"
