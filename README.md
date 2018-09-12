@@ -3,6 +3,8 @@
 Magical template for C projects, improves quality of life.
 
 Released into the public domain so you don't have to bother with crediting this.
+One exception: `cmake/pkg/c_template.svg` is from KDE Choqok because AppImage
+requires an icon.
 
 A list of software used can be found in this file. For absolute minimum
 requirements for build steps refer to `cicd/docker_targets/*/bootstrap.sh`.
@@ -14,8 +16,8 @@ html documentation:
 
 The official project home and all official mirrors:
 * Home: https://git.mel.vin/template/c
-* GitLab: https://gitlab.com/melvinvermeeren/template\_c
-* GitHub: https://github.com/melvinvermeeren/template\_c
+* GitLab: https://gitlab.com/melvinvermeeren/template_c
+* GitHub: https://github.com/melvinvermeeren/template_c
 
 ## Code
 

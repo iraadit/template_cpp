@@ -6,6 +6,10 @@ configure_file(
 	"${PKG_TMP}/${PROJECT_NAME}.desktop"
 	@ONLY)
 
-install(
-	FILES "${PKG_TMP}/${PROJECT_NAME}.desktop"
+install(FILES
+	"${PKG_TMP}/${PROJECT_NAME}.desktop"
 	DESTINATION share/applications)
+
+install(FILES
+	"${PKG_SRC}/${PROJECT_NAME}.svg"
+	DESTINATION share/icons)

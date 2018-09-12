@@ -112,6 +112,7 @@ appimage_x86_64:
     - make DESTDIR="$PWD/tmp/appimage" install
     - cp -aL /opt/appimage/AppRun tmp/appimage
     - cp -a tmp/appimage/usr/share/applications/*.desktop tmp/appimage
+    - cp -a tmp/appimage/usr/share/icons/*.svg tmp/appimage
     - appimagetool tmp/appimage
     - mv c_template-x86_64.AppImage ../c_template-x86_64.appimage
   artifacts:
