@@ -1,6 +1,6 @@
 find_path(CATCH_INCLUDE_DIR
-	NAMES catch/catch.hpp
-	DOC "Path to Catch as in <catch/catch.hpp>.")
+	NAMES catch2/catch.hpp
+	DOC "Path to Catch as in <catch2/catch.hpp>.")
 
 if(NOT CATCH_INCLUDE_DIR)
 	message(FATAL_ERROR "Could not find Catch.")

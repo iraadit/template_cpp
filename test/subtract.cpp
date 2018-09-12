@@ -1,5 +1,5 @@
 #include <c_template/subtract.h>
-#include <catch/catch.hpp>
+#include <catch2/catch.hpp>
 
 SCENARIO("subtract two numbers", "[subtract]")
 {
