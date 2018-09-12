@@ -11,6 +11,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 # call regex_check.sh to check repo
 "$SCRIPT_DIR/../cicd/style/regex_check.sh" \
 	-e '^build[^/]*/' \
+	-e '^.*\.svg$' \
 	"$SCRIPT_DIR/.."
 "$SCRIPT_DIR/../cicd/style/regex_check.sh" \
 	-e '^build[^/]*/' \

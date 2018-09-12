@@ -13,6 +13,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 	-e '\.(c|cpp|h|hpp)$' \
 	-e '^\.clang-tidy$' \
 	-e '^build[^/]*/' \
+	-e '^.*\.svg$' \
 	-i "$SCRIPT_DIR/.."
 "$SCRIPT_DIR/../cicd/style/line_limit.sh" \
 	-e 'CMakeLists\.txt$' \
