@@ -11,7 +11,7 @@ variables:
 clang_format:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.2
   script:
     - mkdir build
     - cd build
@@ -21,7 +21,7 @@ clang_format:
 clang_tidy:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.2
   script:
     - mkdir build
     - cd build
@@ -83,7 +83,7 @@ gcc:
 
 clang_sanitise:
   stage: test
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.2
   script:
     - mkdir build
     - cd build
