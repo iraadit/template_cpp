@@ -1,6 +1,5 @@
 stages:
   - analyse
-  - build
   - test
   - doc
   - deploy
@@ -58,28 +57,6 @@ regex_check:
     - cd build
     - cmake -DCODE:BOOL=OFF -DREGEX_CHECK:BOOL=ON -DWERROR:BOOL=ON ..
     - make regex_check
-
-clang:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/c/cicd/clang:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
-
-gcc:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/c/cicd/gcc:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
 
 clang_sanitise:
   stage: test
