@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Utility;
+Comment=@PROJECT_DESCRIPTION@
+Exec=@PROJECT_NAME@
+GenericName=@PROJECT_DESCRIPTION@
+Icon=@PROJECT_NAME@
+Name=@PROJECT_NAME@
+StartupNotify=true
+Terminal=true
+Type=Application
