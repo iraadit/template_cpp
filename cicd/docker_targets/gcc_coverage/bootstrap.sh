@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CATCH=2.2.3
+CATCH=2.4.0
 
 set -e
 
@@ -20,9 +20,9 @@ apk --no-cache add \
 apk --no-cache add -t tmp \
 	curl
 
-mkdir -p /usr/local/include/catch
+mkdir -p /usr/local/include/catch2
 curl -Lf \
-	-o /usr/local/include/catch/catch.hpp \
-	https://git.mel.vin/mirror/catch/raw/v$CATCH/catch/catch.hpp
+	-o /usr/local/include/catch2/catch.hpp \
+	https://git.mel.vin/mirror/catch/raw/v$CATCH/catch2/catch.hpp
 
 apk --no-cache del tmp

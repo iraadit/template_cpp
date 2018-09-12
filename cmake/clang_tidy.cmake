@@ -1,3 +1,7 @@
+if(CLANG_TIDY_FOUND)
+	return()
+endif()
+
 find_program(CLANG_TIDY_PATH
 	NAMES clang-tidy
 	DOC "Path to clang-tidy.")
@@ -5,6 +9,8 @@ find_program(CLANG_TIDY_PATH
 if(NOT CLANG_TIDY_PATH)
 	message(FATAL_ERROR "Could not find clang-tidy.")
 endif()
+set(CLANG_TIDY_FOUND ON CACHE BOOL "Found clang-tidy.")
+mark_as_advanced(CLANG_TIDY_FOUND)
 message(STATUS "Found clang-tidy: ${CLANG_TIDY_PATH}")
 
 set(OPT "${CLANG_TIDY_PATH}")

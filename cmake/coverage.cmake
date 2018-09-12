@@ -14,50 +14,67 @@ endif()
 
 # find coverage tools, gcov is for GCC and llvm-cov for clang
 # llvm-cov has to wrapped with the gcov option
-if (CMAKE_C_COMPILER_ID STREQUAL "Clang")
-	find_program(LLVMCOV_PATH
-		NAMES llvm-cov
-		DOC "Path to llvm-cov.")
+if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
+	if(NOT LLVMCOV_FOUND)
+		find_program(LLVMCOV_PATH
+			NAMES llvm-cov
+			DOC "Path to llvm-cov.")
 
-	if(NOT LLVMCOV_PATH)
-		message(FATAL_ERROR "Could not find llvm-cov.")
+		if(NOT LLVMCOV_PATH)
+			message(FATAL_ERROR "Could not find llvm-cov.")
+		endif()
+		set(LLVMCOV_FOUND ON CACHE BOOL "Found llvm-cov.")
+		mark_as_advanced(LLVMCOV_FOUND)
+		message(STATUS "Found llvm-cov: ${LLVMCOV_PATH}")
+
+		set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
+
+		# wrap llvm-cov to have behaviour like gcov
+		file(WRITE "${GCOV_PATH}"
+			"#!/bin/sh\nexec \"${LLVMCOV_PATH}\" gcov \"$@\"")
+
+		execute_process(COMMAND chmod +x "${GCOV_PATH}")
 	endif()
-	message(STATUS "Found llvm-cov: ${LLVMCOV_PATH}")
-
-	set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
-
-	# wrap llvm-cov to have behaviour like gcov
-	file(WRITE "${GCOV_PATH}"
-		"#!/bin/sh\nexec \"${LLVMCOV_PATH}\" gcov \"$@\"")
-
-	execute_process(COMMAND chmod +x "${GCOV_PATH}")
-elseif (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-	find_program(GCOV_PATH
-		NAMES gcov
-		DOC "Path to gcov.")
-	if(NOT GCOV_PATH)
-		message(FATAL_ERROR "Could not find gcov.")
+elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+	if(NOT GCOV_FOUND)
+		find_program(GCOV_PATH
+			NAMES gcov
+			DOC "Path to gcov.")
+		if(NOT GCOV_PATH)
+			message(FATAL_ERROR "Could not find gcov.")
+		endif()
+		set(GCOV_FOUND ON CACHE BOOL "Found gcov.")
+		mark_as_advanced(GCOV_FOUND)
+		message(STATUS "Found gcov: ${GCOV_PATH}")
 	endif()
 else()
 	message(FATAL_ERROR
 		"Code coverage not supported for current compiler.")
 endif()
 
-find_program(LCOV_PATH
-	NAMES lcov
-	DOC "Path to lcov.")
-if(NOT LCOV_PATH)
-	message(FATAL_ERROR "Could not find lcov.")
+if(NOT LCOV_FOUND)
+	find_program(LCOV_PATH
+		NAMES lcov
+		DOC "Path to lcov.")
+	if(NOT LCOV_PATH)
+		message(FATAL_ERROR "Could not find lcov.")
+	endif()
+	set(LCOV_FOUND ON CACHE BOOL "Found lcov.")
+	mark_as_advanced(LCOV_FOUND)
+	message(STATUS "Found lcov: ${LCOV_PATH}")
 endif()
-message(STATUS "Found lcov: ${LCOV_PATH}")
 
-find_program(GENHTML_PATH
-	NAMES genhtml
-	DOC "Path to genhtml.")
-if(NOT GENHTML_PATH)
-	message(FATAL_ERROR "Could not find genhtml.")
+if(NOT GENHTML_FOUND)
+	find_program(GENHTML_PATH
+		NAMES genhtml
+		DOC "Path to genhtml.")
+	if(NOT GENHTML_PATH)
+		message(FATAL_ERROR "Could not find genhtml.")
+	endif()
+	set(GENHTML_FOUND ON CACHE BOOL "Found genhtml.")
+	mark_as_advanced(GENHTML_FOUND)
+	message(STATUS "Found genhtml: ${GENHTML_PATH}")
 endif()
-message(STATUS "Found genhtml: ${GENHTML_PATH}")
 
 # add necessary compile and linker flags
 add_compile_options(--coverage)
