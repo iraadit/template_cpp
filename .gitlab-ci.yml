@@ -1,6 +1,7 @@
 stages:
   - analyse
   - test
+  - package
   - deploy
 
 variables:
@@ -95,6 +96,27 @@ sphinx_html:
   artifacts:
     paths:
       - build/doc/html
+
+appimage_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/c/cicd/appimage_x86_64:1.0
+  only:
+    - master@template/c
+    - tags@template/c
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/tmp/appimage" install
+    - cp -aL /opt/appimage/AppRun tmp/appimage
+    - cp -a tmp/appimage/usr/share/applications/*.desktop tmp/appimage
+    - appimagetool tmp/appimage
+    - mv c_template-x86_64.AppImage ../c_template-x86_64.appimage
+  artifacts:
+    paths:
+        - c_template-x86_64.appimage
 
 review:
   stage: deploy
