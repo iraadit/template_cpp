@@ -1,7 +1,6 @@
 stages:
   - analyse
   - test
-  - doc
   - deploy
 
 variables:
@@ -86,8 +85,7 @@ gcc_coverage:
       - build/coverage_report
 
 sphinx_html:
-  stage: doc
-  dependencies: []
+  stage: test
   image: git.mel.vin:5005/template/c/cicd/sphinx_html:1.4
   script:
     - mkdir build
@@ -116,7 +114,7 @@ review:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mv build/doc/html public
     - mv build/coverage_report public/coverage
     - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
@@ -135,7 +133,7 @@ review_stop:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mkdir /tmp/empty
     - rsync -a --delete --filter="+ $CI_ENVIRONMENT_SLUG" --filter='-,p *'
       /tmp/empty/ doc@mel.vin:~/template/c
