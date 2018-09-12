@@ -43,7 +43,13 @@ if(PROJECT_VERSION STREQUAL CMAKE_PROJECT_VERSION)
 endif()
 set(PROJECT_VERSION "${TMP_VER}")
 
-message(STATUS "Updated version to ${PROJECT_VERSION}.")
+# do not message if actual version did not change
+if(NOT PROJECT_VERSION STREQUAL PROJECT_VERSION_PREV)
+	set(PROJECT_VERSION_PREV "${PROJECT_VERSION}" CACHE STRING
+		"Project version during previous cache build." FORCE)
+	mark_as_advanced(PROJECT_VERSION_PREV)
+	message(STATUS "Updated version to ${PROJECT_VERSION}.")
+endif()
 
 unset(TMP_VER)
 unset(TMP_TAG)
