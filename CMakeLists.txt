@@ -57,6 +57,7 @@ include(version_header)
 
 if(${CODE})
 	include(code)
+	include(package)
 elseif(${CLANG_TIDY} OR ${COVERAGE} OR ${SANITISE} OR ${TEST})
 	message(FATAL_ERROR "At least one flag enabled that requires CODE=ON.")
 endif()

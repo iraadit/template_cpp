@@ -1,8 +1,7 @@
 stages:
   - analyse
-  - build
   - test
-  - doc
+  - package
   - deploy
 
 variables:
@@ -59,28 +58,6 @@ regex_check:
     - cmake -DCODE:BOOL=OFF -DREGEX_CHECK:BOOL=ON -DWERROR:BOOL=ON ..
     - make regex_check
 
-clang:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/c/cicd/clang:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
-
-gcc:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/c/cicd/gcc:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
-
 clang_sanitise:
   stage: test
   image: git.mel.vin:5005/template/c/cicd/clang_tools:1.2
@@ -109,8 +86,7 @@ gcc_coverage:
       - build/coverage_report
 
 sphinx_html:
-  stage: doc
-  dependencies: []
+  stage: test
   image: git.mel.vin:5005/template/c/cicd/sphinx_html:1.4
   script:
     - mkdir build
@@ -120,6 +96,28 @@ sphinx_html:
   artifacts:
     paths:
       - build/doc/html
+
+appimage_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/c/cicd/appimage_x86_64:1.0
+  only:
+    - master@template/c
+    - tags@template/c
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/tmp/appimage" install
+    - cp -aL /opt/appimage/AppRun tmp/appimage
+    - cp -a tmp/appimage/usr/share/applications/*.desktop tmp/appimage
+    - cp -a tmp/appimage/usr/share/icons/*.svg tmp/appimage
+    - appimagetool tmp/appimage
+    - mv c_template-x86_64.AppImage ../c_template-x86_64.appimage
+  artifacts:
+    paths:
+        - c_template-x86_64.appimage
 
 review:
   stage: deploy
@@ -139,7 +137,7 @@ review:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mv build/doc/html public
     - mv build/coverage_report public/coverage
     - rsync -a --delete public/ doc@mel.vin:~/template/c/$CI_ENVIRONMENT_SLUG
@@ -158,7 +156,7 @@ review_stop:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mkdir /tmp/empty
     - rsync -a --delete --filter="+ $CI_ENVIRONMENT_SLUG" --filter='-,p *'
       /tmp/empty/ doc@mel.vin:~/template/c

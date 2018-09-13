@@ -118,7 +118,7 @@ print("Initializing the template.")
 
 # basic project info
 cmakelist = os.path.join(scp_dir, "CMakeLists.txt")
-pname = def_input("Project name", prj_dir)
+pname = def_input("Project name (no whitespace)", prj_dir)
 taskq.put(ReReplaceTask(cmakelist, "(\nproject\\()c_template(\n)",
                         "\\g<1>" + pname + "\\g<2>"))
 
@@ -158,9 +158,15 @@ if use_ci == "yes":
         taskq.put(ReReplaceTask(gitlabci, ver_cur, ver_new))
 
         # update review/pages only for project, not forks
-        taskq.put(ReReplaceTask(gitlabci, "(\n +- [a-z]+@)template/c(\n)",
-                                "\\g<1>" + gitlab_group + '/' + pname
-                                + "\\g<2>"))
+        taskq.put(ReReplaceTask(gitlabci,
+                                "(?m)^( +- [a-zA-Z0-9/-]+@)template/c$",
+                                "\\g<1>" + gitlab_group + '/' + pname))
+
+        # update direct references to c_template such as for appimages
+        # XXX keep this one last to edit gitlabci as it is not context-aware
+        taskq.put(ReReplaceTask(gitlabci,
+                                "([^a-zA-Z0-9])c_template([^a-zA-Z0-9])",
+                                "\\g<1>" + pname + "\\g<2>"))
 
         # update image registry location
         for root, dirs, files in os.walk(dockertarget):
@@ -172,19 +178,25 @@ else:
         taskq.put(DeleteTask(gitlabci))
 
 # update all code reference to c template
-sfiles = glob.glob("**/*.cpp", recursive=True) \
-        + glob.glob("**/*.c", recursive=True) \
-        + glob.glob("**/*.hpp", recursive=True) \
-        + glob.glob("**/*.h", recursive=True)
+sfiles = glob.glob(scp_dir + "/**/*.cpp", recursive=True) \
+        + glob.glob(scp_dir + "/**/*.c", recursive=True) \
+        + glob.glob(scp_dir + "/**/*.hpp", recursive=True) \
+        + glob.glob(scp_dir + "/**/*.h", recursive=True)
 for file in sfiles:
-        full_path = os.path.join(scp_dir, file)
-        taskq.put(ReReplaceTask(full_path, "c_template", pname))
-        taskq.put(ReReplaceTask(full_path, "C_TEMPLATE", pname.upper()))
+        taskq.put(ReReplaceTask(file, "c_template", pname))
+        taskq.put(ReReplaceTask(file, "C_TEMPLATE", pname.upper()))
 
 # move project include dir
 oldinclude = os.path.join(scp_dir, './include/c_template')
 newinclude = os.path.join(scp_dir, './include/%s' % pname)
 taskq.put(MoveTask(oldinclude, newinclude))
+
+# update names of package files
+for file in glob.glob(scp_dir + "/cmake/pkg/c_template*"):
+            new_path = re.sub("^(([^/]*/)*)c_template([^/]*)$",
+                              "\\g<1>" + pname + "\\g<3>",
+                              file)
+            taskq.put(MoveTask(file, new_path))
 
 # delete c template descriptive files
 taskq.put(DeleteTask(os.path.join(scp_dir, 'README.md')))
