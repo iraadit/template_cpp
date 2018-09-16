@@ -1,8 +1,7 @@
 stages:
   - analyse
-  - build
   - test
-  - doc
+  - package
   - deploy
 
 variables:
@@ -11,7 +10,7 @@ variables:
 clang_format:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.3
   script:
     - mkdir build
     - cd build
@@ -21,7 +20,7 @@ clang_format:
 clang_tidy:
   stage: analyse
   allow_failure: true
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.3
   script:
     - mkdir build
     - cd build
@@ -59,31 +58,9 @@ regex_check:
     - cmake -DCODE:BOOL=OFF -DREGEX_CHECK:BOOL=ON -DWERROR:BOOL=ON ..
     - make regex_check
 
-clang:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/c/cicd/clang:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
-
-gcc:
-  stage: build
-  only:
-    - master
-  image: git.mel.vin:5005/template/cpp/cicd/gcc:1.1
-  script:
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make -j $(nproc)
-
 clang_sanitise:
   stage: test
-  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.1
+  image: git.mel.vin:5005/template/c/cicd/clang_tools:1.3
   script:
     - mkdir build
     - cd build
@@ -94,7 +71,7 @@ clang_sanitise:
 
 gcc_coverage:
   stage: test
-  image: git.mel.vin:5005/template/c/cicd/gcc_coverage:1.1
+  image: git.mel.vin:5005/template/c/cicd/gcc_coverage:1.2
   coverage: '/^ *lines\.+: (\d+\.\d+\%) \(\d+ of \d+ lines\)$/'
   script:
     - mkdir build
@@ -109,9 +86,8 @@ gcc_coverage:
       - build/coverage_report
 
 sphinx_html:
-  stage: doc
-  dependencies: []
-  image: git.mel.vin:5005/template/c/cicd/sphinx_html:1.3
+  stage: test
+  image: git.mel.vin:5005/template/c/cicd/sphinx_html:1.4
   script:
     - mkdir build
     - cd build
@@ -120,6 +96,64 @@ sphinx_html:
   artifacts:
     paths:
       - build/doc/html
+
+appimage_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/cpp/cicd/appimage_x86_64:1.0
+  only:
+    - master@template/cpp
+    - tags@template/cpp
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/tmp/appimage" install
+    - cp -aL /opt/appimage/AppRun tmp/appimage
+    - cp -a tmp/appimage/usr/share/applications/*.desktop tmp/appimage
+    - cp -a tmp/appimage/usr/share/icons/*.svg tmp/appimage
+    - appimagetool tmp/appimage
+    - mv cpp_template-x86_64.AppImage ../cpp_template-x86_64.appimage
+  artifacts:
+    paths:
+        - cpp_template-x86_64.appimage
+
+mingw_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/cpp/cicd/mingw_x86_64:1.0
+  only:
+    - master@template/cpp
+    - tags@template/cpp
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/
+      -DCMAKE_TOOLCHAIN_FILE=../cmake/cross/mingw_x86_64.cmake ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/../cpp_template_mingw_x86_64" install
+  artifacts:
+    paths:
+        - cpp_template_mingw_x86_64
+
+osxcross_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/c/cicd/osxcross_i386_x86_64:1.0
+  only:
+    - master@template/cpp
+    - tags@template/cpp
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/
+      -DCMAKE_TOOLCHAIN_FILE=../cmake/cross/osxcross_x86_64.cmake ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/../cpp_template_osxcross_x86_64" install
+  artifacts:
+    paths:
+        - cpp_template_osxcross_x86_64
 
 review:
   stage: deploy
@@ -139,7 +173,7 @@ review:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mv build/doc/html public
     - mv build/coverage_report public/coverage
     - rsync -a --delete public/ doc@mel.vin:~/template/cpp/$CI_ENVIRONMENT_SLUG
@@ -158,7 +192,7 @@ review_stop:
     - mkdir -p ~/.ssh
     - echo "$DOC_SSH_KNOWNHOSTS" > ~/.ssh/known_hosts
     - eval $(ssh-agent)
-    - echo "$DOC_SSH_KEY" | ssh-add - >/dev/null
+    - echo "$DOC_SSH_KEY" | ssh-add - > /dev/null
     - mkdir /tmp/empty
     - rsync -a --delete --filter="+ $CI_ENVIRONMENT_SLUG" --filter='-,p *'
       /tmp/empty/ doc@mel.vin:~/template/cpp

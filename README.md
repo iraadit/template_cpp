@@ -3,6 +3,8 @@
 Magical template for C++ projects, improves quality of life. Also supports C.
 
 Released into the public domain so you don't have to bother with crediting this.
+One exception: `cmake/pkg/cpp_template.svg` is from KDE Choqok because AppImage
+requires an icon.
 
 A list of software used can be found in this file. For absolute minimum
 requirements for build steps refer to `cicd/docker_targets/*/bootstrap.sh`.
@@ -14,8 +16,8 @@ html documentation:
 
 The official project home and all official mirrors:
 * Home: https://git.mel.vin/template/cpp
-* GitLab: https://gitlab.com/melvinvermeeren/template\_cpp
-* GitHub: https://github.com/melvinvermeeren/template\_cpp
+* GitLab: https://gitlab.com/melvinvermeeren/template_cpp
+* GitHub: https://github.com/melvinvermeeren/template_cpp
 
 ## Code
 

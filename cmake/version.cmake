@@ -1,4 +1,4 @@
-if(NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/.git")
+if(NOT IS_DIRECTORY "${PROJECT_SOURCE_DIR}/.git")
 	return()
 endif()
 
@@ -12,7 +12,7 @@ find_package(Git REQUIRED)
 #	1.3.2-1-g846ffe7, one commit since tag
 #	1.3.2-1-g846ffe7+, one commit since tag, dirty
 execute_process(COMMAND "${GIT_EXECUTABLE}" describe --dirty=+ --tags --always
-	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
 	OUTPUT_VARIABLE TMP_VER
 	OUTPUT_STRIP_TRAILING_WHITESPACE)
 
@@ -36,14 +36,20 @@ endif()
 string(REGEX REPLACE "^(.*)-[0-9]+-g([0-9a-f]+\\+?)$" "\\1-\\2"
 	TMP_VER "${TMP_VER}")
 
-# only override CMAKE_ variant when they currently match
-# subprojects do not use CMAKE_ variant
-if(PROJECT_VERSION STREQUAL CMAKE_PROJECT_VERSION)
-	set(CMAKE_PROJECT_VERSION "${TMP_VER}")
-endif()
+# only set CMAKE variant when local name matches CMAKE name
+# this avoids clashing when being used as a subproject
 set(PROJECT_VERSION "${TMP_VER}")
+if(PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+	set(CMAKE_PROJECT_VERSION "${PROJECT_VERSION}")
+endif()
 
-message(STATUS "Updated version to ${PROJECT_VERSION}.")
+# do not message if actual version did not change
+if(NOT PROJECT_VERSION STREQUAL PROJECT_VERSION_PREV)
+	set(PROJECT_VERSION_PREV "${PROJECT_VERSION}" CACHE STRING
+		"Project version during previous cache build." FORCE)
+	mark_as_advanced(PROJECT_VERSION_PREV)
+	message(STATUS "Updated version to ${PROJECT_VERSION}.")
+endif()
 
 unset(TMP_VER)
 unset(TMP_TAG)
