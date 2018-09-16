@@ -1,6 +1,8 @@
 #pragma once
 
 #include "base.hpp"
+
+#include <cstdint>
 #include <string>
 
 /**
