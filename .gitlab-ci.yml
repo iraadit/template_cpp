@@ -137,6 +137,24 @@ mingw_x86_64:
     paths:
         - c_template_mingw_x86_64
 
+osxcross_x86_64:
+  stage: package
+  image: git.mel.vin:5005/template/c/cicd/osxcross_i386_x86_64:1.0
+  only:
+    - master@template/c
+    - tags@template/c
+  dependencies: []
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_INSTALL_PREFIX=/
+      -DCMAKE_TOOLCHAIN_FILE=../cmake/cross/osxcross_x86_64.cmake ..
+    - make -j $(nproc)
+    - make DESTDIR="$PWD/../c_template_osxcross_x86_64" install
+  artifacts:
+    paths:
+        - c_template_osxcross_x86_64
+
 review:
   stage: deploy
   variables:
