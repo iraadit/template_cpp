@@ -43,15 +43,19 @@ project(c_template
 	DESCRIPTION "__DESCRIPTION__"
 	LANGUAGES ${PROJECT_LANGUAGES})
 set(PROJECT_VERSION_SUFFIX "") # alpha/beta/rc, e.g. "-rc0"
-set(CMAKE_PROJECT_VERSION_SUFFIX "${PROJECT_VERSION_SUFFIX}")
-foreach (prefix "" "CMAKE_")
-	set("${prefix}PROJECT_VERSION"
-		"${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
-	set("${prefix}PROJECT_AUTHOR" "__AUTHOR__")
-	set("${prefix}PROJECT_COPYRIGHT" "__COPYRIGHT__")
-	set("${prefix}PROJECT_MAIL" "__AUTHOR_MAIL__")
-endforeach(prefix)
-string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
+set(PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
+set(PROJECT_AUTHOR "__AUTHOR__")
+set(PROJECT_COPYRIGHT "__COPYRIGHT__")
+set(PROJECT_MAIL "__AUTHOR_MAIL__")
+# only set CMAKE variant when local name matches CMAKE name
+# this avoids clashing when being used as a subproject
+if(PROJECT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+	set(CMAKE_PROJECT_VERSION "${PROJECT_VERSION}")
+	set(CMAKE_PROJECT_VERSION_SUFFIX "${PROJECT_VERSION_SUFFIX}")
+	set(CMAKE_PROJECT_AUTHOR "${PROJECT_AUTHOR}")
+	set(CMAKE_PROJECT_COPYRIGHT "${PROJECT_COPYRIGHT}")
+	set(CMAKE_PROJECT_MAIL "${PROJECT_MAIL}")
+endif()
 include(version)
 include(version_header)
 
