@@ -4,9 +4,9 @@ get_target_property(DOXY_DOT_PATH Doxygen::dot IMPORTED_LOCATION)
 get_filename_component(DOXY_DOT_PATH "${DOXY_DOT_PATH}" DIRECTORY)
 file(TO_NATIVE_PATH "${DOXY_DOT_PATH}" DOXY_DOT_PATH)
 
-set(DOC_SRC "${CMAKE_SOURCE_DIR}/doc")
-set(DOC_DEST "${CMAKE_BINARY_DIR}/doc/${DOC}")
-set(DOC_TMP "${CMAKE_BINARY_DIR}/tmp/doc")
+set(DOC_SRC "${PROJECT_SOURCE_DIR}/doc")
+set(DOC_DEST "${PROJECT_BINARY_DIR}/doc/${DOC}")
+set(DOC_TMP "${PROJECT_BINARY_DIR}/tmp/doc")
 
 set(DOXY_BUILD_LATEX "NO")
 if (${WERROR})

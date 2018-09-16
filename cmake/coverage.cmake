@@ -27,7 +27,7 @@ if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
 		mark_as_advanced(LLVMCOV_FOUND)
 		message(STATUS "Found llvm-cov: ${LLVMCOV_PATH}")
 
-		set(GCOV_PATH "${CMAKE_BINARY_DIR}/llvm-cov.sh")
+		set(GCOV_PATH "${PROJECT_BINARY_DIR}/llvm-cov.sh")
 
 		# wrap llvm-cov to have behaviour like gcov
 		file(WRITE "${GCOV_PATH}"
@@ -126,7 +126,7 @@ add_custom_target(coverage_report
 	# exclude everything but the project sources
 	COMMAND "${LCOV_PATH}" -q
 		--gcov-tool "\"${GCOV_PATH}\""
-		-e coverage_report.total "\"${CMAKE_SOURCE_DIR}/*\""
+		-e coverage_report.total "\"${PROJECT_SOURCE_DIR}/*\""
 		--output-file coverage_report.info.cleaned
 
 	# generate html report and remove intermediate reports.
