@@ -133,6 +133,9 @@ mingw_x86_64:
       -DCMAKE_TOOLCHAIN_FILE=../cmake/cross/mingw_x86_64.cmake ..
     - make -j $(nproc)
     - make DESTDIR="$PWD/../cpp_template_mingw_x86_64" install
+    - cp /usr/lib/gcc/x86_64-w64-mingw32/*-win32/libstdc++-*.dll
+      /usr/lib/gcc/x86_64-w64-mingw32/*-win32/libgcc_s_seh-*.dll
+      ../cpp_template_mingw_x86_64/bin
   artifacts:
     paths:
         - cpp_template_mingw_x86_64
